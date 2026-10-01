@@ -1,0 +1,37 @@
+---
+description: Taqaddum project rules — offline-first Flutter app built from the Stitch design reference
+alwaysApply: true
+---
+
+# Taqaddum project rules
+
+## Offline & data
+- Never add network, server, cloud or analytics dependencies (Firebase, Supabase, REST, GraphQL, CDN assets, runtime Google Fonts, WebViews) without explicit approval.
+- Never replace local persistence (Drift/SQLite, SharedPreferences, secure storage) with cloud storage.
+- Never store a plaintext password; credentials go through `PasswordHasher` + `CredentialStore`.
+- Widgets never run SQL. All reads/writes go through repositories in `features/*/data/`.
+- Statistics are derived from stored records through domain calculators; do not store or hardcode duplicated totals.
+- Multi-record writes (log + goal progress + activity event) use a single database transaction.
+- Read "now" from `clockProvider` / `currentDayProvider`, never `DateTime.now()` in providers or domain code, so tests can pin time.
+- Demo data only via `DemoDataSeeder` when `DemoDataSeeder.enabled`; never seed automatically.
+
+## Design
+- Before modifying a screen, open its `design_reference/stitch_taqaddum_design_system_foundation/<nn>_<name>/screen.png` (and `code.html`) and compare.
+- Respect canonical tokens in `lib/core/theme/` (colors, typography, spacing, radius, motion). No ad-hoc hex colors or magic sizes in screens.
+- Reuse shared components from `lib/core/widgets/` (buttons, inputs, chips, rows, sheets, bottom navigation). Do not copy-paste near-identical widgets.
+- Material Symbols (`Symbols.*`) only; no emoji in UI. Touch targets at least 44 px.
+- Layouts must fit 360–430 px widths and 1.35× text: use `Expanded`/`Flexible`/`Wrap` and ellipsis rather than fixed-width rows.
+- Never use `screen.png` as UI, never embed `code.html` in a WebView.
+- One bottom navigation instance lives in the shell; focused flows (check-in, night review, weekly/monthly review, onboarding goal setup) hide it.
+- No dead buttons: every control does something real, or it is not shown.
+
+## Structure
+- Keep the 24-screen architecture and route map in `docs/screen_mapping.md` intact unless explicitly requested.
+- Never create duplicate screen variants (e.g. one goal editor serves new + edit).
+- User-facing strings go in `lib/l10n/app_en.arb` (access with `context.l10n`); run `flutter gen-l10n` after editing ARB files.
+
+## Workflow
+- After meaningful changes run: `dart format .`, `flutter analyze`, `flutter test`.
+- New domain logic gets a unit test in `test/unit/`; new repository behaviour gets a test in `test/data/` using `TestEnv` (in-memory Drift, fixed clock).
+- New screens or routes are added to the route list in `test/widget/screens_test.dart`.
+- After changing Drift tables run: `dart run build_runner build --delete-conflicting-outputs` and bump `schemaVersion` with a migration step.

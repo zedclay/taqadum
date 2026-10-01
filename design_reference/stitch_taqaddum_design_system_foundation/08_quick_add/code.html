@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#a93100", "on-tertiary-fixed": "#211a17", "primary-container": "#d24209", "surface-container": "#e9edff", "outline-variant": "#e3bfb4", "on-secondary-container": "#5f1600", "on-tertiary-container": "#fffbff", "tertiary-container": "#7d726e", "inverse-surface": "#293040", "on-primary-fixed-variant": "#842500", "outline": "#8e7067", "secondary-container": "#fe6a3c", "on-secondary-fixed": "#3a0a00", "surface-dim": "#d3daef", "error-container": "#ffdad6", "on-secondary-fixed-variant": "#862300", "on-primary-container": "#fffbff", "secondary-fixed-dim": "#ffb59f", "on-tertiary-fixed-variant": "#4e4541", "on-error": "#ffffff", "on-primary-fixed": "#3a0b00", "surface-container-lowest": "#ffffff", "on-background": "#141b2b", "inverse-primary": "#ffb59e", "surface": "#f9f9ff", "surface-container-highest": "#dce2f7", "secondary": "#ae3203", "surface-tint": "#ad3300", "tertiary-fixed": "#eee0da", "surface-variant": "#dce2f7", "error": "#ba1a1a", "inverse-on-surface": "#edf0ff", "on-tertiary": "#ffffff", "on-surface-variant": "#5a4139", "on-surface": "#141b2b", "on-primary": "#ffffff", "secondary-fixed": "#ffdbd1", "primary-fixed": "#ffdbd0", "tertiary": "#645a55", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container-high": "#e1e8fd", "primary-fixed-dim": "#ffb59e", "on-error-container": "#93000a", "surface-container-low": "#f1f3ff", "tertiary-fixed-dim": "#d1c4be", "surface-bright": "#f9f9ff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "1.25rem", "space-sm": "0.5rem", "space-md": "1rem", "gutter": "0.75rem", "space-xl": "2rem" }, fontFamily: { "caption": ["Inter"], "headline-3": ["Inter"], "body": ["Inter"], "body-medium": ["Inter"], "headline-2": ["Inter"], "caption-sm": ["Inter"], "display": ["Inter"], "body-large": ["Inter"], "headline-1": ["Inter"], "label-strong": ["Inter"] }, fontSize: { "caption": ["12px", { lineHeight: "16px", fontWeight: "400" }], "headline-3": ["18px", { lineHeight: "24px", fontWeight: "600" }], "body": ["14px", { lineHeight: "20px", fontWeight: "400" }], "body-medium": ["14px", { lineHeight: "20px", fontWeight: "500" }], "headline-2": ["22px", { lineHeight: "28px", fontWeight: "600" }], "caption-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }], "display": ["32px", { lineHeight: "38px", fontWeight: "700" }], "body-large": ["16px", { lineHeight: "24px", fontWeight: "400" }], "headline-1": ["28px", { lineHeight: "34px", fontWeight: "700" }], "label-strong": ["12px", { lineHeight: "16px", fontWeight: "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body text-body text-on-surface flex flex-col min-h-screen relative overflow-x-hidden"><main class="flex flex-col relative w-full bg-surface min-h-screen"><div class="flex flex-col w-full relative select-none">
+<!-- DIMMED BACKGROUND LAYER: Taqaddum Today / Daily Plan Screen -->
+<div aria-hidden="true" class="w-full flex flex-col px-margin pt-4 pb-20 opacity-30 pointer-events-none filter blur-[1.5px]">
+<!-- Top Header Overview -->
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-headline-3 text-headline-3">
+          S
+        </div>
+<div class="flex flex-col">
+<span class="font-caption text-caption text-tertiary">Tuesday, October 24</span>
+<span class="font-headline-2 text-headline-2 text-on-surface">Today's Focus</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">calendar_today</span>
+</div>
+</div>
+<!-- Momentum Bar Card -->
+<div class="mt-4 p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-body-medium text-body-medium text-on-surface">Daily Momentum</span>
+<span class="font-label-strong text-label-strong text-primary">68%</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container">
+<div class="h-2 rounded-full bg-primary" style="width: 68%;"></div>
+</div>
+<div class="flex items-center justify-between text-caption text-tertiary font-caption pt-1">
+<span>5 of 8 completed</span>
+<span>2 goals aligned</span>
+</div>
+</div>
+<!-- Tasks Stack Preview Behind Backdrop -->
+<div class="mt-5 flex flex-col space-y-2.5">
+<span class="font-label-strong text-label-strong text-tertiary uppercase tracking-wider">Morning Commitments</span>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest flex items-center justify-between shadow-sm">
+<div class="flex items-center space-x-3">
+<div class="w-5 h-5 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[15px]">check</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface line-through text-opacity-50">Review quarterly targets</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-tertiary font-caption-sm text-caption-sm">Work</span>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-container-lowest flex items-center justify-between shadow-sm">
+<div class="flex items-center space-x-3">
+<div class="w-5 h-5 rounded-lg bg-surface-container-high"></div>
+<span class="font-body-medium text-body-medium text-on-surface">Deep work: Sales architecture</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-tertiary font-caption-sm text-caption-sm">Deep</span>
+</div>
+</div>
+</div>
+<!-- MODAL BACKDROP (40% dimming with soft blur) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-40 transition-opacity"></div>
+<!-- ELEVATED BOTTOM SHEET -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex flex-col max-w-lg mx-auto bg-surface-container-lowest rounded-t-[28px] shadow-2xl transition-all duration-300 max-h-[777px] overflow-hidden">
+<!-- DRAG HANDLE & QUICK VIEW CONTROLLER -->
+<div class="pt-3 pb-2 px-margin flex flex-col items-center flex-shrink-0 bg-surface-container-lowest">
+<div class="w-10 h-1.5 bg-outline-variant/60 rounded-full mx-auto mb-2"></div>
+<!-- Interactive Screen Switcher Bar for Seamless Inspection -->
+<div class="w-full flex items-center justify-between p-1 bg-surface-container-low rounded-xl mb-1">
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold" id="tab-btn-grid" onclick="switchView('grid')">
+          Action Grid
+        </button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all text-tertiary hover:text-on-surface" id="tab-btn-task" onclick="switchView('task')">
+          Task
+        </button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all text-tertiary hover:text-on-surface" id="tab-btn-quran" onclick="switchView('quran')">
+          Quran
+        </button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all text-tertiary hover:text-on-surface" id="tab-btn-money" onclick="switchView('money')">
+          Money
+        </button>
+</div>
+</div>
+<!-- VIEW 1: INITIAL ACTION GRID -->
+<div class="flex flex-col flex-1 px-margin pb-safe pb-6 overflow-y-auto" id="view-grid">
+<!-- Header -->
+<div class="flex items-start justify-between mt-1 mb-4">
+<div class="flex flex-col">
+<h2 class="font-headline-2 text-headline-2 text-on-surface tracking-tight">Quick Add</h2>
+<p class="font-caption text-caption text-tertiary mt-0.5">Add something without leaving your flow.</p>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- 6-Action Grid (2 columns, 155px min-width equivalent tactile cards) -->
+<div class="grid grid-cols-2 gap-2.5 mb-5">
+<!-- 1. Task -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('task')">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed text-primary flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Task</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Add something to do</span>
+</div>
+</button>
+<!-- 2. Quran -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('quran')">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-tertiary-container flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Quran</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Log today's progress</span>
+</div>
+</button>
+<!-- 3. Money -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('money')">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Money</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Income or expense</span>
+</div>
+</button>
+<!-- 4. Work -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('task')">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed-dim text-on-secondary-fixed flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">business_center</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Work</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Lead, meet or call</span>
+</div>
+</button>
+<!-- 5. Habit -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('task')">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">autorenew</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Habit</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Build consistency</span>
+</div>
+</button>
+<!-- 6. Note -->
+<button class="flex items-start p-3.5 rounded-2xl bg-surface-container-low/70 hover:bg-surface-container-high/60 active:scale-[0.98] transition-all text-left group" onclick="switchView('task')">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-tertiary flex items-center justify-center mr-3 flex-shrink-0 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">edit_note</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface font-semibold truncate">Note</span>
+<span class="font-caption-sm text-caption-sm text-tertiary mt-0.5 leading-tight">Capture quickly</span>
+</div>
+</button>
+</div>
+<!-- Quick Recent Pills Row -->
+<div class="flex flex-col space-y-2 mt-1">
+<span class="font-caption-sm text-caption-sm text-tertiary font-medium uppercase tracking-wider">Suggested actions</span>
+<div class="flex items-center space-x-2 overflow-x-auto pb-1">
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption flex-shrink-0 transition-colors" onclick="switchView('quran')">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Log 6 Quran pages</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption flex-shrink-0 transition-colors" onclick="switchView('money')">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>Add expense</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption flex-shrink-0 transition-colors" onclick="switchView('task')">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Contact leads</span>
+</button>
+</div>
+</div>
+</div>
+<!-- VIEW 2: TASK CONTEXTUAL FORM -->
+<div class="hidden flex-col flex-1 px-margin pb-safe pb-4 overflow-y-auto" id="view-task">
+<!-- Back Chevron & Title -->
+<div class="flex items-center justify-between mb-4">
+<button class="flex items-center space-x-1 text-tertiary hover:text-on-surface transition-colors py-1" onclick="switchView('grid')">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-body-medium text-body-medium font-medium">Add task</span>
+</button>
+<span class="font-caption text-caption px-2.5 py-1 rounded-full bg-surface-container text-primary font-medium">Step 1 of 1</span>
+</div>
+<!-- Task Input Field -->
+<div class="flex flex-col space-y-1 mb-4">
+<label class="font-caption-sm text-caption-sm text-tertiary font-medium">What needs to be done?</label>
+<div class="flex items-center bg-surface-container-low rounded-xl px-3.5 py-3">
+<input class="bg-transparent w-full text-on-surface font-body-large text-body-large focus:outline-none placeholder:text-tertiary" placeholder="e.g. Prepare client proposal" type="text" value="Contact 5 qualified leads"/>
+</div>
+</div>
+<!-- Category Selector -->
+<div class="flex flex-col space-y-1.5 mb-4">
+<label class="font-caption-sm text-caption-sm text-tertiary font-medium">Category</label>
+<div class="flex items-center space-x-2 overflow-x-auto pb-1">
+<button class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-primary text-on-primary font-caption text-caption font-medium shadow-sm">
+<span class="w-2 h-2 rounded-full bg-on-primary"></span>
+<span>Work</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span>Personal</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed"></span>
+<span>Finance</span>
+</button>
+</div>
+</div>
+<!-- When Selector & Time -->
+<div class="flex flex-col space-y-1.5 mb-4">
+<label class="font-caption-sm text-caption-sm text-tertiary font-medium">Schedule</label>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<button class="px-3 py-1.5 rounded-xl bg-primary text-on-primary font-caption text-caption font-semibold">Today</button>
+<button class="px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">Tomorrow</button>
+<button class="px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">Date...</button>
+</div>
+<div class="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-surface-container-low text-on-surface font-caption text-caption">
+<span class="material-symbols-outlined text-[16px] text-tertiary">schedule</span>
+<span>11:00 AM</span>
+</div>
+</div>
+</div>
+<!-- Related Goal Selection -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between mb-5 hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center space-x-2.5">
+<span class="material-symbols-outlined text-[20px] text-primary">track_changes</span>
+<div class="flex flex-col">
+<span class="font-caption-sm text-caption-sm text-tertiary">Related Goal</span>
+<span class="font-body-medium text-body-medium text-on-surface font-medium">Grow Skewes revenue</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary">chevron_right</span>
+</div>
+<!-- Sticky Action CTA -->
+<button class="w-full h-[54px] rounded-2xl bg-primary text-on-primary font-body-large text-body-large font-semibold hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-md">
+<span>Add task</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+<!-- VIEW 3: QURAN CONTEXTUAL FORM -->
+<div class="hidden flex-col flex-1 px-margin pb-safe pb-4 overflow-y-auto" id="view-quran">
+<!-- Back Chevron & Title -->
+<div class="flex items-center justify-between mb-4">
+<button class="flex items-center space-x-1 text-tertiary hover:text-on-surface transition-colors py-1" onclick="switchView('grid')">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-body-medium text-body-medium font-medium">Log Quran</span>
+</button>
+<span class="font-caption text-caption px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-medium">Daily Habit</span>
+</div>
+<!-- Mode Pills -->
+<div class="flex items-center p-1 bg-surface-container-low rounded-xl mb-4">
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption bg-surface-container-lowest text-on-surface shadow-sm font-semibold">Reading</button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption text-tertiary hover:text-on-surface">Memorization</button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption text-tertiary hover:text-on-surface">Revision</button>
+</div>
+<!-- Metric Counter Area: Pages -->
+<div class="p-4 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center mb-4">
+<span class="font-caption text-caption text-tertiary mb-1">Total pages read today</span>
+<div class="flex items-center space-x-6 my-1">
+<button class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" onclick="adjustPages(-1)">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<span class="font-display text-display text-on-surface font-bold" id="quran-pages">6</span>
+<button class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" onclick="adjustPages(1)">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<span class="font-caption-sm text-caption-sm text-tertiary">Approx. 12 minutes session</span>
+</div>
+<!-- Surah Selection Row -->
+<div class="p-3.5 bg-surface-container-low rounded-xl flex items-center justify-between mb-5 hover:bg-surface-container transition-colors cursor-pointer">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center font-caption-sm text-caption-sm font-bold">
+            24
+          </div>
+<div class="flex flex-col">
+<span class="font-caption-sm text-caption-sm text-tertiary">Surah</span>
+<span class="font-body-medium text-body-medium text-on-surface font-medium">Surah An-Nur</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary">expand_more</span>
+</div>
+<!-- Sticky Quran CTA -->
+<button class="w-full h-[54px] rounded-2xl bg-primary text-on-primary font-body-large text-body-large font-semibold hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-md">
+<span>Save Quran log</span>
+<span class="material-symbols-outlined text-[20px]">check</span>
+</button>
+</div>
+<!-- VIEW 4: MONEY CONTEXTUAL FORM -->
+<div class="hidden flex-col flex-1 px-margin pb-safe pb-4 overflow-y-auto" id="view-money">
+<!-- Back Chevron & Title -->
+<div class="flex items-center justify-between mb-3">
+<button class="flex items-center space-x-1 text-tertiary hover:text-on-surface transition-colors py-1" onclick="switchView('grid')">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-body-medium text-body-medium font-medium">Add transaction</span>
+</button>
+<span class="font-caption text-caption px-2 py-0.5 rounded-full bg-surface-container text-tertiary">Wallet</span>
+</div>
+<!-- Segmented Type Selector -->
+<div class="flex items-center p-1 bg-surface-container-low rounded-xl mb-4">
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption bg-surface-container-lowest text-primary shadow-sm font-semibold">Expense</button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption text-tertiary hover:text-on-surface">Income</button>
+<button class="flex-1 py-1.5 text-center rounded-lg font-caption text-caption text-tertiary hover:text-on-surface">Saving</button>
+</div>
+<!-- Prominent Amount Display -->
+<div class="p-4 bg-surface-container-low rounded-2xl flex flex-col items-center justify-center mb-4">
+<span class="font-caption-sm text-caption-sm text-tertiary uppercase tracking-wider font-semibold">Transaction Amount</span>
+<div class="flex items-baseline space-x-1.5 my-1">
+<span class="font-headline-1 text-headline-1 text-on-surface font-bold tracking-tight">125,000</span>
+<span class="font-body-large text-body-large text-tertiary font-semibold">DZD</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-tertiary">Equivalent to standard operational batch</span>
+</div>
+<!-- Category Chips -->
+<div class="flex flex-col space-y-1.5 mb-5">
+<label class="font-caption-sm text-caption-sm text-tertiary font-medium">Category</label>
+<div class="flex items-center space-x-2 overflow-x-auto pb-1">
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-primary text-on-primary font-caption text-caption font-medium">
+<span class="material-symbols-outlined text-[15px]">work</span>
+<span>Business</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-tertiary">person</span>
+<span>Client payment</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-tertiary">inventory</span>
+<span>Inventory</span>
+</button>
+</div>
+</div>
+<!-- Sticky Money CTA -->
+<button class="w-full h-[54px] rounded-2xl bg-primary text-on-primary font-body-large text-body-large font-semibold hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-md">
+<span>Add transaction</span>
+<span class="material-symbols-outlined text-[20px]">check</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  let currentPages = 6;
+
+  function switchView(viewName) {
+    const views = ['grid', 'task', 'quran', 'money'];
+    views.forEach(v => {
+      const el = document.getElementById(`view-${v}`);
+      const btn = document.getElementById(`tab-btn-${v}`);
+      if (v === viewName) {
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+        if (btn) {
+          btn.className = "flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all bg-surface-container-lowest text-primary shadow-sm font-semibold";
+        }
+      } else {
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+        if (btn) {
+          btn.className = "flex-1 py-1.5 text-center rounded-lg font-caption-sm text-caption-sm transition-all text-tertiary hover:text-on-surface";
+        }
+      }
+    });
+  }
+
+  function adjustPages(delta) {
+    currentPages = Math.max(1, currentPages + delta);
+    const counter = document.getElementById('quran-pages');
+    if (counter) {
+      counter.innerText = currentPages;
+    }
+  }
+</script></main></body></html>

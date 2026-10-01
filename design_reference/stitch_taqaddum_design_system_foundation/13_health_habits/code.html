@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary-fixed": "#211a17", "on-error": "#ffffff", "secondary-fixed-dim": "#ffb59f", "background": "#f9f9ff", "primary-fixed-dim": "#ffb59e", "surface-bright": "#f9f9ff", "on-primary": "#ffffff", "secondary": "#ae3203", "secondary-container": "#fe6a3c", "inverse-surface": "#293040", "tertiary-fixed-dim": "#d1c4be", "tertiary-fixed": "#eee0da", "surface-container-low": "#f1f3ff", "tertiary-container": "#7d726e", "tertiary": "#645a55", "surface-container-high": "#e1e8fd", "on-error-container": "#93000a", "primary-container": "#d24209", "surface-container": "#e9edff", "on-primary-fixed-variant": "#842500", "on-tertiary-container": "#fffbff", "on-secondary-fixed": "#3a0a00", "surface-variant": "#dce2f7", "surface": "#f9f9ff", "inverse-primary": "#ffb59e", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-background": "#141b2b", "on-secondary-fixed-variant": "#862300", "inverse-on-surface": "#edf0ff", "surface-container-highest": "#dce2f7", "primary": "#a93100", "surface-tint": "#ad3300", "on-secondary-container": "#5f1600", "on-tertiary-fixed-variant": "#4e4541", "secondary-fixed": "#ffdbd1", "on-surface": "#141b2b", "on-surface-variant": "#5a4139", "on-primary-container": "#fffbff", "on-tertiary": "#ffffff", "outline-variant": "#e3bfb4", "on-secondary": "#ffffff", "on-primary-fixed": "#3a0b00", "surface-dim": "#d3daef", "error": "#ba1a1a", "outline": "#8e7067", "primary-fixed": "#ffdbd0" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-md": "1rem", "gutter": "0.75rem", "margin": "1.25rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-xs": "0.25rem" }, fontFamily: { "headline-3": ["Inter"], "body-medium": ["Inter"], "caption-sm": ["Inter"], "caption": ["Inter"], "headline-1": ["Inter"], "headline-2": ["Inter"], "label-strong": ["Inter"], "body-large": ["Inter"], "display": ["Inter"], "body": ["Inter"] }, fontSize: { "headline-3": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-medium": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "caption-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-1": ["28px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-2": ["22px", { "lineHeight": "28px", "fontWeight": "600" }], "label-strong": ["12px", { "lineHeight": "16px", "fontWeight": "600" }], "body-large": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "display": ["32px", { "lineHeight": "38px", "fontWeight": "700" }], "body": ["14px", { "lineHeight": "20px", "fontWeight": "400" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; min-height: 100%; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body text-body text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><main class="flex-1 flex flex-col relative w-full bg-surface pb-28 pt-safe"><div class="flex flex-col w-full px-margin pb-12 space-y-space-lg">
+<!-- Screen Header -->
+<header class="flex flex-col space-y-space-xs pt-2">
+<div class="flex items-center justify-between">
+<button aria-label="Go back" class="flex items-center justify-center w-10 h-10 -ml-2 rounded-full text-on-surface active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="flex items-center space-x-1">
+<button aria-label="History and calendar logs" class="flex items-center justify-center w-10 h-10 rounded-full text-tertiary hover:text-on-surface active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+</button>
+</div>
+</div>
+<div class="pt-1">
+<h1 class="font-headline-1 text-headline-1 text-on-surface tracking-tight">Health &amp; Habits</h1>
+<p class="font-body text-body text-tertiary">Movement, sleep, and daily consistency.</p>
+</div>
+</header>
+<!-- Contextual Insight Pill -->
+<aside class="flex items-center space-x-space-sm px-3.5 py-2.5 rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-center w-6 h-6 rounded-full bg-secondary-fixed text-secondary shrink-0">
+<span class="material-symbols-outlined text-[16px]">bedtime</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface-variant truncate">
+      Your sleep has been more consistent this week.
+    </span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0 animate-pulse ml-auto"></span>
+</aside>
+<!-- Today Summary Hero Card -->
+<section class="rounded-2xl p-5 bg-surface-container-lowest shadow-sm flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-label-strong text-label-strong text-secondary uppercase tracking-wider">Today</span>
+<span class="font-caption text-caption text-tertiary">Thu, Oct 24</span>
+</div>
+<!-- Movement Metric & Clean Progress -->
+<div class="flex flex-col space-y-2">
+<div class="flex items-baseline justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">directions_walk</span>
+<span class="font-headline-3 text-headline-3 text-on-surface">Movement today</span>
+</div>
+<div class="flex items-baseline space-x-1">
+<span class="font-headline-2 text-headline-2 text-on-surface">22</span>
+<span class="font-body text-body text-tertiary">/ 30 min</span>
+</div>
+</div>
+<!-- Slim Rounded Progress Track -->
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full transition-all duration-500 ease-out" style="width: 73.3%;"></div>
+</div>
+<div class="flex justify-between items-center text-tertiary font-caption text-caption pt-0.5">
+<span>73% completed</span>
+<span class="font-caption-sm text-caption-sm text-secondary font-medium">8 min remaining</span>
+</div>
+</div>
+<!-- Secondary Metrics Strip -->
+<div class="grid grid-cols-3 gap-2 pt-2">
+<!-- Workout Metric -->
+<div class="flex flex-col items-center p-2.5 rounded-xl bg-surface-container-low text-center">
+<div class="flex items-center space-x-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-strong text-label-strong">Done</span>
+</div>
+<span class="font-caption text-caption text-tertiary mt-1">Workout</span>
+</div>
+<!-- Sleep Metric -->
+<div class="flex flex-col items-center p-2.5 rounded-xl bg-surface-container-low text-center">
+<div class="flex items-center space-x-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-tertiary">dark_mode</span>
+<span class="font-label-strong text-label-strong">6h 45m</span>
+</div>
+<span class="font-caption text-caption text-tertiary mt-1">Sleep</span>
+</div>
+<!-- Habits Metric -->
+<div class="flex flex-col items-center p-2.5 rounded-xl bg-surface-container-low text-center">
+<div class="flex items-center space-x-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">checklist</span>
+<span class="font-label-strong text-label-strong">4 of 6</span>
+</div>
+<span class="font-caption text-caption text-tertiary mt-1">Habits</span>
+</div>
+</div>
+</section>
+<!-- Quick Log Actions -->
+<section class="overflow-x-auto -mx-margin px-margin scrollbar-none">
+<div class="flex space-x-2 py-0.5 min-w-max">
+<button class="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface font-label-strong text-label-strong shadow-sm active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">fitness_center</span>
+<span>Log workout</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface font-label-strong text-label-strong shadow-sm active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">directions_walk</span>
+<span>Log walk</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface font-label-strong text-label-strong shadow-sm active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">bedtime</span>
+<span>Log sleep</span>
+</button>
+<button class="flex items-center space-x-1.5 px-3.5 py-2 rounded-full bg-surface-container-lowest text-on-surface font-label-strong text-label-strong shadow-sm active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">add_task</span>
+<span>Add habit</span>
+</button>
+</div>
+</section>
+<!-- Workout Section -->
+<section class="flex flex-col space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Workout</h2>
+<span class="font-caption text-caption text-tertiary">Scheduled &amp; logged</span>
+</div>
+<div class="flex items-center justify-between p-4 rounded-2xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center space-x-3.5">
+<div class="flex items-center justify-center w-11 h-11 rounded-xl bg-secondary-fixed text-secondary shrink-0">
+<span class="material-symbols-outlined text-[24px]">fitness_center</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface">Strength training</span>
+<span class="font-caption text-caption text-tertiary">45 min · Upper body &amp; core</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-secondary-fixed text-secondary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span class="font-caption-sm text-caption-sm font-semibold">Completed</span>
+</div>
+</div>
+</section>
+<!-- Walking Section -->
+<section class="flex flex-col space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Walking</h2>
+<span class="font-caption text-caption text-tertiary">Target 30 min</span>
+</div>
+<div class="flex flex-col p-4 rounded-2xl bg-surface-container-lowest shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="flex items-center justify-center w-10 h-10 rounded-xl bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">directions_walk</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-3 text-headline-3 text-on-surface">22 / 30 min</span>
+<span class="font-caption text-caption text-tertiary">Continuous and natural pace</span>
+</div>
+</div>
+<span class="font-label-strong text-label-strong text-secondary">73%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 73%;"></div>
+</div>
+<p class="font-caption text-caption text-tertiary flex items-center space-x-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">info</span>
+<span>8 min remaining to reach daily movement.</span>
+</p>
+</div>
+</section>
+<!-- Sleep Section -->
+<section class="flex flex-col space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Sleep</h2>
+<span class="font-caption text-caption text-tertiary">Sleep health rhythm</span>
+</div>
+<div class="flex flex-col p-4 rounded-2xl bg-surface-container-lowest shadow-sm space-y-3">
+<div class="flex items-start justify-between">
+<div class="flex items-center space-x-3">
+<div class="flex items-center justify-center w-10 h-10 rounded-xl bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[22px]">bedtime</span>
+</div>
+<div>
+<div class="flex items-baseline space-x-1.5">
+<span class="font-headline-2 text-headline-2 text-on-surface">6h 45m</span>
+<span class="font-caption text-caption text-tertiary">/ 7h 30m target</span>
+</div>
+<span class="font-caption text-caption text-tertiary">Bed 23:45 · Wake 06:30</span>
+</div>
+</div>
+<!-- Non-judgmental status pill -->
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-caption-sm text-caption-sm font-medium">
+          45 min below target
+        </span>
+</div>
+<div class="pt-2 flex items-center justify-between rounded-xl p-2.5 bg-surface-container-low">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">bolt</span>
+<span class="font-body-medium text-body-medium text-on-surface">Energy today: Steady</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-tertiary">sentiment_satisfied</span>
+</div>
+</div>
+</section>
+<!-- Daily Habits Section -->
+<section class="flex flex-col space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center space-x-2">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Daily Habits</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption-sm text-caption-sm font-medium">4 of 6 completed</span>
+</div>
+<button class="font-caption text-caption text-primary hover:underline" type="button">Edit</button>
+</div>
+<div class="flex flex-col space-y-2">
+<!-- Habit 1: No social media in morning -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">No social media in morning</span>
+<span class="font-caption text-caption text-tertiary">Focus</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Habit 2: Walk 30 min -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-surface-container text-transparent flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">Walk 30 min</span>
+<span class="font-caption text-caption text-tertiary">Movement</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Habit 3: Read Quran -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">Read Quran</span>
+<span class="font-caption text-caption text-tertiary">Spiritual</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Habit 4: Sleep before 23:30 -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-surface-container text-transparent flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">Sleep before 23:30</span>
+<span class="font-caption text-caption text-tertiary">Rest</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Habit 5: Drink 2.5L water -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">Drink 2.5L water</span>
+<span class="font-caption text-caption text-tertiary">Health</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+<!-- Habit 6: Daily mobility stretch -->
+<div class="habit-item flex items-center justify-between p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm cursor-pointer select-none active:scale-[0.99] transition-transform">
+<div class="flex items-center space-x-3 min-w-0">
+<button class="habit-checkbox w-6 h-6 rounded-lg bg-secondary text-on-secondary flex items-center justify-center shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col min-w-0">
+<span class="font-body-medium text-body-medium text-on-surface truncate">Daily mobility stretch</span>
+<span class="font-caption text-caption text-tertiary">Recovery</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 shrink-0 pl-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-high"></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Health Goals Section -->
+<section class="flex flex-col space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Health goals</h2>
+<span class="font-caption text-caption text-tertiary">Weekly progress</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Goal 1 -->
+<div class="flex flex-col p-4 rounded-2xl bg-surface-container-lowest shadow-sm space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="font-body-medium text-body-medium text-on-surface">Workout 3x/week</span>
+<span class="font-caption text-caption text-tertiary">2 of 3 sessions</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 66%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-tertiary">1 session left before Sunday</span>
+</div>
+<!-- Goal 2 -->
+<div class="flex flex-col p-4 rounded-2xl bg-surface-container-lowest shadow-sm space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="font-body-medium text-body-medium text-on-surface">Walk 30 min/day</span>
+<span class="font-caption text-caption text-tertiary">5 of 7 days</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 71%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-tertiary">On track to meet weekly target</span>
+</div>
+</div>
+</section>
+<!-- Consistency Section -->
+<section class="p-4 rounded-2xl bg-surface-container-low shadow-sm flex flex-col space-y-2">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<h3 class="font-headline-3 text-headline-3 text-on-surface">5 of 7 days active this week</h3>
+</div>
+<p class="font-body text-body text-tertiary leading-relaxed">
+      Consistent movement and regular sleep rhythm. You returned after missing one day.
+    </p>
+<div class="flex items-center space-x-2 pt-2">
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">M</span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption-sm text-caption-sm font-semibold">✓</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">T</span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption-sm text-caption-sm font-semibold">✓</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">W</span>
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-tertiary flex items-center justify-center font-caption-sm text-caption-sm">—</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">T</span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption-sm text-caption-sm font-semibold">✓</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">F</span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption-sm text-caption-sm font-semibold">✓</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">S</span>
+<div class="w-7 h-7 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption-sm text-caption-sm font-semibold">✓</div>
+</div>
+<div class="flex flex-col items-center space-y-1">
+<span class="font-caption-sm text-caption-sm text-tertiary">S</span>
+<div class="w-7 h-7 rounded-full bg-surface-container text-tertiary flex items-center justify-center font-caption-sm text-caption-sm">?</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Simple interactive habit checkbox toggle without external libraries
+  document.querySelectorAll('.habit-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      const btn = item.querySelector('.habit-checkbox');
+      const isChecked = btn.classList.contains('bg-secondary');
+      if (isChecked) {
+        btn.classList.remove('bg-secondary', 'text-on-secondary');
+        btn.classList.add('bg-surface-container', 'text-transparent');
+      } else {
+        btn.classList.remove('bg-surface-container', 'text-transparent');
+        btn.classList.add('bg-secondary', 'text-on-secondary');
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(20,27,43,0.04)] pb-safe" data-active-classes="text-primary font-label-strong"><div class="h-[76px] px-margin flex items-center justify-between max-w-md mx-auto relative"><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="today" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-caption">Today</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="progress" href="#"><span class="material-symbols-outlined text-[24px]">monitoring</span><span class="font-caption text-caption">Progress</span></a><div class="flex items-center justify-center -translate-y-2"><a aria-label="Quick Add" class="w-[50px] h-[50px] rounded-full bg-primary flex items-center justify-center text-on-primary shadow-[0_8px_20px_-2px_rgba(169,49,0,0.35)] transition-transform duration-150 active:scale-90" data-path="quick-add" href="#"><span class="material-symbols-outlined text-[28px]">add</span></a></div><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="goals" href="#"><span class="material-symbols-outlined text-[24px]">adjust</span><span class="font-caption text-caption">Goals</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-caption">Profile</span></a></div></nav></body></html>

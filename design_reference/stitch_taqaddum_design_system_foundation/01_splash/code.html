@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Taqaddum (تقدّم) — Splash</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#F85D27',
+              navy: '#121826',
+            },
+            canvas: '#F9FAFB',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            arabic: ['"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+          },
+          screens: {
+            'mobile': '390px',
+          }
+        }
+      }
+    };
+  </script>
+<!-- BEGIN: Custom Animation Styles -->
+<style data-purpose="splash-animations">
+    @keyframes logoEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes textEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes indeterminateProgress {
+      0% {
+        transform: translateX(-100%);
+      }
+      50% {
+        transform: translateX(10%);
+      }
+      100% {
+        transform: translateX(250%);
+      }
+    }
+
+    .animate-logo-entrance {
+      animation: logoEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-text-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+      opacity: 0;
+    }
+
+    .animate-indicator-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      opacity: 0;
+    }
+
+    .progress-bar-slider {
+      animation: indeterminateProgress 1.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  </style>
+<!-- END: Custom Animation Styles -->
+<!-- BEGIN: Base Layout Styles -->
+<style data-purpose="device-simulation">
+    /* Global canvas centering for display in previewers */
+    body {
+      background-color: #ECEEF2;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+<!-- END: Base Layout Styles -->
+</head>
+<body class="flex items-center justify-center min-h-screen p-0 sm:p-4 select-none">
+<!-- BEGIN: MobileDeviceFrame -->
+<!-- Constrained strictly to iOS standard dimensions: 390px x 844px -->
+<main class="relative w-[390px] h-[844px] bg-canvas overflow-hidden flex flex-col justify-between shadow-2xl sm:rounded-[50px] border border-slate-200/80">
+<!-- Subtle Radial Glow in Center Background -->
+<div aria-hidden="true" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full pointer-events-none blur-3xl opacity-60" data-purpose="subtle-brand-glow" style="background: radial-gradient(circle, rgba(248, 93, 39, 0.08) 0%, rgba(249, 250, 251, 0) 70%);">
+</div>
+<!-- BEGIN: IOSStatusBar -->
+<!-- Native iOS Top Safe Area Component -->
+<header class="relative z-10 w-full pt-3 px-7 flex items-center justify-between text-[#111827]" data-purpose="ios-status-bar">
+<!-- iOS Time -->
+<span class="text-[15px] font-semibold tracking-tight leading-none pt-0.5">9:41</span>
+<!-- iOS System Indicators (Cellular, Wifi, Battery) -->
+<div aria-label="System status" class="flex items-center space-x-1.5">
+<!-- Cellular Signal -->
+<svg class="w-4 h-3.5 fill-current" fill="none" viewbox="0 0 17 12" xmlns="http://www.w3.org/2000/svg">
+<rect height="4" rx="0.75" width="3" x="0" y="8"></rect>
+<rect height="6.5" rx="0.75" width="3" x="4.5" y="5.5"></rect>
+<rect height="9" rx="0.75" width="3" x="9" y="3"></rect>
+<rect height="11.5" rx="0.75" width="3" x="13.5" y="0.5"></rect>
+</svg>
+<!-- Wi-Fi Icon -->
+<svg class="w-4 h-3.5 fill-current" fill="none" viewbox="0 0 16 12" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M8 2.2C10.7 2.2 13.1 3.2 15 4.9L16 3.8C13.8 1.8 11.1 0.7 8 0.7C4.9 0.7 2.2 1.8 0 3.8L1 4.9C2.9 3.2 5.3 2.2 8 2.2ZM8 6C9.8 6 11.4 6.7 12.6 7.9L13.7 6.8C12.2 5.3 10.2 4.4 8 4.4C5.8 4.4 3.8 5.3 2.3 6.8L3.4 7.9C4.6 6.7 6.2 6 8 6ZM8 9.6C8.9 9.6 9.7 10 10.3 10.6L8 13.1L5.7 10.6C6.3 10 7.1 9.6 8 9.6Z" fill-rule="evenodd"></path>
+</svg>
+<!-- Battery Icon -->
+<div class="flex items-center">
+<div class="w-5 h-[11px] border border-current rounded-[3px] p-[1px] flex items-center">
+<div class="h-full w-full bg-current rounded-[1px]"></div>
+</div>
+<div class="w-[1.5px] h-1 bg-current rounded-r-[0.5px] -ml-[0.5px]"></div>
+</div>
+</div>
+</header>
+<!-- END: IOSStatusBar -->
+<!-- BEGIN: BrandCenterContainer -->
+<!-- Centered Brand Identity & Progress Indicator -->
+<section aria-label="Brand Presentation" class="relative z-10 flex-1 flex flex-col items-center justify-center -mt-6 px-6">
+<!-- Brand Logo Presentation -->
+<div class="animate-logo-entrance flex justify-center items-center mb-6" data-purpose="brand-logo-wrapper">
+<img alt="Taqaddum (تقدّم) Logo" class="w-[200px] max-w-[205px] h-auto object-contain select-none pointer-events-none drop-shadow-sm" decoding="sync" loading="eager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfuyGKhdQt_c3v67JG3nbujEGca2RhJGnZMlm3P20IMEJKia5Cty8z6lxdKYI7AOqlv22_MI0BgFvF4IzlR0V8cf5H0oea3z87n290QRpdnUnxPuytTfv7P2aGRQ6GhyGy2ZouMGgtP1Ea5owBhApu4wvZ5BkPUv6QVrWeGIMRLVtP3RjQORK1hqVgiR2k8O869bAwLkrpfvrRK4HclneMtu6jFPMwfz3jQIr9S_mDgK5JDkDcJ0R9_2OyqFT2yCpjsWg"/>
+</div>
+<!-- Bilingual Tagline Group -->
+<div class="animate-text-entrance flex flex-col items-center text-center space-y-1.5" data-purpose="brand-tagline-group">
+<!-- English Tagline -->
+<p class="font-sans font-medium text-[15px] text-[#667085] max-w-[260px] leading-relaxed tracking-normal">
+          Progress, one day at a time.
+        </p>
+<!-- Arabic Bilingual Tagline -->
+<p class="font-arabic font-normal text-[13px] text-slate-400 tracking-wide text-center" dir="rtl">
+          تقدّم كل يوم، خطوة بخطوة.
+        </p>
+</div>
+<!-- Minimal Indeterminate Progress Bar -->
+<div class="animate-indicator-entrance mt-8" data-purpose="splash-loading-indicator">
+<!-- Loading Track -->
+<div class="w-[80px] h-[3px] bg-[#E4E7EC] rounded-full overflow-hidden relative">
+<!-- Animated Progress Bar -->
+<div class="progress-bar-slider absolute top-0 left-0 bottom-0 w-1/2 bg-brand-orange rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- END: BrandCenterContainer -->
+<!-- BEGIN: BottomSafeArea -->
+<!-- Subtle Philosophy Whisper & Standard iOS Home Indicator -->
+<footer class="relative z-10 pb-2 px-6 flex flex-col items-center justify-end" data-purpose="bottom-safe-area">
+<!-- Whisper-light Philosophy Note -->
+<p class="text-[11px] text-slate-400 font-normal tracking-wide text-center mb-5 select-none opacity-80 font-sans">
+        Build your better days.
+      </p>
+<!-- iOS Home Indicator Line -->
+<div aria-hidden="true" class="w-32 h-1 bg-slate-300 rounded-full mb-1"></div>
+</footer>
+<!-- END: BottomSafeArea -->
+</main>
+<!-- END: MobileDeviceFrame -->
+</body></html>

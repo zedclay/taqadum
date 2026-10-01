@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary-fixed": "#211a17", "on-error": "#ffffff", "secondary-fixed-dim": "#ffb59f", "background": "#f9f9ff", "primary-fixed-dim": "#ffb59e", "surface-bright": "#f9f9ff", "on-primary": "#ffffff", "secondary": "#ae3203", "secondary-container": "#fe6a3c", "inverse-surface": "#293040", "tertiary-fixed-dim": "#d1c4be", "tertiary-fixed": "#eee0da", "surface-container-low": "#f1f3ff", "tertiary-container": "#7d726e", "tertiary": "#645a55", "surface-container-high": "#e1e8fd", "on-error-container": "#93000a", "primary-container": "#d24209", "surface-container": "#e9edff", "on-primary-fixed-variant": "#842500", "on-tertiary-container": "#fffbff", "on-secondary-fixed": "#3a0a00", "surface-variant": "#dce2f7", "surface": "#f9f9ff", "inverse-primary": "#ffb59e", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-background": "#141b2b", "on-secondary-fixed-variant": "#862300", "inverse-on-surface": "#edf0ff", "surface-container-highest": "#dce2f7", "primary": "#a93100", "surface-tint": "#ad3300", "on-secondary-container": "#5f1600", "on-tertiary-fixed-variant": "#4e4541", "secondary-fixed": "#ffdbd1", "on-surface": "#141b2b", "on-surface-variant": "#5a4139", "on-primary-container": "#fffbff", "on-tertiary": "#ffffff", "outline-variant": "#e3bfb4", "on-secondary": "#ffffff", "on-primary-fixed": "#3a0b00", "surface-dim": "#d3daef", "error": "#ba1a1a", "outline": "#8e7067", "primary-fixed": "#ffdbd0" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-md": "1rem", "gutter": "0.75rem", "margin": "1.25rem", "space-sm": "0.5rem", "space-xl": "2rem", "space-xs": "0.25rem" }, fontFamily: { "headline-3": ["Inter"], "body-medium": ["Inter"], "caption-sm": ["Inter"], "caption": ["Inter"], "headline-1": ["Inter"], "headline-2": ["Inter"], "label-strong": ["Inter"], "body-large": ["Inter"], "display": ["Inter"], "body": ["Inter"] }, fontSize: { "headline-3": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-medium": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "caption-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }], "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-1": ["28px", { "lineHeight": "34px", "fontWeight": "700" }], "headline-2": ["22px", { "lineHeight": "28px", "fontWeight": "600" }], "label-strong": ["12px", { "lineHeight": "16px", "fontWeight": "600" }], "body-large": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "display": ["32px", { "lineHeight": "38px", "fontWeight": "700" }], "body": ["14px", { "lineHeight": "20px", "fontWeight": "400" }] } } } };</script><style>@layer base { html, body { width: 100vw; margin: 0; padding: 0; min-height: 100%; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 16px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body text-body text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><main class="flex-1 flex flex-col relative w-full bg-surface pb-28 pt-safe"><div class="flex flex-col w-full px-margin pb-12 select-none">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between py-space-sm mb-space-sm">
+<button aria-label="Navigate back" class="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="flex items-center gap-1">
+<button aria-label="History log" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+</button>
+<button aria-label="More options" class="w-10 h-10 -mr-2 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px]">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Title & Intro -->
+<section class="mb-space-lg">
+<h1 class="font-headline-1 text-headline-1 text-on-surface tracking-tight">Quran</h1>
+<p class="font-body text-body text-on-surface-variant mt-1">Reading, memorization, and revision.</p>
+</section>
+<!-- Today Hero Card -->
+<section class="bg-surface-container-low rounded-[20px] p-5 shadow-sm mb-space-lg">
+<div class="flex items-center justify-between mb-4">
+<div>
+<span class="font-label-strong text-caption-sm text-tertiary uppercase tracking-wider block mb-0.5">Daily Routine</span>
+<h2 class="font-headline-2 text-headline-2 text-on-surface">Today</h2>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-lowest text-primary text-caption-sm font-label-strong shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        3 of 3 completed
+      </span>
+</div>
+<!-- 3 Daily Progress Rows -->
+<div class="space-y-3.5">
+<!-- Reading -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 flex flex-col gap-2 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Reading</span>
+</div>
+<span class="font-label-strong text-caption text-on-surface">6 / 6 pages</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-full"></div>
+</div>
+</div>
+<!-- Memorization -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 flex flex-col gap-2 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Memorization</span>
+</div>
+<span class="font-label-strong text-caption text-on-surface">¼ page</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-full"></div>
+</div>
+</div>
+<!-- Revision -->
+<div class="bg-surface-container-lowest rounded-xl p-3.5 flex flex-col gap-2 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Revision</span>
+</div>
+<span class="font-label-strong text-caption text-on-surface">10 min</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-full"></div>
+</div>
+</div>
+</div>
+<!-- Quick Log Trigger -->
+<button class="mt-4 w-full h-11 bg-surface-container-lowest text-on-surface font-label-strong text-body-medium rounded-xl flex items-center justify-center gap-1.5 hover:bg-surface-container-high transition-colors active:scale-[0.99] shadow-sm" id="open-sheet-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">add</span>
+      Log progress
+    </button>
+</section>
+<!-- Current Memorization & Year Goal (Bento Grid) -->
+<section class="space-y-space-md mb-space-lg">
+<!-- Current Memorization Card -->
+<div class="bg-surface-container-lowest rounded-[20px] p-5 shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-strong text-caption-sm text-tertiary uppercase tracking-wider">Current memorization</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface font-caption text-caption-sm">Surah 2</span>
+</div>
+<div class="flex items-baseline justify-between mb-2">
+<h3 class="font-headline-2 text-headline-2 text-on-surface">Al-Baqarah</h3>
+<span class="font-body-medium text-body-medium text-on-surface-variant">3.5 of 4 pages</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden mb-3">
+<div class="bg-primary h-full rounded-full" style="width: 88%;"></div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+          Next · ¼ page
+        </span>
+<button class="h-8 px-4 rounded-lg bg-surface-container text-on-surface font-label-strong text-caption flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+          Continue
+        </button>
+</div>
+</div>
+<!-- Year Goal Card -->
+<div class="bg-surface-container-lowest rounded-[20px] p-5 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-strong text-caption-sm text-tertiary uppercase tracking-wider">Year goal</span>
+<span class="font-label-strong text-caption-sm text-primary">27%</span>
+</div>
+<div class="flex items-baseline justify-between mb-2">
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Memorize 3 Juz</h3>
+<span class="font-caption text-caption text-on-surface-variant">0.8 / 3 Juz</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 27%;"></div>
+</div>
+</div>
+</section>
+<!-- Revision Section -->
+<section class="mb-space-lg">
+<div class="flex items-center justify-between mb-3 px-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Revision</h2>
+<span class="font-caption text-caption text-on-surface-variant">Active schedule</span>
+</div>
+<div class="bg-surface-container-lowest rounded-[20px] p-4 shadow-sm space-y-3">
+<!-- Item 1 -->
+<div class="flex items-center justify-between py-1">
+<div class="min-w-0 pr-3">
+<h4 class="font-body-medium text-body-medium text-on-surface truncate">Al-Baqarah · Pages 18–21</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Last reviewed 4 days ago</p>
+</div>
+<span class="shrink-0 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-strong text-caption-sm">
+          Review today
+        </span>
+</div>
+<div class="h-[1px] bg-surface-container w-full"></div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between py-1">
+<div class="min-w-0 pr-3">
+<h4 class="font-body-medium text-body-medium text-on-surface truncate">Juz Amma</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Last reviewed 2 days ago</p>
+</div>
+<span class="shrink-0 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-strong text-caption-sm">
+          Strong
+        </span>
+</div>
+</div>
+</section>
+<!-- Consistency Matrix -->
+<section class="mb-space-lg">
+<div class="bg-surface-container-lowest rounded-[20px] p-5 shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<h2 class="font-headline-3 text-headline-3 text-on-surface">Consistency</h2>
+<span class="font-label-strong text-caption text-primary">25 of last 30 days</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mb-4">Steady forward movement over rigid streaks.</p>
+<!-- Dot Matrix (14 days representation) -->
+<div class="flex items-center justify-between gap-1 py-2 px-1 bg-surface-container-low rounded-xl mb-3">
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">M</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">T</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">W</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">T</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">F</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">S</span>
+<span class="w-3.5 h-3.5 rounded-full bg-surface-container-highest"></span>
+</div>
+<div class="flex flex-col items-center gap-1.5">
+<span class="font-caption-sm text-caption-sm text-tertiary">S</span>
+<span class="w-3.5 h-3.5 rounded-full bg-primary"></span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">spa</span>
+<span class="font-caption text-caption">Consistency is building. You returned after missing one day.</span>
+</div>
+</div>
+</section>
+<!-- This Week Summary -->
+<section class="mb-space-lg">
+<h2 class="font-headline-3 text-headline-3 text-on-surface mb-3 px-1">This week</h2>
+<div class="grid grid-cols-3 gap-2.5">
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 flex flex-col justify-between shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant">Read</span>
+<div class="mt-2">
+<span class="font-headline-3 text-headline-3 text-on-surface block">38</span>
+<span class="font-caption-sm text-caption-sm text-tertiary">pages</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 flex flex-col justify-between shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant">Memorized</span>
+<div class="mt-2">
+<span class="font-headline-3 text-headline-3 text-on-surface block">1¼</span>
+<span class="font-caption-sm text-caption-sm text-tertiary">pages</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-3.5 flex flex-col justify-between shadow-sm">
+<span class="font-caption text-caption text-on-surface-variant">Revised</span>
+<div class="mt-2">
+<span class="font-headline-3 text-headline-3 text-on-surface block">65</span>
+<span class="font-caption-sm text-caption-sm text-tertiary">minutes</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="mb-space-md">
+<h2 class="font-headline-3 text-headline-3 text-on-surface mb-3 px-1">Recent activity</h2>
+<div class="bg-surface-container-lowest rounded-[20px] p-4 shadow-sm space-y-3.5">
+<!-- Item 1 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+</div>
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface">Read 6 pages</h4>
+<span class="font-caption text-caption text-on-surface-variant">Today · 8:30 AM</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-primary font-label-strong text-caption-sm">
+          Reading
+        </span>
+</div>
+<div class="h-[1px] bg-surface-container w-full"></div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface">Memorized ¼ page</h4>
+<span class="font-caption text-caption text-on-surface-variant">Today · 6:45 AM</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-primary font-label-strong text-caption-sm">
+          Memorization
+        </span>
+</div>
+<div class="h-[1px] bg-surface-container w-full"></div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+</div>
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface">Revised 10 min</h4>
+<span class="font-caption text-caption text-on-surface-variant">Yesterday · 9:15 PM</span>
+</div>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-low text-primary font-label-strong text-caption-sm">
+          Revision
+        </span>
+</div>
+</div>
+</section>
+<!-- Interactive Quick Log Bottom Sheet Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm transition-opacity duration-200 hidden opacity-0 flex flex-col justify-end" id="quick-log-modal">
+<div class="bg-surface-container-lowest w-full rounded-t-[28px] p-6 shadow-2xl transform transition-transform duration-300 translate-y-full max-w-md mx-auto" id="modal-content">
+<!-- Handle -->
+<div class="w-10 h-1 bg-surface-container-highest rounded-full mx-auto mb-5"></div>
+<!-- Header -->
+<div class="flex items-center justify-between mb-5">
+<h3 class="font-headline-2 text-headline-2 text-on-surface">Log progress</h3>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors" id="close-sheet-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Segmented Control -->
+<div class="bg-surface-container p-1 rounded-xl flex items-center mb-5" role="tablist">
+<button class="tab-btn flex-1 py-1.5 text-center rounded-lg font-label-strong text-caption bg-surface-container-lowest text-on-surface shadow-sm transition-all" data-type="Reading" type="button">
+          Reading
+        </button>
+<button class="tab-btn flex-1 py-1.5 text-center rounded-lg font-label-strong text-caption text-on-surface-variant transition-all" data-type="Memorization" type="button">
+          Memorization
+        </button>
+<button class="tab-btn flex-1 py-1.5 text-center rounded-lg font-label-strong text-caption text-on-surface-variant transition-all" data-type="Revision" type="button">
+          Revision
+        </button>
+</div>
+<!-- Form Inputs -->
+<div class="space-y-4 mb-6">
+<div>
+<label class="block font-label-strong text-caption text-on-surface mb-1.5">Surah</label>
+<div class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-body-medium font-body-medium text-on-surface flex items-center justify-between">
+<span>Al-Baqarah (Surah 2)</span>
+<span class="material-symbols-outlined text-[20px] text-tertiary">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-label-strong text-caption text-on-surface mb-1.5" id="metric-label">Pages read</label>
+<div class="flex items-center gap-3">
+<button class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-on-surface active:scale-95" id="btn-decrement" type="button">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<div class="flex-1 bg-surface-container-low rounded-xl h-12 flex items-center justify-center font-headline-3 text-headline-3 text-on-surface">
+<span id="metric-value">6</span>
+</div>
+<button class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-on-surface active:scale-95" id="btn-increment" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Confirm Action Button -->
+<button class="w-full h-12 rounded-xl bg-primary text-on-primary font-label-strong text-body-medium flex items-center justify-center gap-2 hover:bg-primary-container active:scale-[0.98] transition-all shadow-sm" id="save-reading-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">check</span>
+        Save reading
+      </button>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const modal = document.getElementById('quick-log-modal');
+    const modalContent = document.getElementById('modal-content');
+    const openBtn = document.getElementById('open-sheet-btn');
+    const closeBtn = document.getElementById('close-sheet-btn');
+    const saveBtn = document.getElementById('save-reading-btn');
+    const tabs = document.querySelectorAll('.tab-btn');
+    const metricVal = document.getElementById('metric-value');
+    const metricLabel = document.getElementById('metric-label');
+    const btnInc = document.getElementById('btn-increment');
+    const btnDec = document.getElementById('btn-decrement');
+
+    let count = 6;
+    let currentType = 'Reading';
+
+    function openModal() {
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        modal.classList.remove('opacity-0');
+        modalContent.classList.remove('translate-y-full');
+      });
+    }
+
+    function closeModal() {
+      modal.classList.add('opacity-0');
+      modalContent.classList.add('translate-y-full');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    saveBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+          t.classList.add('text-on-surface-variant');
+        });
+        tab.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+        tab.classList.remove('text-on-surface-variant');
+
+        currentType = tab.getAttribute('data-type');
+        if (currentType === 'Reading') {
+          metricLabel.textContent = 'Pages read';
+          count = 6;
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span> Save reading';
+        } else if (currentType === 'Memorization') {
+          metricLabel.textContent = 'Pages memorized';
+          count = 1;
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span> Save memorization';
+        } else {
+          metricLabel.textContent = 'Minutes revised';
+          count = 10;
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span> Save revision';
+        }
+        metricVal.textContent = count;
+      });
+    });
+
+    btnInc.addEventListener('click', () => {
+      count++;
+      metricVal.textContent = count;
+    });
+
+    btnDec.addEventListener('click', () => {
+      if (count > 1) {
+        count--;
+        metricVal.textContent = count;
+      }
+    });
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-2px_12px_rgba(20,27,43,0.04)] pb-safe" data-active-classes="text-primary font-label-strong"><div class="h-[76px] px-margin flex items-center justify-between max-w-md mx-auto relative"><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="today" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-caption text-caption">Today</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="progress" href="#"><span class="material-symbols-outlined text-[24px]">monitoring</span><span class="font-caption text-caption">Progress</span></a><div class="flex items-center justify-center -translate-y-2"><a aria-label="Quick Add" class="w-[50px] h-[50px] rounded-full bg-primary flex items-center justify-center text-on-primary shadow-[0_8px_20px_-2px_rgba(169,49,0,0.35)] transition-transform duration-150 active:scale-90" data-path="quick-add" href="#"><span class="material-symbols-outlined text-[28px]">add</span></a></div><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="goals" href="#"><span class="material-symbols-outlined text-[24px]">adjust</span><span class="font-caption text-caption">Goals</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] gap-1 text-tertiary transition-colors duration-200 active:scale-95" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-caption text-caption">Profile</span></a></div></nav></body></html>

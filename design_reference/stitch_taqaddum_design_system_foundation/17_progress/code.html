@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary-container": "#d24209", "primary-fixed-dim": "#ffb59e", "on-error": "#ffffff", "tertiary-fixed-dim": "#d1c4be", "inverse-on-surface": "#edf0ff", "outline-variant": "#e3bfb4", "on-secondary-fixed": "#3a0a00", "on-tertiary-fixed-variant": "#4e4541", "outline": "#8e7067", "surface-container-low": "#f1f3ff", "surface-tint": "#ad3300", "on-tertiary-fixed": "#211a17", "on-tertiary": "#ffffff", "tertiary-fixed": "#eee0da", "on-primary": "#ffffff", "inverse-primary": "#ffb59e", "error": "#ba1a1a", "surface-container-high": "#e1e8fd", "secondary-fixed-dim": "#ffb59f", "surface": "#f9f9ff", "surface-container-highest": "#dce2f7", "secondary-fixed": "#ffdbd1", "tertiary": "#645a55", "tertiary-container": "#7d726e", "surface-container-lowest": "#ffffff", "primary": "#a93100", "surface-dim": "#d3daef", "surface-container": "#e9edff", "background": "#f9f9ff", "primary-fixed": "#ffdbd0", "on-secondary-container": "#5f1600", "on-tertiary-container": "#fffbff", "on-error-container": "#93000a", "on-primary-container": "#fffbff", "secondary": "#ae3203", "surface-bright": "#f9f9ff", "error-container": "#ffdad6", "on-secondary": "#ffffff", "on-primary-fixed-variant": "#842500", "surface-variant": "#dce2f7", "on-primary-fixed": "#3a0b00", "on-background": "#141b2b", "on-surface-variant": "#5a4139", "secondary-container": "#fe6a3c", "on-secondary-fixed-variant": "#862300", "inverse-surface": "#293040", "on-surface": "#141b2b" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2rem", "gutter": "0.75rem", "space-md": "1rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "margin": "1.25rem", "space-sm": "0.5rem" }, fontFamily: { "caption-sm": ["Inter"], "headline-2": ["Inter"], "body-medium": ["Inter"], "body-large": ["Inter"], "display": ["Inter"], "headline-3": ["Inter"], "label-strong": ["Inter"], "headline-1": ["Inter"], "body": ["Inter"], "caption": ["Inter"] }, fontSize: { "caption-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }], "headline-2": ["22px", { lineHeight: "28px", fontWeight: "600" }], "body-medium": ["14px", { lineHeight: "20px", fontWeight: "500" }], "body-large": ["16px", { lineHeight: "24px", fontWeight: "400" }], "display": ["32px", { lineHeight: "38px", fontWeight: "700" }], "headline-3": ["18px", { lineHeight: "24px", fontWeight: "600" }], "label-strong": ["12px", { lineHeight: "16px", fontWeight: "600" }], "headline-1": ["28px", { lineHeight: "34px", fontWeight: "700" }], "body": ["14px", { lineHeight: "20px", fontWeight: "400" }], "caption": ["12px", { lineHeight: "16px", fontWeight: "400" }] } } } };</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#f9f9ff;color:#141b2b;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body text-body text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><h1 class="font-headline-2 text-headline-2 text-on-surface tracking-tight">Progress</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Select Period" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">calendar_today</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full px-margin pt-16 pb-24 bg-surface"><div class="flex flex-col w-full pb-8 space-y-6">
+<!-- 1. Header & Period Selector -->
+<section class="flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<h2 class="font-headline-1 text-headline-1 text-on-surface tracking-tight">Progress</h2>
+<p class="font-body text-body text-on-surface-variant mt-0.5">Consistency, patterns, and long-term direction.</p>
+</div>
+<button aria-label="View history log" class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+</div>
+<!-- Segmented Control -->
+<div class="p-1 bg-surface-container rounded-xl flex items-center shadow-inner">
+<button class="flex-1 py-1.5 text-center font-caption-sm text-caption-sm text-on-surface-variant rounded-lg hover:text-on-surface transition-all">
+        Week
+      </button>
+<button class="flex-1 py-1.5 text-center font-label-strong text-label-strong text-on-surface bg-surface-container-lowest rounded-lg shadow-sm transition-all">
+        Month
+      </button>
+<button class="flex-1 py-1.5 text-center font-caption-sm text-caption-sm text-on-surface-variant rounded-lg hover:text-on-surface transition-all">
+        Year
+      </button>
+</div>
+</section>
+<!-- 2. Overall Progress Hero Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-caption-sm text-caption-sm px-2.5 py-1 bg-surface-container rounded-full text-on-surface-variant tracking-wide font-medium">
+        This month
+      </span>
+<div class="inline-flex items-center gap-1 px-2.5 py-0.5 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-[14px] text-primary">trending_up</span>
+<span class="font-caption-sm text-caption-sm text-on-surface font-semibold">+6% vs last month</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-baseline justify-between">
+<span class="font-headline-3 text-headline-3 text-on-surface">Overall consistency</span>
+<span class="font-display text-display text-primary tracking-tight">78%</span>
+</div>
+<!-- Track -->
+<div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 78%;"></div>
+</div>
+</div>
+<p class="font-body text-body text-on-surface-variant pt-1 leading-relaxed">
+<span class="font-label-strong text-label-strong text-on-surface font-semibold">24 of 30 days</span> had meaningful progress across your focus areas.
+    </p>
+</section>
+<!-- 3. Progress Over Time (Minimal SVG Line Chart) -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Progress over time</h3>
+<p class="font-caption text-caption text-on-surface-variant">Weekly trajectory this month</p>
+</div>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant bg-surface-container-low px-2 py-1 rounded-md">October</span>
+</div>
+<div class="w-full h-44 relative pt-3">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 320 120">
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#a93100" stop-opacity="0.22"></stop>
+<stop offset="100%" stop-color="#a93100" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Guides -->
+<line stroke="#dce2f7" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="310" y1="20" y2="20"></line>
+<line stroke="#dce2f7" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="310" y1="56" y2="56"></line>
+<line stroke="#dce2f7" stroke-dasharray="3 3" stroke-width="1" x1="20" x2="310" y1="92" y2="92"></line>
+<!-- Values labels on Y axis -->
+<text class="fill-[#8e7067] font-caption-sm text-[9px]" x="6" y="23">100%</text>
+<text class="fill-[#8e7067] font-caption-sm text-[9px]" x="12" y="59">75%</text>
+<text class="fill-[#8e7067] font-caption-sm text-[9px]" x="12" y="95">50%</text>
+<!-- Area fill under line -->
+<!-- Points: W1(40, 68% -> y=62), W2(120, 72% -> y=57), W3(200, 75% -> y=52), W4(280, 78% -> y=47) -->
+<path d="M 40 62 C 80 61, 80 57, 120 57 C 160 57, 160 52, 200 52 C 240 52, 240 47, 280 47 L 280 110 L 40 110 Z" fill="url(#chartGradient)"></path>
+<!-- Line stroke -->
+<path d="M 40 62 C 80 61, 80 57, 120 57 C 160 57, 160 52, 200 52 C 240 52, 240 47, 280 47" fill="none" stroke="#a93100" stroke-linecap="round" stroke-width="3"></path>
+<!-- Data points -->
+<circle cx="40" cy="62" fill="#ffffff" r="3.5" stroke="#a93100" stroke-width="2"></circle>
+<circle cx="120" cy="57" fill="#ffffff" r="3.5" stroke="#a93100" stroke-width="2"></circle>
+<circle cx="200" cy="52" fill="#ffffff" r="3.5" stroke="#a93100" stroke-width="2"></circle>
+<!-- Current point active pulse -->
+<circle cx="280" cy="47" fill="#a93100" fill-opacity="0.18" r="7"></circle>
+<circle cx="280" cy="47" fill="#a93100" r="4.5"></circle>
+</svg>
+<!-- Active Tooltip Callout -->
+<div class="absolute right-5 top-1 px-2.5 py-1 bg-inverse-surface rounded-lg shadow-md flex items-center gap-1.5 pointer-events-none">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-caption-sm text-caption-sm text-inverse-on-surface font-semibold">78% · Current</span>
+</div>
+<!-- X-axis labels -->
+<div class="flex justify-between px-7 pt-2 font-caption text-caption text-on-surface-variant">
+<span>W1</span>
+<span>W2</span>
+<span>W3</span>
+<span class="font-semibold text-primary">W4</span>
+</div>
+</div>
+</section>
+<!-- 4. Life Areas Breakdown -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Life areas</h3>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">6 tracked categories</span>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm space-y-4">
+<!-- Quran -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-[#10B981]">
+<span class="material-symbols-outlined text-[17px]">auto_stories</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Quran</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">+4%</span>
+<span class="font-label-strong text-label-strong text-on-surface">86%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#10B981] rounded-full" style="width: 86%;"></div>
+</div>
+</div>
+<!-- Work -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[17px]">work</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Work</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">+5%</span>
+<span class="font-label-strong text-label-strong text-on-surface">79%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 79%;"></div>
+</div>
+</div>
+<!-- Finance -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-[#2563EB]">
+<span class="material-symbols-outlined text-[17px]">account_balance_wallet</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Finance</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">+2%</span>
+<span class="font-label-strong text-label-strong text-on-surface">72%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#2563EB] rounded-full" style="width: 72%;"></div>
+</div>
+</div>
+<!-- Health -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-[#E11D48]">
+<span class="material-symbols-outlined text-[17px]">directions_run</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-body-medium text-body-medium text-on-surface">Health</span>
+<span class="font-caption-sm text-caption-sm px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">Needs focus</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-tertiary font-medium">-4%</span>
+<span class="font-label-strong text-label-strong text-on-surface">58%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#E11D48] rounded-full" style="width: 58%;"></div>
+</div>
+</div>
+<!-- Learning -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-[#7C3AED]">
+<span class="material-symbols-outlined text-[17px]">school</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Learning</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">+7%</span>
+<span class="font-label-strong text-label-strong text-on-surface">68%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#7C3AED] rounded-full" style="width: 68%;"></div>
+</div>
+</div>
+<!-- Personal -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-[#D97706]">
+<span class="material-symbols-outlined text-[17px]">family_restroom</span>
+</div>
+<span class="font-body-medium text-body-medium text-on-surface">Personal</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">+3%</span>
+<span class="font-label-strong text-label-strong text-on-surface">81%</span>
+</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#D97706] rounded-full" style="width: 81%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Strongest Area & Needs Attention -->
+<section class="grid grid-cols-2 gap-3">
+<!-- Card 1: Strongest -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col justify-between space-y-2">
+<div class="space-y-1.5">
+<div class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-[#10B981]">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant block">Strongest rhythm</span>
+<h4 class="font-headline-3 text-headline-3 text-on-surface">Quran</h4>
+</div>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+        86% consistency with steady daily recitation and memorization.
+      </p>
+</div>
+<!-- Card 2: Needs attention -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col justify-between space-y-2">
+<div class="space-y-1.5">
+<div class="w-6 h-6 rounded-md bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">adjust</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant block">Needs attention</span>
+<h4 class="font-headline-3 text-headline-3 text-on-surface">Health</h4>
+</div>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+        58% · 2 of 6 planned workouts completed this month.
+      </p>
+</div>
+</section>
+<!-- 6. Consistency Section (Mini Heatmap) -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Consistency</h3>
+<p class="font-caption text-caption text-on-surface-variant">24 meaningful progress days in October</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">insights</span>
+</div>
+</div>
+<!-- Weekday headers -->
+<div class="grid grid-cols-7 gap-2 text-center">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">M</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">T</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">W</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">T</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">F</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">S</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant font-medium">S</span>
+</div>
+<!-- Calendar heatmap (30 days) -->
+<div class="grid grid-cols-7 gap-2">
+<!-- Week 1 -->
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">1</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">2</div>
+<div class="aspect-square rounded-lg bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-caption-sm text-[10px]">3</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">4</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">5</div>
+<div class="aspect-square rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant font-caption-sm text-[10px]">6</div>
+<div class="aspect-square rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary font-caption-sm text-[10px]">7</div>
+<!-- Week 2 -->
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">8</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">9</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">10</div>
+<div class="aspect-square rounded-lg bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-caption-sm text-[10px]">11</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">12</div>
+<div class="aspect-square rounded-lg bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-caption-sm text-[10px]">13</div>
+<div class="aspect-square rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant font-caption-sm text-[10px]">14</div>
+<!-- Week 3 -->
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">15</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">16</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">17</div>
+<div class="aspect-square rounded-lg bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-caption-sm text-[10px]">18</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">19</div>
+<div class="aspect-square rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant font-caption-sm text-[10px]">20</div>
+<div class="aspect-square rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary font-caption-sm text-[10px]">21</div>
+<!-- Week 4 -->
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">22</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">23</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">24</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">25</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">26</div>
+<div class="aspect-square rounded-lg bg-primary-fixed-dim flex items-center justify-center text-on-primary-fixed font-caption-sm text-[10px]">27</div>
+<div class="aspect-square rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant font-caption-sm text-[10px]">28</div>
+<!-- Week 5 -->
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">29</div>
+<div class="aspect-square rounded-lg bg-primary flex items-center justify-center text-on-primary font-caption-sm text-[10px]">30</div>
+<div class="aspect-square rounded-lg opacity-25 flex items-center justify-center text-on-surface-variant font-caption-sm text-[10px]">31</div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</div>
+<!-- Legend -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Strong</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-fixed-dim"></span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Steady</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-container"></span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Light</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-container-low"></span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Rest</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<p class="font-caption text-caption text-on-surface">Your most consistent days are <span class="font-semibold">Monday</span> and <span class="font-semibold">Tuesday</span>.</p>
+</div>
+</section>
+<!-- 7. Active Goals Progress Snapshot -->
+<section class="space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Active goals</h3>
+<a class="font-caption-sm text-caption-sm text-primary font-semibold flex items-center gap-0.5 hover:underline" href="#">
+        View all goals
+        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm space-y-4">
+<!-- Goal 1 -->
+<div class="space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface font-semibold">Grow Skewes revenue</h4>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption-sm text-caption-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Work</span>
+<span class="font-caption text-caption text-on-surface-variant">1,850,000 / 6,000,000 DZD</span>
+</div>
+</div>
+<span class="font-label-strong text-label-strong text-primary">31%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 31%;"></div>
+</div>
+</div>
+<!-- Goal 2 -->
+<div class="space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface font-semibold">Memorize 3 Juz</h4>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption-sm text-caption-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Quran</span>
+<span class="font-caption text-caption text-on-surface-variant">0.8 / 3 Juz</span>
+</div>
+</div>
+<span class="font-label-strong text-label-strong text-[#10B981]">27%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#10B981] rounded-full" style="width: 27%;"></div>
+</div>
+</div>
+<!-- Goal 3 -->
+<div class="space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="font-body-medium text-body-medium text-on-surface font-semibold">Save 600,000 DZD</h4>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption-sm text-caption-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Finance</span>
+<span class="font-caption text-caption text-on-surface-variant">170k / 600k DZD</span>
+</div>
+</div>
+<span class="font-label-strong text-label-strong text-[#2563EB]">28%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#2563EB] rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Monthly & Weekly Review Entry Points -->
+<section class="space-y-2.5">
+<div class="bg-surface-container-low rounded-2xl p-5 shadow-sm space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[22px]">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-headline-3 text-headline-3 text-on-surface">Monthly review ready</h4>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">October summary</span>
+</div>
+</div>
+<p class="font-body text-body text-on-surface-variant leading-relaxed">
+        See comprehensive patterns, key accomplishments, and areas to adjust for November.
+      </p>
+<button class="w-full py-2.5 px-4 bg-primary text-on-primary rounded-xl font-label-strong text-label-strong flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-transform">
+<span>Review this month</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Secondary link -->
+<a class="block text-center py-2 font-caption text-caption text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+      Latest weekly review (Week 4 · 74%) →
+    </a>
+</section>
+</div>
+<script>
+  // Ensure the bottom nav highlights the Progress item
+  document.addEventListener('DOMContentLoaded', () => {
+    const progressTab = document.querySelector('nav a[data-path="progress"]');
+    if (progressTab) {
+      // Clear any default active state on Today
+      const todayTab = document.querySelector('nav a[data-path="today"]');
+      if (todayTab) {
+        todayTab.classList.remove('text-primary', 'font-semibold');
+        todayTab.classList.add('text-on-surface-variant');
+      }
+      progressTab.classList.remove('text-on-surface-variant');
+      progressTab.classList.add('text-primary', 'font-semibold');
+    }
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex items-center justify-around h-16 px-gutter"><a class="flex flex-col items-center justify-center min-w-[56px] h-11 gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="today" href="#"><span class="material-symbols-outlined text-[24px]">check_circle</span><span class="font-caption-sm text-caption-sm">Today</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-11 gap-space-xs transition-colors text-primary font-semibold" data-path="progress" href="#"><span class="material-symbols-outlined text-[24px]">bar_chart</span><span class="font-caption-sm text-caption-sm">Progress</span></a><div class="flex items-center justify-center min-w-[56px] h-11 -mt-5"><a aria-label="Add" class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-[0_8px_20px_-2px_rgba(169,49,0,0.35)] active:scale-95 transition-transform" data-path="quick-add" href="#"><span class="material-symbols-outlined text-[26px]">add</span></a></div><a class="flex flex-col items-center justify-center min-w-[56px] h-11 gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="goals" href="#"><span class="material-symbols-outlined text-[24px]">track_changes</span><span class="font-caption-sm text-caption-sm">Goals</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-11 gap-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">account_circle</span><span class="font-caption-sm text-caption-sm">Profile</span></a></div></nav></body></html>

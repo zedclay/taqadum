@@ -1,0 +1,695 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Taqaddum (تقدّم) — Splash</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#F85D27',
+              navy: '#121826',
+            },
+            canvas: '#F9FAFB',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            arabic: ['"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+          },
+          screens: {
+            'mobile': '390px',
+          }
+        }
+      }
+    };
+  </script>
+<!-- BEGIN: Custom Animation Styles -->
+<style data-purpose="splash-animations">
+    @keyframes logoEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes textEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes indeterminateProgress {
+      0% {
+        transform: translateX(-100%);
+      }
+      50% {
+        transform: translateX(10%);
+      }
+      100% {
+        transform: translateX(250%);
+      }
+    }
+
+    .animate-logo-entrance {
+      animation: logoEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-text-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+      opacity: 0;
+    }
+
+    .animate-indicator-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      opacity: 0;
+    }
+
+    .progress-bar-slider {
+      animation: indeterminateProgress 1.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  </style>
+<!-- END: Custom Animation Styles -->
+<!-- BEGIN: Base Layout Styles -->
+<style data-purpose="device-simulation">
+    /* Global canvas centering for display in previewers */
+    body {
+      background-color: #ECEEF2;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+<!-- END: Base Layout Styles -->
+<meta content="web_standard" name="shell-type"></head>
+<body class="flex items-center justify-center min-h-screen p-0 sm:p-4 select-none">
+<!-- BEGIN: MobileDeviceFrame -->
+<!-- Constrained strictly to iOS standard dimensions: 390px x 844px -->
+<main class="relative w-[390px] h-[844px] bg-canvas overflow-hidden flex flex-col justify-between shadow-2xl sm:rounded-[50px] border border-slate-200/80"><div class="flex flex-col w-full h-full relative font-sans text-on-surface select-none">
+<!-- Interactive State Controller & Step Switcher Wrapper -->
+<div class="flex flex-col h-full justify-between" data-current-step="1" data-lang="en" id="onboarding-root">
+<!-- Top System & Onboarding Navigation Bar -->
+<header class="flex flex-col px-5 pt-3 pb-2 z-20 shrink-0"><!-- iOS Status Bar Simulation -->
+<div class="flex items-center justify-between text-body-medium font-semibold text-on-surface tracking-tight mb-3 h-6">
+<span class="text-caption font-semibold">9:41</span>
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[15px]">wifi</span>
+<span class="material-symbols-outlined text-[17px]">battery_full</span>
+</div>
+</div>
+<!-- Progress Row: Step Indicator & Skip -->
+<div class="flex items-center justify-between mb-2.5">
+<span class="text-[13px] font-medium text-[#667085]">Step 1 of 4</span>
+<button class="text-[13px] font-medium text-[#667085] hover:text-[#111827] transition-colors" onclick="setStep(4)" type="button">Skip</button>
+</div>
+<!-- Sleek Progress Bar (Track: #E4E7EC, Active fill: #F85D27 at 25%) -->
+<div class="w-full h-1.5 rounded-full bg-[#E4E7EC] overflow-hidden">
+<div class="h-full rounded-full bg-[#F85D27] w-1/4 transition-all duration-300"></div>
+</div></header>
+<!-- Main Content Container with Step Card Views -->
+<div class="flex-1 overflow-y-auto px-5 pb-24 pt-1">
+<!-- ================= STEP 1: FOCUS AREAS ================= -->
+<section class="step-view flex flex-col transition-opacity duration-200" id="step-1-view"><div class="mb-5 mt-2">
+<h1 class="text-[24px] font-semibold text-[#111827] tracking-tight leading-tight mb-1.5">
+What would you like<br>to improve?
+</h1>
+<p class="text-[14px] text-[#667085]">
+Choose what matters most right now.
+</p>
+</div>
+<!-- 2-Column Grid (6 Cards, 16px radius, #F9FAFB context) -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1: Quran & Faith -->
+<button class="focus-card is-selected text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#FFF4ED] flex items-center justify-center text-[#F85D27]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+<div class="check-badge w-5 h-5 rounded-full bg-[#F85D27] text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Quran &amp; Faith</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Consistency</p>
+</div>
+</button>
+<!-- Card 2: Work -->
+<button class="focus-card is-selected text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#FFF4ED] flex items-center justify-center text-[#F85D27]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+<div class="check-badge w-5 h-5 rounded-full bg-[#F85D27] text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Work</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Stay focused</p>
+</div>
+</button>
+<!-- Card 3: Money -->
+<button class="focus-card text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#F2F4F7] flex items-center justify-center text-[#344054]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div class="check-badge hidden w-5 h-5 rounded-full bg-[#F85D27] text-white items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Money</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Track &amp; save</p>
+</div>
+</button>
+<!-- Card 4: Health -->
+<button class="focus-card is-selected text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#FFF4ED] flex items-center justify-center text-[#F85D27]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+<div class="check-badge w-5 h-5 rounded-full bg-[#F85D27] text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Health</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Feel stronger</p>
+</div>
+</button>
+<!-- Card 5: Learning -->
+<button class="focus-card text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#F2F4F7] flex items-center justify-center text-[#344054]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<div class="check-badge hidden w-5 h-5 rounded-full bg-[#F85D27] text-white items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Learning</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Keep growing</p>
+</div>
+</button>
+<!-- Card 6: Personal Life -->
+<button class="focus-card text-left p-4 rounded-2xl bg-white border border-[#E5E7EB] shadow-sm flex flex-col justify-between h-[126px] relative group transition-all duration-150" onclick="toggleSelectCard(this)" type="button">
+<div class="flex items-center justify-between w-full">
+<div class="w-9 h-9 rounded-xl bg-[#F2F4F7] flex items-center justify-center text-[#344054]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">diversity_3</span>
+</div>
+<div class="check-badge hidden w-5 h-5 rounded-full bg-[#F85D27] text-white items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">check</span>
+</div>
+</div>
+<div>
+<h2 class="text-[14px] font-semibold text-[#111827] leading-snug">Personal Life</h2>
+<p class="text-[12px] text-[#667085] leading-normal">Find balance</p>
+</div>
+</button>
+</div></section>
+<!-- ================= STEP 2: MAIN GOALS ================= -->
+<section class="step-view hidden flex-col transition-opacity duration-200" id="step-2-view">
+<div class="mb-4">
+<h2 class="text-headline-2 font-headline-2 text-on-surface tracking-tight mb-1">
+<span class="lang-en">What are your main goals?</span>
+<span class="lang-ar hidden font-arabic">ما هي أهدافك الرئيسية؟</span>
+</h2>
+<p class="text-body-medium font-body-medium text-tertiary">
+<span class="lang-en">Select key milestones to set up your momentum.</span>
+<span class="lang-ar hidden font-arabic">حدد الأهداف الأولية لبدء تقدمك المنظم.</span>
+</p>
+</div>
+<div class="space-y-4">
+<!-- Quran Section Goals -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 mb-2.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-label-strong font-label-strong text-on-surface">
+<span class="lang-en">Quran &amp; Faith</span>
+<span class="lang-ar hidden font-arabic">القرآن والروحانية</span>
+</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="goal-chip is-active px-3 py-1.5 rounded-full text-caption font-label-strong bg-secondary-fixed text-on-secondary-fixed flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px]">done</span>
+<span class="lang-en">Read 1 Hizb daily</span>
+<span class="lang-ar hidden font-arabic">قراءة حزب يومياً</span>
+</button>
+<button class="goal-chip px-3 py-1.5 rounded-full text-caption font-body-medium bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px] opacity-0">done</span>
+<span class="lang-en">Memorize Surah Al-Kahf</span>
+<span class="lang-ar hidden font-arabic">حفظ سورة الكهف</span>
+</button>
+<button class="goal-chip px-3 py-1.5 rounded-full text-caption font-body-medium bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px] opacity-0">done</span>
+<span class="lang-en">Daily morning Adhkar</span>
+<span class="lang-ar hidden font-arabic">أذكار الصباح والمساء</span>
+</button>
+</div>
+</div>
+<!-- Work Section Goals -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 mb-2.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-strong font-label-strong text-on-surface">
+<span class="lang-en">Work &amp; Business</span>
+<span class="lang-ar hidden font-arabic">العمل والمشاريع</span>
+</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="goal-chip is-active px-3 py-1.5 rounded-full text-caption font-label-strong bg-secondary-fixed text-on-secondary-fixed flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px]">done</span>
+<span class="lang-en">4 hours deep work</span>
+<span class="lang-ar hidden font-arabic">٤ ساعات تركيز عميق</span>
+</button>
+<button class="goal-chip px-3 py-1.5 rounded-full text-caption font-body-medium bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px] opacity-0">done</span>
+<span class="lang-en">Close Q3 Roadmap</span>
+<span class="lang-ar hidden font-arabic">إغلاق خطة الربع الحالي</span>
+</button>
+</div>
+</div>
+<!-- Health Goals -->
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 mb-2.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-label-strong font-label-strong text-on-surface">
+<span class="lang-en">Health &amp; Energy</span>
+<span class="lang-ar hidden font-arabic">الصحة والنشاط</span>
+</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="goal-chip is-active px-3 py-1.5 rounded-full text-caption font-label-strong bg-secondary-fixed text-on-secondary-fixed flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px]">done</span>
+<span class="lang-en">Walk 8,000 steps</span>
+<span class="lang-ar hidden font-arabic">المشي ٨٠٠٠ خطوة</span>
+</button>
+<button class="goal-chip px-3 py-1.5 rounded-full text-caption font-body-medium bg-surface-container-low text-on-surface hover:bg-surface-container flex items-center gap-1.5 transition-all" onclick="toggleChip(this)" type="button">
+<span class="material-symbols-outlined text-[15px] opacity-0">done</span>
+<span class="lang-en">Sleep before 11 PM</span>
+<span class="lang-ar hidden font-arabic">النوم قبل الساعة ١١</span>
+</button>
+</div>
+</div>
+<!-- Custom Goal Trigger Card -->
+<button class="w-full py-3 px-4 rounded-xl bg-surface-container-low hover:bg-surface-container text-tertiary flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="text-caption font-label-strong">
+<span class="lang-en">+ Add Custom Target</span>
+<span class="lang-ar hidden font-arabic">+ إضافة هدف مخصص</span>
+</span>
+</button>
+</div>
+</section>
+<!-- ================= STEP 3: DAILY RHYTHM ================= -->
+<section class="step-view hidden flex-col transition-opacity duration-200" id="step-3-view">
+<div class="mb-4">
+<h2 class="text-headline-2 font-headline-2 text-on-surface tracking-tight mb-1">
+<span class="lang-en">How should your day feel?</span>
+<span class="lang-ar hidden font-arabic">كيف تحب أن يبدو إيقاع يومك؟</span>
+</h2>
+<p class="text-body-medium font-body-medium text-tertiary">
+<span class="lang-en">Pick your daily pace. Taqaddum adapts to your lifestyle.</span>
+<span class="lang-ar hidden font-arabic">اختر وتيرة يومك المناسبة لك دون ضغط.</span>
+</p>
+</div>
+<!-- 3 Rhythm Styles -->
+<div class="space-y-2.5 mb-5">
+<button class="rhythm-option text-left w-full p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-3 transition-all" onclick="selectRhythm(this)" type="button">
+<div class="mt-0.5 w-4 h-4 rounded-full bg-surface-container-highest flex items-center justify-center radio-dot">
+<div class="w-2 h-2 rounded-full bg-transparent inner-dot"></div>
+</div>
+<div>
+<h3 class="text-body-medium font-label-strong text-on-surface">
+<span class="lang-en">Morning Focus</span>
+<span class="lang-ar hidden font-arabic">تركيز صباحي</span>
+</h3>
+<p class="text-caption font-body text-tertiary">
+<span class="lang-en">High impact goals done early before distractions</span>
+<span class="lang-ar hidden font-arabic">إنجاز الأولويات الكبرى في الصباح الباكر</span>
+</p>
+</div>
+</button>
+<button class="rhythm-option is-active text-left w-full p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-sm flex items-start gap-3 transition-all" onclick="selectRhythm(this)" type="button">
+<div class="mt-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center radio-dot">
+<div class="w-2 h-2 rounded-full bg-on-primary inner-dot"></div>
+</div>
+<div>
+<h3 class="text-body-medium font-label-strong text-on-surface">
+<span class="lang-en">Balanced Day</span>
+<span class="lang-ar hidden font-arabic">يوم متوازن</span>
+</h3>
+<p class="text-caption font-body text-tertiary">
+<span class="lang-en">Evenly spaced commitments with restful pauses</span>
+<span class="lang-ar hidden font-arabic">توزيع هادئ للمهام مع فترات راحة كافية</span>
+</p>
+</div>
+</button>
+<button class="rhythm-option text-left w-full p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-3 transition-all" onclick="selectRhythm(this)" type="button">
+<div class="mt-0.5 w-4 h-4 rounded-full bg-surface-container-highest flex items-center justify-center radio-dot">
+<div class="w-2 h-2 rounded-full bg-transparent inner-dot"></div>
+</div>
+<div>
+<h3 class="text-body-medium font-label-strong text-on-surface">
+<span class="lang-en">Adaptive &amp; Flexible</span>
+<span class="lang-ar hidden font-arabic">مرونة وتكيف</span>
+</h3>
+<p class="text-caption font-body text-tertiary">
+<span class="lang-en">Fluid schedule that shifts cleanly with demands</span>
+<span class="lang-ar hidden font-arabic">جدول مرن يتغير بحسب مجريات يومك</span>
+</p>
+</div>
+</button>
+</div>
+<!-- Gentle Check-in Prompts -->
+<h4 class="text-label-strong font-label-strong text-on-surface mb-2">
+<span class="lang-en">Daily Checkpoints</span>
+<span class="lang-ar hidden font-arabic">محطات اليوم</span>
+</h4>
+<div class="space-y-2">
+<div class="p-3 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-primary">wb_twilight</span>
+<span class="text-body-medium font-label-strong text-on-surface">
+<span class="lang-en">Morning Intention (07:30)</span>
+<span class="lang-ar hidden font-arabic">نية الصباح (٧:٣٠ ص)</span>
+</span>
+</div>
+<button class="w-9 h-5 rounded-full bg-primary p-0.5 flex items-center justify-end transition-colors" onclick="toggleSwitch(this)" type="button">
+<span class="w-4 h-4 rounded-full bg-on-primary shadow-sm transform transition-transform"></span>
+</button>
+</div>
+<div class="p-3 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">nightlight</span>
+<span class="text-body-medium font-label-strong text-on-surface">
+<span class="lang-en">Evening Reflection (21:30)</span>
+<span class="lang-ar hidden font-arabic">مراجعة المساء (٩:٣٠ م)</span>
+</span>
+</div>
+<button class="w-9 h-5 rounded-full bg-primary p-0.5 flex items-center justify-end transition-colors" onclick="toggleSwitch(this)" type="button">
+<span class="w-4 h-4 rounded-full bg-on-primary shadow-sm transform transition-transform"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- ================= STEP 4: READY & SUMMARY ================= -->
+<section class="step-view hidden flex-col transition-opacity duration-200" id="step-4-view">
+<div class="mb-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-fixed text-primary flex items-center justify-center mb-2.5 shadow-sm">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<h2 class="text-headline-2 font-headline-2 text-on-surface tracking-tight mb-1">
+<span class="lang-en">You're ready to begin</span>
+<span class="lang-ar hidden font-arabic">أنت جاهز لخطوتك الأولى</span>
+</h2>
+<p class="text-body-medium font-body-medium text-tertiary">
+<span class="lang-en">Your daily system is set to connect habits to purpose.</span>
+<span class="lang-ar hidden font-arabic">تم ضبط نظامك اليومي لربط أفعالك بأهدافك الكبرى.</span>
+</p>
+</div>
+<!-- Overview Bento Card -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm mb-4 space-y-3.5">
+<!-- Focus Tags Row -->
+<div>
+<span class="text-caption-sm font-label-strong text-tertiary uppercase tracking-wider block mb-1.5">
+<span class="lang-en">Focus Areas</span>
+<span class="lang-ar hidden font-arabic">المسارات النشطة</span>
+</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2.5 py-1 rounded-full text-caption-sm font-label-strong bg-surface-container text-on-surface flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="lang-en">Quran</span>
+<span class="lang-ar hidden font-arabic">القرآن</span>
+</span>
+<span class="px-2.5 py-1 rounded-full text-caption-sm font-label-strong bg-surface-container-high text-on-surface flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="lang-en">Work</span>
+<span class="lang-ar hidden font-arabic">العمل</span>
+</span>
+<span class="px-2.5 py-1 rounded-full text-caption-sm font-label-strong bg-error-container text-on-error-container flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="lang-en">Health</span>
+<span class="lang-ar hidden font-arabic">الصحة</span>
+</span>
+</div>
+</div>
+<!-- Starter Checklist -->
+<div>
+<span class="text-caption-sm font-label-strong text-tertiary uppercase tracking-wider block mb-1.5">
+<span class="lang-en">First Day Targets</span>
+<span class="lang-ar hidden font-arabic">أهداف اليوم الأول</span>
+</span>
+<div class="space-y-1.5">
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span class="text-caption font-body-medium">
+<span class="lang-en">Read 1 Hizb of Quran</span>
+<span class="lang-ar hidden font-arabic">قراءة حزب من القرآن الكريم</span>
+</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span class="text-caption font-body-medium">
+<span class="lang-en">4h uninterrupted focused session</span>
+<span class="lang-ar hidden font-arabic">٤ ساعات تركيز وإنتاجية</span>
+</span>
+</div>
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-error">check_circle</span>
+<span class="text-caption font-body-medium">
+<span class="lang-en">Reach 8,000 steps target</span>
+<span class="lang-ar hidden font-arabic">تحقيق ٨٠٠٠ خطوة يومية</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Selected Pace Badge -->
+<div class="flex items-center justify-between pt-1 border-t-0 text-caption font-body">
+<span class="text-tertiary">
+<span class="lang-en">Daily Pace:</span>
+<span class="lang-ar hidden font-arabic">إيقاع اليوم:</span>
+</span>
+<span class="font-label-strong text-primary">
+<span class="lang-en">Balanced Rhythm</span>
+<span class="lang-ar hidden font-arabic">إيقاع متوازن</span>
+</span>
+</div>
+</div>
+<!-- Editorial Quote Card -->
+<div class="p-3.5 rounded-xl bg-surface-container text-center">
+<p class="text-caption font-body-medium text-tertiary italic">
+<span class="lang-en">“Small steady steps compound into a remarkable life.”</span>
+<span class="lang-ar hidden font-arabic">«قليلٌ دائم خيرٌ من كثيرٍ منقطع»</span>
+</p>
+</div>
+</section>
+</div>
+<!-- Sticky Bottom CTA Action Bar -->
+<div class="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-surface via-surface to-transparent pt-6 z-20 flex flex-col items-center">
+<button class="w-full h-[52px] rounded-[14px] bg-[#F85D27] text-white font-medium text-[16px] flex items-center justify-center gap-2 active:scale-[0.99] hover:bg-[#e04f1c] transition-all shadow-sm" id="btn-main-cta" onclick="nextStep()" type="button">
+<span id="cta-label-en" class="">Continue</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Client-side Interactive Script -->
+<script>
+    let currentStep = 1;
+    let currentLang = 'en';
+
+    function updateStepUI() {
+      // Toggle Step Views
+      for (let i = 1; i <= 4; i++) {
+        const view = document.getElementById(`step-${i}-view`);
+        const pill = document.getElementById(`pill-step-${i}`);
+        const seg = document.getElementById(`prog-seg-${i}`);
+
+        if (i === currentStep) {
+          view.classList.remove('hidden');
+          view.classList.add('flex');
+          // Active pill styling
+          pill.className = "step-pill px-2.5 py-1 rounded-full text-caption-sm font-label-strong transition-all flex items-center gap-1 bg-primary text-on-primary shadow-sm";
+        } else {
+          view.classList.add('hidden');
+          view.classList.remove('flex');
+          // Inactive pill styling
+          pill.className = "step-pill px-2.5 py-1 rounded-full text-caption-sm font-label-strong transition-all flex items-center gap-1 bg-surface-container-high text-tertiary";
+        }
+
+        // Fill progress segments
+        if (i <= currentStep) {
+          seg.className = "h-1 rounded-full transition-all duration-300 bg-primary";
+        } else {
+          seg.className = "h-1 rounded-full transition-all duration-300 bg-surface-container-highest";
+        }
+      }
+
+      // Back button visibility
+      const btnBack = document.getElementById('btn-back');
+      if (currentStep > 1) {
+        btnBack.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        btnBack.classList.add('opacity-0', 'pointer-events-none');
+      }
+
+      // Counter text
+      const counterTextEn = document.querySelector('#step-counter-text .lang-en');
+      const counterTextAr = document.querySelector('#step-counter-text .lang-ar');
+      if (counterTextEn) counterTextEn.textContent = `Step ${currentStep} of 4`;
+      if (counterTextAr) {
+        const arNumbers = ['١', '٢', '٣', '٤'];
+        counterTextAr.textContent = `الخطوة ${arNumbers[currentStep - 1]} من ٤`;
+      }
+
+      // CTA label
+      const ctaEn = document.getElementById('cta-label-en');
+      const ctaAr = document.getElementById('cta-label-ar');
+      if (currentStep === 4) {
+        ctaEn.textContent = 'Start Taqaddum';
+        ctaAr.textContent = 'ابدأ مع تقدّم';
+      } else {
+        ctaEn.textContent = 'Continue';
+        ctaAr.textContent = 'استمرار';
+      }
+    }
+
+    function setStep(stepNum) {
+      if (stepNum >= 1 && stepNum <= 4) {
+        currentStep = stepNum;
+        updateStepUI();
+      }
+    }
+
+    function nextStep() {
+      if (currentStep < 4) {
+        currentStep++;
+        updateStepUI();
+      } else {
+        // Final Action Trigger (Ready to proceed)
+        const btn = document.getElementById('btn-main-cta');
+        btn.classList.add('opacity-90');
+        setTimeout(() => {
+          btn.classList.remove('opacity-90');
+        }, 300);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateStepUI();
+      }
+    }
+
+    function toggleSelectCard(el) {
+      const isSelected = el.classList.contains('is-selected');
+      const badge = el.querySelector('.check-badge');
+      if (isSelected) {
+        el.classList.remove('is-selected');
+        el.classList.remove('bg-surface-container-lowest');
+        el.classList.add('bg-surface-container-lowest');
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+      } else {
+        el.classList.add('is-selected');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      }
+    }
+
+    function toggleChip(btn) {
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const isActive = btn.classList.contains('is-active');
+      if (isActive) {
+        btn.classList.remove('is-active', 'bg-secondary-fixed', 'text-on-secondary-fixed');
+        btn.classList.add('bg-surface-container-low', 'text-on-surface');
+        icon.classList.add('opacity-0');
+      } else {
+        btn.classList.add('is-active', 'bg-secondary-fixed', 'text-on-secondary-fixed');
+        btn.classList.remove('bg-surface-container-low', 'text-on-surface');
+        icon.classList.remove('opacity-0');
+      }
+    }
+
+    function selectRhythm(card) {
+      document.querySelectorAll('.rhythm-option').forEach(el => {
+        el.className = "rhythm-option text-left w-full p-3.5 rounded-xl bg-surface-container-lowest shadow-sm flex items-start gap-3 transition-all";
+        const dot = el.querySelector('.radio-dot');
+        const inner = el.querySelector('.inner-dot');
+        dot.className = "mt-0.5 w-4 h-4 rounded-full bg-surface-container-highest flex items-center justify-center radio-dot";
+        inner.className = "w-2 h-2 rounded-full bg-transparent inner-dot";
+      });
+
+      card.className = "rhythm-option is-active text-left w-full p-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed shadow-sm flex items-start gap-3 transition-all";
+      const dot = card.querySelector('.radio-dot');
+      const inner = card.querySelector('.inner-dot');
+      dot.className = "mt-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center radio-dot";
+      inner.className = "w-2 h-2 rounded-full bg-on-primary inner-dot";
+    }
+
+    function toggleSwitch(btn) {
+      const knob = btn.querySelector('span');
+      const isOff = btn.classList.contains('bg-surface-container-highest');
+      if (isOff) {
+        btn.classList.remove('bg-surface-container-highest', 'justify-start');
+        btn.classList.add('bg-primary', 'justify-end');
+      } else {
+        btn.classList.remove('bg-primary', 'justify-end');
+        btn.classList.add('bg-surface-container-highest', 'justify-start');
+      }
+    }
+
+    function toggleLanguage() {
+      const root = document.getElementById('onboarding-root');
+      const indicator = document.getElementById('lang-indicator');
+      const enLabels = document.querySelectorAll('.lang-en, .step-label-en');
+      const arLabels = document.querySelectorAll('.lang-ar, .step-label-ar');
+
+      if (currentLang === 'en') {
+        currentLang = 'ar';
+        root.setAttribute('dir', 'rtl');
+        root.classList.add('font-arabic');
+        root.classList.remove('font-sans');
+        indicator.textContent = 'English';
+        enLabels.forEach(el => el.classList.add('hidden'));
+        arLabels.forEach(el => el.classList.remove('hidden'));
+      } else {
+        currentLang = 'en';
+        root.removeAttribute('dir');
+        root.classList.add('font-sans');
+        root.classList.remove('font-arabic');
+        indicator.textContent = 'العربية';
+        enLabels.forEach(el => el.classList.remove('hidden'));
+        arLabels.forEach(el => el.classList.add('hidden'));
+      }
+      updateStepUI();
+    }
+  </script>
+</div></main>
+<!-- END: MobileDeviceFrame -->
+
+
+</body></html>

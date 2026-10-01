@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Taqaddum (تقدّم) — Splash</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#F85D27',
+              navy: '#121826',
+            },
+            canvas: '#F9FAFB',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            arabic: ['"IBM Plex Sans Arabic"', 'system-ui', 'sans-serif'],
+          },
+          screens: {
+            'mobile': '390px',
+          }
+        }
+      }
+    };
+  </script>
+<!-- BEGIN: Custom Animation Styles -->
+<style data-purpose="splash-animations">
+    @keyframes logoEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(4px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes textEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes indeterminateProgress {
+      0% {
+        transform: translateX(-100%);
+      }
+      50% {
+        transform: translateX(10%);
+      }
+      100% {
+        transform: translateX(250%);
+      }
+    }
+
+    .animate-logo-entrance {
+      animation: logoEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-text-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+      opacity: 0;
+    }
+
+    .animate-indicator-entrance {
+      animation: textEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      opacity: 0;
+    }
+
+    .progress-bar-slider {
+      animation: indeterminateProgress 1.75s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  </style>
+<!-- END: Custom Animation Styles -->
+<!-- BEGIN: Base Layout Styles -->
+<style data-purpose="device-simulation">
+    /* Global canvas centering for display in previewers */
+    body {
+      background-color: #ECEEF2;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+<!-- END: Base Layout Styles -->
+<meta content="web_standard" name="shell-type"/></head>
+<body class="flex items-center justify-center min-h-screen p-0 sm:p-4 select-none">
+<!-- BEGIN: MobileDeviceFrame -->
+<!-- Constrained strictly to iOS standard dimensions: 390px x 844px -->
+<main class="relative w-[390px] h-[844px] bg-canvas overflow-hidden flex flex-col justify-between shadow-2xl sm:rounded-[50px] border border-slate-200/80"><div class="flex flex-col w-full relative min-w-0 pb-6 px-margin">
+<div class="flex items-center justify-between pt-3 pb-2 text-on-surface">
+<span class="font-body-medium text-body-medium tracking-tight">9:41</span>
+<div class="flex items-center gap-1.5">
+<button class="flex items-center gap-1 bg-surface-container-low px-2 py-0.5 rounded-full text-caption-sm font-caption-sm text-on-surface-variant hover:bg-surface-container transition-colors" id="langToggleBtn" type="button">
+<span class="font-semibold text-secondary" id="langIndicatorEn">EN</span>
+<span class="text-outline-variant">|</span>
+<span class="opacity-70" id="langIndicatorAr">عربي</span>
+</button>
+<div class="flex items-center gap-1 text-on-surface pl-1">
+<span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[15px]">wifi</span>
+<span class="material-symbols-outlined text-[17px]">battery_full</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-center text-center mt-3 mb-5">
+<div class="w-32 flex justify-center mb-3">
+<img alt="Taqaddum Logo" class="w-32 h-auto object-contain select-none pointer-events-none drop-shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_wj42RJqu7_6XRX5KI4p2DTyynrRsIwRRxBi2SuJq73YYnL9Smy9aHt85-cigRvnfjYjS9JAWpbLVTGTJ8OB1pBVtyeNqKVnQFvlvWENPEGPmivgpUDKjCchG5L44qVFGeEv6fAlhveeyVKtn67NNUfdfj-e_QSTCOVrHEXTQECEN4_GreGoU0dYL8HReyngMktoMqwogoWW_emsZ62ll4mJlowBKAAht1B8gXVin4jLLMIfGCtznEBUytpfz30fgeww"/>
+</div>
+<div class="flex items-center gap-1.5 justify-center">
+<h1 class="font-headline-2 text-headline-2 text-on-surface tracking-tight" id="headerTitle">Welcome back</h1>
+<span class="font-headline-3 text-headline-3 text-primary tracking-normal opacity-90">مرحبًا</span>
+</div>
+<p class="font-body text-body text-tertiary mt-1 px-4 max-w-[320px]" id="headerSubtitle">
+      Continue building your intentional momentum.
+    </p>
+</div>
+<div class="w-full bg-surface-container-low p-1 rounded-xl mb-5 flex relative">
+<div class="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] bg-surface-container-lowest rounded-lg shadow-sm transition-all duration-300 ease-out" id="tabIndicator"></div>
+<button class="relative z-10 w-1/2 py-2 text-center font-label-strong text-label-strong text-secondary transition-colors duration-200" id="tabSignIn" type="button">
+<span id="tabSignInText">Sign In</span>
+<span class="text-[10px] opacity-70 ml-1">دخول</span>
+</button>
+<button class="relative z-10 w-1/2 py-2 text-center font-label-strong text-label-strong text-tertiary transition-colors duration-200" id="tabSignUp" type="button">
+<span id="tabSignUpText">Create Account</span>
+<span class="text-[10px] opacity-70 ml-1">تسجيل</span>
+</button>
+</div>
+<div class="relative w-full overflow-hidden">
+<form class="flex flex-col gap-3.5 w-full transition-all duration-300 ease-in-out" id="signInForm">
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-baseline">
+<label class="font-label-strong text-label-strong text-on-surface-variant" for="signinEmail">Email</label>
+<span class="font-caption-sm text-caption-sm text-outline">البريد الإلكتروني</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-[50px] bg-surface-container-lowest rounded-xl px-3.5 text-body text-on-surface placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-low shadow-sm" id="signinEmail" placeholder="name@example.com" required="" type="email"/>
+<span class="material-symbols-outlined text-outline absolute right-3 pointer-events-none text-[19px]">mail</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-baseline">
+<label class="font-label-strong text-label-strong text-on-surface-variant" for="signinPassword">Password</label>
+<span class="font-caption-sm text-caption-sm text-outline">كلمة المرور</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-[50px] bg-surface-container-lowest rounded-xl pl-3.5 pr-10 text-body text-on-surface placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-low shadow-sm" id="signinPassword" placeholder="••••••••••••" required="" type="password"/>
+<button class="absolute right-3 text-outline hover:text-on-surface-variant flex items-center justify-center p-1" id="toggleSigninPasswordBtn" type="button">
+<span class="material-symbols-outlined text-[19px]" id="signinEyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex justify-between items-center pt-0.5">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded text-secondary accent-secondary" type="checkbox"/>
+<span class="font-caption text-caption text-on-surface-variant">Remember me</span>
+</label>
+<button class="font-caption text-caption text-secondary hover:underline transition-all" id="openForgotModalBtn" type="button">
+          Forgot password? <span class="text-[11px] opacity-80">نسيت؟</span>
+</button>
+</div>
+<button class="w-full h-[50px] bg-secondary text-on-secondary rounded-xl font-body-medium text-body-large font-semibold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform mt-1" type="submit">
+<span>Sign In</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<form class="hidden flex flex-col gap-3 w-full transition-all duration-300 ease-in-out" id="signUpForm">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<label class="font-label-strong text-label-strong text-on-surface-variant" for="signupName">Full Name</label>
+<span class="font-caption-sm text-caption-sm text-outline">الاسم الكامل</span>
+</div>
+<input class="w-full h-[46px] bg-surface-container-lowest rounded-xl px-3.5 text-body text-on-surface placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-low shadow-sm" id="signupName" placeholder="Omar Al-Farouq" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<label class="font-label-strong text-label-strong text-on-surface-variant" for="signupEmail">Email</label>
+<span class="font-caption-sm text-caption-sm text-outline">البريد الإلكتروني</span>
+</div>
+<input class="w-full h-[46px] bg-surface-container-lowest rounded-xl px-3.5 text-body text-on-surface placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-low shadow-sm" id="signupEmail" placeholder="name@example.com" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<label class="font-label-strong text-label-strong text-on-surface-variant" for="signupPassword">Create Password</label>
+<span class="font-caption-sm text-caption-sm text-outline">كلمة المرور</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-[46px] bg-surface-container-lowest rounded-xl pl-3.5 pr-10 text-body text-on-surface placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-low shadow-sm" id="signupPassword" placeholder="At least 8 characters" required="" type="password"/>
+<button class="absolute right-3 text-outline hover:text-on-surface-variant flex items-center justify-center p-1" id="toggleSignupPasswordBtn" type="button">
+<span class="material-symbols-outlined text-[19px]" id="signupEyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-1.5 px-1 py-0.5 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-1.5 text-caption-sm font-caption-sm text-tertiary" id="checkLen">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>8+ chars</span>
+</div>
+<div class="flex items-center gap-1.5 text-caption-sm font-caption-sm text-tertiary" id="checkMix">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Letters &amp; numbers</span>
+</div>
+</div>
+<p class="font-caption-sm text-caption-sm text-tertiary leading-relaxed px-0.5">
+        By joining Taqaddum, you agree to our <a class="text-secondary underline" href="#">Terms</a> &amp; <a class="text-secondary underline" href="#">Privacy Policy</a>.
+      </p>
+<button class="w-full h-[50px] bg-secondary text-on-secondary rounded-xl font-body-medium text-body-large font-semibold flex items-center justify-center gap-2 shadow-sm active:scale-[0.98] transition-transform" type="submit">
+<span>Create Account</span>
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</button>
+</form>
+</div>
+<div class="flex items-center my-4 gap-3">
+<div class="h-[1px] flex-1 bg-surface-container-highest"></div>
+<span class="font-caption-sm text-caption-sm text-outline uppercase tracking-wider">or continue with</span>
+<div class="h-[1px] flex-1 bg-surface-container-highest"></div>
+</div>
+<button class="w-full h-[50px] bg-surface-container-lowest hover:bg-surface-container-low rounded-xl px-4 flex items-center justify-center gap-3 shadow-sm active:scale-[0.98] transition-all" type="button">
+<svg class="w-5 h-5 flex-shrink-0" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+</svg>
+<span class="font-body-medium text-body-medium text-on-surface">Continue with Google</span>
+<span class="font-caption-sm text-caption-sm text-outline">جوجل</span>
+</button>
+<div class="mt-4 text-center">
+<p class="font-caption text-caption text-tertiary" id="bottomSwitchText">
+<span>Don't have an account?</span>
+<button class="text-secondary font-semibold ml-1 hover:underline" id="inlineSwitchBtn" type="button">Create account</button>
+</p>
+</div>
+<div class="flex justify-center mt-5 mb-1">
+<div class="w-32 h-1 bg-surface-container-highest rounded-full"></div>
+</div>
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-[2px] hidden opacity-0 transition-opacity duration-300 z-40" id="forgotModalBackdrop"></div>
+<div class="fixed bottom-0 left-0 right-0 max-w-[390px] mx-auto bg-surface-container-lowest rounded-t-3xl p-5 shadow-2xl z-50 transform translate-y-full transition-transform duration-300 ease-out flex flex-col gap-4" id="forgotModalSheet">
+<div class="w-10 h-1 bg-surface-container-highest rounded-full mx-auto"></div>
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-headline-3 text-headline-3 text-on-surface">Reset password</h3>
+<p class="font-caption text-caption text-tertiary mt-0.5">Enter your email and we'll send a recovery link.</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1" id="closeForgotModalBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-strong text-label-strong text-on-surface-variant">Account Email</label>
+<input class="w-full h-[48px] bg-surface-container-low rounded-xl px-3.5 text-body text-on-surface focus:outline-none" placeholder="name@example.com" type="email"/>
+</div>
+<div class="flex gap-2.5 pt-1">
+<button class="w-1/3 h-[46px] rounded-xl bg-surface-container text-tertiary font-body-medium text-body-medium" id="cancelForgotBtn" type="button">
+        Cancel
+      </button>
+<button class="w-2/3 h-[46px] rounded-xl bg-secondary text-on-secondary font-body-medium text-body-medium font-semibold shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-1.5" id="sendResetBtn" type="button">
+<span>Send Link</span>
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+<div class="hidden text-center text-secondary font-caption text-caption" id="resetFeedback">
+      ✓ Reset instructions sent! Please check your inbox.
+    </div>
+</div>
+</div>
+<script>
+  (() => {
+    const tabSignIn = document.getElementById('tabSignIn');
+    const tabSignUp = document.getElementById('tabSignUp');
+    const tabIndicator = document.getElementById('tabIndicator');
+    const signInForm = document.getElementById('signInForm');
+    const signUpForm = document.getElementById('signUpForm');
+    const inlineSwitchBtn = document.getElementById('inlineSwitchBtn');
+    const headerTitle = document.getElementById('headerTitle');
+    const headerSubtitle = document.getElementById('headerSubtitle');
+    const bottomSwitchText = document.getElementById('bottomSwitchText');
+
+    let currentMode = 'signin';
+
+    function setMode(mode) {
+      currentMode = mode;
+      if (mode === 'signin') {
+        tabIndicator.style.transform = 'translateX(0%)';
+        tabSignIn.classList.remove('text-tertiary');
+        tabSignIn.classList.add('text-secondary');
+        tabSignUp.classList.remove('text-secondary');
+        tabSignUp.classList.add('text-tertiary');
+
+        signInForm.classList.remove('hidden');
+        signUpForm.classList.add('hidden');
+
+        headerTitle.textContent = 'Welcome back';
+        headerSubtitle.textContent = 'Continue building your intentional momentum.';
+        bottomSwitchText.innerHTML = 'Don\'t have an account? <button type="button" id="inlineSwitchBtnDynamic" class="text-secondary font-semibold ml-1 hover:underline">Create account</button>';
+        
+        const dynBtn = document.getElementById('inlineSwitchBtnDynamic');
+        if (dynBtn) dynBtn.addEventListener('click', () => setMode('signup'));
+      } else {
+        tabIndicator.style.transform = 'translateX(100%)';
+        tabSignUp.classList.remove('text-tertiary');
+        tabSignUp.classList.add('text-secondary');
+        tabSignIn.classList.remove('text-secondary');
+        tabSignIn.classList.add('text-tertiary');
+
+        signUpForm.classList.remove('hidden');
+        signInForm.classList.add('hidden');
+
+        headerTitle.textContent = 'Begin your journey';
+        headerSubtitle.textContent = 'Track habits, reflect daily, and sustain growth.';
+        bottomSwitchText.innerHTML = 'Already have an account? <button type="button" id="inlineSwitchBtnDynamic" class="text-secondary font-semibold ml-1 hover:underline">Sign in</button>';
+
+        const dynBtn = document.getElementById('inlineSwitchBtnDynamic');
+        if (dynBtn) dynBtn.addEventListener('click', () => setMode('signin'));
+      }
+    }
+
+    tabSignIn.addEventListener('click', () => setMode('signin'));
+    tabSignUp.addEventListener('click', () => setMode('signup'));
+    inlineSwitchBtn.addEventListener('click', () => setMode('signup'));
+
+    // Password visibility toggle helpers
+    const toggleSigninBtn = document.getElementById('toggleSigninPasswordBtn');
+    const signinPassword = document.getElementById('signinPassword');
+    const signinEyeIcon = document.getElementById('signinEyeIcon');
+    toggleSigninBtn.addEventListener('click', () => {
+      const isPwd = signinPassword.type === 'password';
+      signinPassword.type = isPwd ? 'text' : 'password';
+      signinEyeIcon.textContent = isPwd ? 'visibility_off' : 'visibility';
+    });
+
+    const toggleSignupBtn = document.getElementById('toggleSignupPasswordBtn');
+    const signupPassword = document.getElementById('signupPassword');
+    const signupEyeIcon = document.getElementById('signupEyeIcon');
+    const checkLen = document.getElementById('checkLen');
+    const checkMix = document.getElementById('checkMix');
+
+    toggleSignupBtn.addEventListener('click', () => {
+      const isPwd = signupPassword.type === 'password';
+      signupPassword.type = isPwd ? 'text' : 'password';
+      signupEyeIcon.textContent = isPwd ? 'visibility_off' : 'visibility';
+    });
+
+    signupPassword.addEventListener('input', (e) => {
+      const val = e.target.value;
+      const hasLength = val.length >= 8;
+      const hasMix = /[a-zA-Z]/.test(val) && /[0-9]/.test(val);
+
+      if (hasLength) {
+        checkLen.classList.remove('text-tertiary');
+        checkLen.classList.add('text-secondary');
+      } else {
+        checkLen.classList.add('text-tertiary');
+        checkLen.classList.remove('text-secondary');
+      }
+
+      if (hasMix) {
+        checkMix.classList.remove('text-tertiary');
+        checkMix.classList.add('text-secondary');
+      } else {
+        checkMix.classList.add('text-tertiary');
+        checkMix.classList.remove('text-secondary');
+      }
+    });
+
+    // Forgot Password Bottom Sheet
+    const openForgotModalBtn = document.getElementById('openForgotModalBtn');
+    const forgotBackdrop = document.getElementById('forgotModalBackdrop');
+    const forgotSheet = document.getElementById('forgotModalSheet');
+    const closeForgotModalBtn = document.getElementById('closeForgotModalBtn');
+    const cancelForgotBtn = document.getElementById('cancelForgotBtn');
+    const sendResetBtn = document.getElementById('sendResetBtn');
+    const resetFeedback = document.getElementById('resetFeedback');
+
+    function openModal() {
+      forgotBackdrop.classList.remove('hidden');
+      setTimeout(() => {
+        forgotBackdrop.classList.remove('opacity-0');
+        forgotSheet.classList.remove('translate-y-full');
+      }, 10);
+    }
+
+    function closeModal() {
+      forgotBackdrop.classList.add('opacity-0');
+      forgotSheet.classList.add('translate-y-full');
+      setTimeout(() => {
+        forgotBackdrop.classList.add('hidden');
+        resetFeedback.classList.add('hidden');
+      }, 300);
+    }
+
+    openForgotModalBtn.addEventListener('click', openModal);
+    closeForgotModalBtn.addEventListener('click', closeModal);
+    cancelForgotBtn.addEventListener('click', closeModal);
+    forgotBackdrop.addEventListener('click', closeModal);
+
+    sendResetBtn.addEventListener('click', () => {
+      resetFeedback.classList.remove('hidden');
+      setTimeout(() => {
+        closeModal();
+      }, 1500);
+    });
+
+    // Language Toggle visual switcher
+    const langBtn = document.getElementById('langToggleBtn');
+    const langEn = document.getElementById('langIndicatorEn');
+    const langAr = document.getElementById('langIndicatorAr');
+    let isArabic = false;
+
+    langBtn.addEventListener('click', () => {
+      isArabic = !isArabic;
+      if (isArabic) {
+        langAr.classList.add('font-semibold', 'text-secondary');
+        langAr.classList.remove('opacity-70');
+        langEn.classList.remove('font-semibold', 'text-secondary');
+        langEn.classList.add('opacity-70');
+        document.documentElement.dir = 'rtl';
+      } else {
+        langEn.classList.add('font-semibold', 'text-secondary');
+        langEn.classList.remove('opacity-70');
+        langAr.classList.remove('font-semibold', 'text-secondary');
+        langAr.classList.add('opacity-70');
+        document.documentElement.dir = 'ltr';
+      }
+    });
+  })();
+</script></main>
+<!-- END: MobileDeviceFrame -->
+</body></html>
