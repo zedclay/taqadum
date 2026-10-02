@@ -163,7 +163,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       body: SafeArea(
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.sm,
               AppSpacing.screen,
@@ -516,13 +516,13 @@ class _LanguagePill extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: 'EN',
+                  text: context.isArabic ? 'عربي' : 'EN',
                   style: AppTypography.label.copyWith(
                     color: AppColors.textPrimary,
                   ),
                 ),
                 TextSpan(
-                  text: '  |  عربي',
+                  text: context.isArabic ? '  |  EN' : '  |  عربي',
                   style: AppTypography.caption.copyWith(
                     color: AppColors.textMuted,
                   ),

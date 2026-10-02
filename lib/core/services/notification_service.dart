@@ -18,11 +18,24 @@ class ScheduledReminder {
   final DateTime at;
 }
 
+/// Android channel labels shown in system settings, in the app language.
+class ReminderChannel {
+  const ReminderChannel({required this.name, required this.description});
+
+  final String name;
+  final String description;
+}
+
 abstract class NotificationService {
   Future<void> init();
   Future<bool> requestPermission();
   Future<bool?> permissionGranted();
-  Future<void> replaceAll(List<ScheduledReminder> reminders);
+
+  /// Cancels every pending reminder and schedules [reminders] instead.
+  Future<void> replaceAll(
+    List<ScheduledReminder> reminders, {
+    required ReminderChannel channel,
+  });
   Future<void> cancelAll();
 }
 
@@ -33,16 +46,19 @@ class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _plugin;
   bool _ready = false;
 
-  static const _details = NotificationDetails(
-    android: AndroidNotificationDetails(
-      'taqaddum_reminders',
-      'Reminders',
-      channelDescription: 'Gentle local reminders you configure in Taqaddum',
-      importance: Importance.defaultImportance,
-      priority: Priority.defaultPriority,
-    ),
-    iOS: DarwinNotificationDetails(),
-  );
+  static const _channelId = 'taqaddum_reminders';
+
+  static NotificationDetails _details(ReminderChannel channel) =>
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          _channelId,
+          channel.name,
+          channelDescription: channel.description,
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+        ),
+        iOS: const DarwinNotificationDetails(),
+      );
 
   @override
   Future<void> init() async {
@@ -112,16 +128,33 @@ class LocalNotificationService implements NotificationService {
   }
 
   @override
-  Future<void> replaceAll(List<ScheduledReminder> reminders) async {
+  Future<void> replaceAll(
+    List<ScheduledReminder> reminders, {
+    required ReminderChannel channel,
+  }) async {
     await init();
     await _plugin.cancelAllPendingNotifications();
+    // Android keeps a channel's first name; re-creating it renames the channel
+    // in system settings after a language change.
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.createNotificationChannel(
+          AndroidNotificationChannel(
+            _channelId,
+            channel.name,
+            description: channel.description,
+          ),
+        );
+    final details = _details(channel);
     for (final reminder in reminders) {
       await _plugin.zonedSchedule(
         id: reminder.id,
         title: reminder.title,
         body: reminder.body,
         scheduledDate: tz.TZDateTime.from(reminder.at, tz.local),
-        notificationDetails: _details,
+        notificationDetails: details,
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       );
     }
@@ -136,6 +169,7 @@ class LocalNotificationService implements NotificationService {
 
 class NoopNotificationService implements NotificationService {
   List<ScheduledReminder> scheduled = const [];
+  ReminderChannel? channel;
 
   @override
   Future<void> init() async {}
@@ -147,8 +181,13 @@ class NoopNotificationService implements NotificationService {
   Future<bool?> permissionGranted() async => true;
 
   @override
-  Future<void> replaceAll(List<ScheduledReminder> reminders) async =>
-      scheduled = reminders;
+  Future<void> replaceAll(
+    List<ScheduledReminder> reminders, {
+    required ReminderChannel channel,
+  }) async {
+    scheduled = reminders;
+    this.channel = channel;
+  }
 
   @override
   Future<void> cancelAll() async => scheduled = const [];

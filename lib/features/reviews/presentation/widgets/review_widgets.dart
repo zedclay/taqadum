@@ -26,6 +26,7 @@ import '../../../progress/domain/progress_calculator.dart';
 import '../../../settings/data/preferences.dart';
 import '../../data/reviews_repository.dart';
 import '../../domain/review_insights.dart';
+import '../../../../core/utilities/bidi.dart';
 
 const weeklyWentWellTags = [
   'focused',
@@ -305,7 +306,7 @@ class PrioritiesEditor extends ConsumerWidget {
                 key: ValueKey('priority-$i-${p.title}'),
                 padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: AppCard(
-                  padding: const EdgeInsets.fromLTRB(14, 10, 4, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(14, 10, 4, 10),
                   onTap: () => edit(i),
                   child: Row(
                     children: [
@@ -320,7 +321,10 @@ class PrioritiesEditor extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(p.title, style: AppTypography.bodyMedium),
+                            Text(
+                              bidiSafe(p.title),
+                              style: AppTypography.bodyMedium,
+                            ),
                             const SizedBox(height: 2),
                             Text.rich(
                               TextSpan(
@@ -462,7 +466,7 @@ class _PrioritySheetState extends ConsumerState<_PrioritySheet> {
               children: [
                 for (final g in goals.take(4))
                   ChoiceTag(
-                    label: g.title,
+                    label: bidiSafe(g.title),
                     selected: _goal == g.id,
                     color: g.area.color,
                     soft: g.area.soft,
@@ -525,7 +529,7 @@ class _PrioritySheetState extends ConsumerState<_PrioritySheet> {
                 ),
                 for (final g in areaGoals)
                   ChoiceTag(
-                    label: g.title,
+                    label: bidiSafe(g.title),
                     selected: _goal == g.id,
                     color: g.area.color,
                     soft: g.area.soft,
@@ -541,8 +545,8 @@ class _PrioritySheetState extends ConsumerState<_PrioritySheet> {
 }
 
 /// Formats a goal movement amount for display.
-String movementLabel(Goal goal, double amount) =>
-    goalValue(goal, amount, compact: true);
+String movementLabel(AppLocalizations l, Goal goal, double amount) =>
+    goalValue(l, goal, amount, compact: true);
 
 class WinRow extends StatelessWidget {
   const WinRow({super.key, required this.win, this.index, this.dense = false});
@@ -561,11 +565,11 @@ class WinRow extends StatelessWidget {
         win.title,
         win.detail == null
             ? l.reviewWinMilestone
-            : l.reviewWinMilestoneOf(win.detail!),
+            : l.reviewWinMilestoneOf(bidiSafe(win.detail!)),
       ),
       WinKind.goalMoved => (
         win.title,
-        l.reviewWinMoved(movementLabel(win.goal!, win.amount!)),
+        l.reviewWinMoved(movementLabel(l, win.goal!, win.amount!)),
       ),
       WinKind.consistency => (
         l.reviewWinConsistency(area!.label(context), win.days!),
@@ -604,7 +608,7 @@ class WinRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: AppTypography.bodyMedium),
+              Text(bidiSafe(title), style: AppTypography.bodyMedium),
               const SizedBox(height: 2),
               Text.rich(
                 TextSpan(
@@ -665,7 +669,7 @@ class GapRow extends StatelessWidget {
         children: [
           Icon(icon, size: 20, color: gap.area?.color ?? AppColors.textMuted),
           AppSpacing.gap12,
-          Expanded(child: Text(title, style: AppTypography.body)),
+          Expanded(child: Text(bidiSafe(title), style: AppTypography.body)),
           AppSpacing.gap8,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -704,7 +708,7 @@ class ReviewFooter extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             AppSpacing.screen,
             AppSpacing.md,
             AppSpacing.screen,

@@ -26,7 +26,7 @@ Future<String?> showUnitSheet(
     title: l.goalUnit,
     selected: current,
     options: [
-      for (final u in units) SheetOption(value: u, label: u),
+      for (final u in units) SheetOption(value: u, label: unitName(l, u)),
       SheetOption(value: _customUnit, label: l.goalUnitCustom),
     ],
   );

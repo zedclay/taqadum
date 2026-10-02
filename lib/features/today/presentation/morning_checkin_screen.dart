@@ -23,6 +23,7 @@ import '../../profile/data/profile_repository.dart';
 import '../data/daily_repository.dart';
 import '../data/tasks_repository.dart';
 import 'widgets/day_labels.dart';
+import '../../../core/utilities/bidi.dart';
 
 class _Candidate {
   const _Candidate({this.task, required this.title, required this.area});
@@ -144,7 +145,7 @@ class _MorningCheckInScreenState extends ConsumerState<MorningCheckInScreen> {
           _init(list, existing.value);
           final candidates = [
             for (final t in list.where((t) => t.completedAt == null))
-              _Candidate(task: t, title: t.title, area: t.area),
+              _Candidate(task: t, title: bidiSafe(t.title), area: t.area),
             ..._custom,
           ];
           final selected = [
@@ -153,7 +154,7 @@ class _MorningCheckInScreenState extends ConsumerState<MorningCheckInScreen> {
           ];
           final others = candidates.where((c) => !_selected.contains(c.key));
           return ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.sm,
               AppSpacing.screen,

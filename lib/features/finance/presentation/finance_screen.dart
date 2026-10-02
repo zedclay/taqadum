@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
@@ -30,33 +29,32 @@ import '../../goals/data/goals_repository.dart';
 import '../../goals/presentation/widgets/goal_mini_card.dart';
 import '../../settings/data/preferences.dart';
 import '../data/finance_repository.dart';
+import '../domain/finance_categories.dart';
 import '../domain/finance_stats.dart';
 import 'transaction_form.dart';
+import '../../../core/utilities/bidi.dart';
 
 enum _FinancePeriod { thisMonth, lastMonth, year }
 
-IconData categoryIcon(BuildContext context, String category) {
-  final l = context.l10n;
-  final icons = {
-    l.catFood: Symbols.restaurant,
-    l.catTransport: Symbols.directions_car,
-    l.catHome: Symbols.home,
-    l.catBills: Symbols.receipt_long,
-    l.catFamily: Symbols.family_restroom,
-    l.catHealth: Symbols.favorite,
-    l.catEducation: Symbols.school,
-    l.catBusiness: Symbols.business_center,
-    l.catShopping: Symbols.shopping_bag,
-    l.catSalary: Symbols.payments,
-    l.catClientPayment: Symbols.handshake,
-    l.catFreelance: Symbols.laptop_mac,
-    l.catGift: Symbols.redeem,
-    l.catEmergency: Symbols.shield,
-    l.catSavingsGoal: Symbols.savings,
-    l.catInvestment: Symbols.trending_up,
-  };
-  return icons[category] ?? Symbols.category;
-}
+IconData categoryIcon(String category) => switch (category) {
+  FinanceCategories.food => Symbols.restaurant,
+  FinanceCategories.transport => Symbols.directions_car,
+  FinanceCategories.home => Symbols.home,
+  FinanceCategories.bills => Symbols.receipt_long,
+  FinanceCategories.family => Symbols.family_restroom,
+  FinanceCategories.health => Symbols.favorite,
+  FinanceCategories.education => Symbols.school,
+  FinanceCategories.business => Symbols.business_center,
+  FinanceCategories.shopping => Symbols.shopping_bag,
+  FinanceCategories.salary => Symbols.payments,
+  FinanceCategories.clientPayment => Symbols.handshake,
+  FinanceCategories.freelance => Symbols.laptop_mac,
+  FinanceCategories.gift => Symbols.redeem,
+  FinanceCategories.emergency => Symbols.shield,
+  FinanceCategories.savingsGoal => Symbols.savings,
+  FinanceCategories.investment => Symbols.trending_up,
+  _ => Symbols.category,
+};
 
 Color transactionColor(TransactionType type) => switch (type) {
   TransactionType.income => AppColors.success,
@@ -250,7 +248,7 @@ class _NetCard extends ConsumerWidget {
                   ),
                 ),
                 TextSpan(
-                  text: ' $currency',
+                  text: ' ${Fmt.currency(currency)}',
                   style: AppTypography.sectionTitle.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -272,7 +270,7 @@ class _NetCard extends ConsumerWidget {
                   withCode: false,
                 ),
                 valueColor: AppColors.success,
-                caption: currency,
+                caption: Fmt.currency(currency),
                 color: AppColors.surfaceMuted,
               ),
               StatTile(
@@ -283,7 +281,7 @@ class _NetCard extends ConsumerWidget {
                   compact: true,
                   withCode: false,
                 ),
-                caption: currency,
+                caption: Fmt.currency(currency),
                 color: AppColors.surfaceMuted,
               ),
               StatTile(
@@ -295,7 +293,7 @@ class _NetCard extends ConsumerWidget {
                   withCode: false,
                 ),
                 valueColor: AppColors.primaryStrong,
-                caption: currency,
+                caption: Fmt.currency(currency),
                 color: AppColors.surfaceMuted,
               ),
             ],
@@ -336,8 +334,7 @@ class _CashFlowCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final months = [
-      for (var m = 1; m <= 12; m++)
-        DateFormat('MMMMM').format(DateTime(2024, m)),
+      for (var m = 1; m <= 12; m++) Fmt.monthNarrow(DateTime(2024, m)),
     ];
     final buckets = FinanceStats.cashFlow(items, range, monthLabels: months);
     final maxY = buckets
@@ -469,7 +466,7 @@ class _SpendingSection extends ConsumerWidget {
                       Row(
                         children: [
                           IconTile(
-                            icon: categoryIcon(context, c.category),
+                            icon: categoryIcon(c.category),
                             color: _barColors[i],
                             background: AppColors.surfaceMuted,
                             size: 36,
@@ -481,7 +478,9 @@ class _SpendingSection extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  c.category,
+                                  financeCategoryLabel(l, c.category),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: AppTypography.bodyMedium,
                                 ),
                                 Text(
@@ -556,7 +555,9 @@ class _SavingsGoal extends ConsumerWidget {
                 color: AppColors.primaryStrong,
               ),
               AppSpacing.gap8,
-              Expanded(child: Text(g.title, style: AppTypography.cardTitle)),
+              Expanded(
+                child: Text(bidiSafe(g.title), style: AppTypography.cardTitle),
+              ),
               Pill(
                 label: '${v.progress.percent}%',
                 foreground: AppColors.primaryStrong,
@@ -574,7 +575,7 @@ class _SavingsGoal extends ConsumerWidget {
                   style: AppTypography.headline.tabular,
                 ),
                 TextSpan(
-                  text: ' / ${goalValue(g, v.progress.target)}',
+                  text: ' / ${goalValue(l, g, v.progress.target)}',
                   style: AppTypography.caption,
                 ),
               ],
@@ -587,7 +588,7 @@ class _SavingsGoal extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  l.financeRemaining(goalValue(g, v.progress.remaining)),
+                  l.financeRemaining(goalValue(l, g, v.progress.remaining)),
                   style: AppTypography.caption,
                 ),
               ),
@@ -679,11 +680,11 @@ class _RecentSectionState extends ConsumerState<_RecentSection> {
                   children: [
                     for (final t in visible)
                       TransactionRow(
-                        icon: categoryIcon(context, t.category),
-                        title: t.note ?? t.category,
+                        icon: categoryIcon(t.category),
+                        title: t.note ?? financeCategoryLabel(l, t.category),
                         meta: t.note == null
                             ? whenLabel(context, t.occurredAt, use24h: use24h)
-                            : '${t.category} · ${whenLabel(context, t.occurredAt, use24h: use24h)}',
+                            : '${financeCategoryLabel(l, t.category)} · ${whenLabel(context, t.occurredAt, use24h: use24h)}',
                         amount: Fmt.money(
                           t.type == TransactionType.income
                               ? t.amountMinor

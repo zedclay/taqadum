@@ -27,6 +27,7 @@ import '../data/tasks_repository.dart';
 import '../domain/today_summary.dart';
 import 'widgets/task_labels.dart';
 import 'widgets/task_sheets.dart';
+import '../../../core/utilities/bidi.dart';
 
 class NightReviewScreen extends ConsumerStatefulWidget {
   const NightReviewScreen({super.key});
@@ -109,7 +110,7 @@ class _NightReviewScreenState extends ConsumerState<NightReviewScreen> {
         closeIcon: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.lg),
+            padding: const EdgeInsetsDirectional.only(end: AppSpacing.lg),
             child: Pill(
               label: l.nightBadge,
               icon: Symbols.bedtime,
@@ -125,7 +126,7 @@ class _NightReviewScreenState extends ConsumerState<NightReviewScreen> {
           _init(existing.value, list);
           final unfinished = list.where((t) => t.completedAt == null).toList();
           return ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.sm,
               AppSpacing.screen,
@@ -520,7 +521,7 @@ class _UnfinishedSection extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: AppCard(
-              padding: const EdgeInsets.fromLTRB(16, 10, 0, 10),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 0, 10),
               child: Row(
                 children: [
                   Container(
@@ -537,7 +538,7 @@ class _UnfinishedSection extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          t.title,
+                          bidiSafe(t.title),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyMedium.copyWith(
@@ -693,7 +694,7 @@ class _TomorrowCard extends ConsumerWidget {
                     ),
                     Expanded(
                       child: Text(
-                        t.title,
+                        bidiSafe(t.title),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium.copyWith(

@@ -31,6 +31,7 @@ import '../../settings/data/settings_store.dart';
 import '../data/work_repository.dart';
 import '../domain/work_stats.dart';
 import 'work_log_form.dart';
+import '../../../core/utilities/bidi.dart';
 
 final _workYearProvider = Provider<AsyncValue<List<WorkActivity>>>((ref) {
   final today = ref.watch(currentDayProvider);
@@ -396,7 +397,7 @@ class _SessionCard extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        session.title,
+                        bidiSafe(session.title),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.bodyMedium,
@@ -408,7 +409,9 @@ class _SessionCard extends StatelessWidget {
                 ),
                 if (session.detail != null || session.counterpart != null)
                   Text(
-                    [?session.counterpart, ?session.detail].join(' · '),
+                    bidiSafe(
+                      [?session.counterpart, ?session.detail].join(' · '),
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.caption,
@@ -644,7 +647,7 @@ class _LeadCard extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  lead.name,
+                  bidiSafe(lead.name),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.cardTitle,
@@ -657,7 +660,7 @@ class _LeadCard extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 2),
-          Text(lead.title, style: AppTypography.caption),
+          Text(bidiSafe(lead.title), style: AppTypography.caption),
           AppSpacing.gap12,
           Row(
             children: [
@@ -767,14 +770,14 @@ class _MeetingRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  meeting.counterpart ?? meeting.title,
+                  bidiSafe(meeting.counterpart ?? meeting.title),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.bodyMedium,
                 ),
                 Text(
                   [
-                    if (meeting.counterpart != null) meeting.title,
+                    if (meeting.counterpart != null) bidiSafe(meeting.title),
                     Fmt.time(at, use24h: use24h),
                     if (meeting.minutes != null) Fmt.minutes(meeting.minutes!),
                   ].join(' · '),

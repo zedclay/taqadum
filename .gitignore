@@ -46,3 +46,23 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Signing keys and credentials — never commit
+*.jks
+*.keystore
+key.properties
+**/android/key.properties
+*.p12
+*.p8
+*.cer
+*.mobileprovision
+*.provisionprofile
+.env
+.env.*
+
+# Local database files
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal

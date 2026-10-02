@@ -33,6 +33,8 @@ import '../../today/presentation/widgets/day_labels.dart';
 import '../data/health_repository.dart';
 import 'habit_form.dart';
 import 'health_log_sheets.dart';
+import '../domain/habit_names.dart';
+import '../../../core/utilities/bidi.dart';
 
 class HealthScreen extends ConsumerWidget {
   const HealthScreen({super.key});
@@ -249,10 +251,22 @@ class _TodayCard extends ConsumerWidget {
                     color: good ? AppColors.health : AppColors.textSecondary,
                   ),
                   const SizedBox(width: 4),
-                  Text(value, style: AppTypography.label),
+                  Flexible(
+                    child: Text(
+                      value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTypography.label,
+                    ),
+                  ),
                 ],
               ),
-              Text(label, style: AppTypography.captionSmall),
+              Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.captionSmall,
+              ),
             ],
           ),
         );
@@ -294,7 +308,7 @@ class _TodayCard extends ConsumerWidget {
                       style: AppTypography.headline.tabular,
                     ),
                     TextSpan(
-                      text: ' / $target min',
+                      text: ' ${l.commonOfTargetMinutes(target)}',
                       style: AppTypography.caption,
                     ),
                   ],
@@ -395,7 +409,7 @@ class _WorkoutCard extends StatelessWidget {
               title: w.title,
               subtitle: [
                 Fmt.minutes(w.minutes),
-                ?w.detail,
+                if (w.detail != null) bidiSafe(w.detail!),
                 Fmt.weekdayShort(w.occurredAt.toLocal()),
               ].join(' · '),
               trailing: l.healthCompleted,
@@ -436,7 +450,7 @@ class _WalkCard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$minutes / $target min',
+                      l.commonMinutesOfTarget(minutes, target),
                       style: AppTypography.cardTitle.tabular,
                     ),
                     Text(
@@ -622,7 +636,7 @@ class _HabitsSectionState extends ConsumerState<_HabitsSection> {
     final l = context.l10n;
     final action = await showOptionSheet<String>(
       context,
-      title: habit.name,
+      title: habitDisplayName(l, habit),
       options: [
         SheetOption(value: 'rename', label: l.healthRenameHabit),
         SheetOption(value: 'archive', label: l.healthArchiveHabit),
@@ -634,10 +648,10 @@ class _HabitsSectionState extends ConsumerState<_HabitsSection> {
       final name = await showTextSheet(
         context,
         title: l.healthRenameHabit,
-        initial: habit.name,
+        initial: habitDisplayName(l, habit),
         actionLabel: l.commonSave,
       );
-      if (name != null) await repo.updateHabit(habit.copyWith(name: name));
+      if (name != null) await repo.renameHabit(habit, name);
     } else {
       final ok = await showConfirmDialog(
         context,
@@ -761,14 +775,17 @@ class _HabitLine extends StatelessWidget {
                 checked: doneToday,
                 square: true,
                 onTap: () => onToggle(!doneToday),
-                semanticLabel: habit.name,
+                semanticLabel: habitDisplayName(context.l10n, habit),
               ),
             AppSpacing.gap12,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(habit.name, style: AppTypography.bodyMedium),
+                  Text(
+                    bidiSafe(habitDisplayName(context.l10n, habit)),
+                    style: AppTypography.bodyMedium,
+                  ),
                   Text(
                     habit.label ?? habit.area.label(context),
                     style: AppTypography.captionSmall,
@@ -785,7 +802,7 @@ class _HabitLine extends StatelessWidget {
                     Container(
                       width: 6,
                       height: 6,
-                      margin: const EdgeInsets.only(left: 3),
+                      margin: const EdgeInsetsDirectional.only(start: 3),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: d ? AppColors.primaryStrong : AppColors.border,

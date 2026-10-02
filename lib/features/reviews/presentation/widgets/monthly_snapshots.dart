@@ -276,7 +276,7 @@ class _SnapshotTileState extends State<_SnapshotTile> {
             curve: AppMotion.curve,
             child: _open
                 ? Padding(
-                    padding: const EdgeInsets.fromLTRB(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
                       AppSpacing.md,
                       0,
                       AppSpacing.md,

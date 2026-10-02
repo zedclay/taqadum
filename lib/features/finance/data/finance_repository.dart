@@ -9,6 +9,7 @@ import '../../../core/utilities/ids.dart';
 import '../../goals/data/goals_repository.dart';
 import '../../goals/domain/goal_progress.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class FinanceRepository {
   FinanceRepository(this._db, this._goals, this._activity);
@@ -76,10 +77,15 @@ class FinanceRepository {
       area: LifeArea.finance,
       type: ActivityType.logged,
       title: note?.trim().isNotEmpty == true ? note!.trim() : category.trim(),
-      subtitle: '${_typeLabel(type)} · ${category.trim()}',
+      subtitle: ActivityFallback.transaction(type, category.trim()),
       amountMinor: signed,
       entityType: 'finance',
       entityId: id,
+      facts: {
+        'type': type.name,
+        'category': category.trim(),
+        'note': note?.trim().isNotEmpty == true ? note!.trim() : null,
+      },
       at: when,
     );
   });
@@ -91,12 +97,6 @@ class FinanceRepository {
       _db.financeTransactions,
     )..where((x) => x.id.equals(t.id))).go();
   });
-
-  static String _typeLabel(TransactionType t) => switch (t) {
-    TransactionType.income => 'Income',
-    TransactionType.expense => 'Expense',
-    TransactionType.saving => 'Saving',
-  };
 }
 
 final financeRepositoryProvider = Provider<FinanceRepository>(

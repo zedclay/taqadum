@@ -30,6 +30,7 @@ import '../../settings/data/preferences.dart';
 import '../../settings/data/settings_store.dart';
 import '../../settings/presentation/settings_sheets.dart';
 import '../data/profile_repository.dart';
+import '../../../core/utilities/bidi.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -44,7 +45,7 @@ class ProfileScreen extends ConsumerWidget {
         child: AsyncView<UserProfile?>(
           value: profile,
           builder: (p) => ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.md,
               AppSpacing.screen,
@@ -75,7 +76,10 @@ class ProfileScreen extends ConsumerWidget {
               if (p != null) ...[AppSpacing.gap28, _Intention(profile: p)],
               AppSpacing.gap28,
               Padding(
-                padding: const EdgeInsets.only(left: 4, bottom: AppSpacing.sm),
+                padding: const EdgeInsetsDirectional.only(
+                  start: 4,
+                  bottom: AppSpacing.sm,
+                ),
                 child: OverlineLabel(l.profileYourTaqaddum),
               ),
               AppCard(
@@ -199,7 +203,7 @@ class _ProfileCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  profile.name,
+                  bidiSafe(profile.name),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.headline,
@@ -240,7 +244,10 @@ class _CurrentFocus extends ConsumerWidget {
         .where((v) => v.goal.isPrimary && v.goal.status == GoalStatus.active)
         .firstOrNull;
     final header = Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: AppSpacing.sm),
+      padding: const EdgeInsetsDirectional.only(
+        start: 4,
+        bottom: AppSpacing.sm,
+      ),
       child: OverlineLabel(l.profileCurrentFocus),
     );
     if (primary == null) {
@@ -295,7 +302,7 @@ class _CurrentFocus extends ConsumerWidget {
                 ],
               ),
               AppSpacing.gap12,
-              Text(g.title, style: AppTypography.headline),
+              Text(bidiSafe(g.title), style: AppTypography.headline),
               if (g.description != null) ...[
                 const SizedBox(height: 2),
                 Text(g.description!, style: AppTypography.caption),
@@ -308,7 +315,7 @@ class _CurrentFocus extends ConsumerWidget {
                   Expanded(
                     child: Text(
                       g.type == GoalType.target
-                          ? l.profileTarget(goalValue(g, g.targetValue))
+                          ? l.profileTarget(goalValue(l, g, g.targetValue))
                           : goalProgressLine(context, primary),
                       style: AppTypography.captionSmall,
                     ),
@@ -339,7 +346,7 @@ class _CurrentFocus extends ConsumerWidget {
                           AppSpacing.gap8,
                           Expanded(
                             child: Text(
-                              l.profileNext(next.title),
+                              l.profileNext(bidiSafe(next.title)),
                               style: AppTypography.label,
                             ),
                           ),
@@ -392,7 +399,10 @@ class _YearProgress extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: AppSpacing.sm),
+          padding: const EdgeInsetsDirectional.only(
+            start: 4,
+            bottom: AppSpacing.sm,
+          ),
           child: Row(
             children: [
               Expanded(

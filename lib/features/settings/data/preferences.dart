@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/localization/app_locale.dart';
 import '../../../core/providers.dart';
 
 abstract final class PrefKeys {
@@ -54,7 +55,7 @@ class AppPreferences {
   });
 
   factory AppPreferences.read(SharedPreferences p) => AppPreferences(
-    localeCode: p.getString(PrefKeys.locale) ?? 'en',
+    localeCode: AppLanguages.normalize(p.getString(PrefKeys.locale)),
     weekStart: p.getInt(PrefKeys.weekStart) ?? DateTime.monday,
     currency: p.getString(PrefKeys.currency) ?? 'DZD',
     use24h: p.getBool(PrefKeys.use24h) ?? true,
@@ -77,7 +78,7 @@ class AppPreferences {
   final int quietEnd;
   final bool smartSuppression;
 
-  Locale get locale => Locale(localeCode);
+  Locale get locale => AppLocale.localeFor(localeCode);
 
   AppPreferences copyWith({
     String? localeCode,
@@ -117,8 +118,9 @@ class PreferencesController extends Notifier<AppPreferences> {
       AppPreferences.read(ref.watch(sharedPreferencesProvider));
 
   Future<void> setLocale(String code) async {
-    await _prefs.setString(PrefKeys.locale, code);
-    state = state.copyWith(localeCode: code);
+    final normalized = AppLanguages.normalize(code);
+    await _prefs.setString(PrefKeys.locale, normalized);
+    state = state.copyWith(localeCode: normalized);
   }
 
   Future<void> setWeekStart(int weekday) async {
@@ -171,13 +173,13 @@ class PreferencesController extends Notifier<AppPreferences> {
 }
 
 const supportedCurrencies = [
-  ('DZD', 'Algerian Dinar'),
-  ('MAD', 'Moroccan Dirham'),
-  ('TND', 'Tunisian Dinar'),
-  ('SAR', 'Saudi Riyal'),
-  ('AED', 'UAE Dirham'),
-  ('EGP', 'Egyptian Pound'),
-  ('EUR', 'Euro'),
-  ('USD', 'US Dollar'),
-  ('GBP', 'British Pound'),
+  'DZD',
+  'MAD',
+  'TND',
+  'SAR',
+  'AED',
+  'EGP',
+  'EUR',
+  'USD',
+  'GBP',
 ];

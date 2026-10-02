@@ -169,12 +169,12 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
 
   double get _targetValue => parseNumber(_target.text) ?? 0;
 
-  String _fmtValue(double v) {
-    if (GoalUnits.isCurrency(_unit)) {
-      return '${Fmt.number(v, maxDecimals: 0)} $_unit';
-    }
-    return _unit.isEmpty ? Fmt.number(v) : '${Fmt.number(v)} $_unit';
-  }
+  String _fmtValue(double v) => unitQuantity(
+    context.l10n,
+    _unit,
+    v,
+    Fmt.number(v, maxDecimals: GoalUnits.isCurrency(_unit) ? 0 : 2),
+  );
 
   Future<void> _save() async {
     final l = context.l10n;
@@ -273,7 +273,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
       title: context.l10n.goalStartingPoint,
       hint: context.l10n.goalStartingPointHint,
       initial: _start,
-      suffix: _unit,
+      suffix: unitName(context.l10n, _unit),
     );
     if (value != null) _set(() => _start = value);
   }
@@ -365,7 +365,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
                 key: _formKey,
                 child: ListView(
                   controller: _scroll,
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.screen,
                     AppSpacing.sm,
                     AppSpacing.screen,
@@ -405,7 +405,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
     return SafeArea(
       top: false,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           AppSpacing.screen,
           AppSpacing.md,
           AppSpacing.screen,
@@ -584,7 +584,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
             child: _SelectField(
               key: const Key('goal-unit'),
               onTap: _pickUnit,
-              label: _unit.isEmpty ? l.goalUnit : _unit,
+              label: _unit.isEmpty ? l.goalUnit : unitName(l, _unit),
               muted: _unit.isEmpty,
               trailingIcon: Symbols.unfold_more,
               compact: true,
@@ -693,7 +693,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
       AppSpacing.gap8,
       _SelectField(
         onTap: _pickUnit,
-        label: _unit.isEmpty ? l.goalUnit : _unit,
+        label: _unit.isEmpty ? l.goalUnit : unitName(l, _unit),
         muted: _unit.isEmpty,
         trailingIcon: Symbols.unfold_more,
       ),
@@ -714,7 +714,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: AppCard(
-              padding: const EdgeInsets.fromLTRB(16, 4, 4, 4),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 4, 4),
               child: Row(
                 children: [
                   Icon(
@@ -773,7 +773,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: AppCard(
-              padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 4, 12),
               onTap: () => _editAction(i),
               child: Row(
                 children: [

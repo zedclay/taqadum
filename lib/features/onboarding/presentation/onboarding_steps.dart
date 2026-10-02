@@ -86,7 +86,7 @@ class _StepScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.lg,
         AppSpacing.screen,
@@ -690,7 +690,7 @@ class ReadyStep extends StatelessWidget {
     final l = context.l10n;
     final targets = draft.selectedTargets(starterTargetsFor(l));
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.xl,
         AppSpacing.screen,

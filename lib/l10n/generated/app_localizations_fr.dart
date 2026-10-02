@@ -903,20 +903,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get langTitle => 'Language';
 
   @override
-  String get langEnglish => 'English';
-
-  @override
-  String get langArabic => 'العربية (Arabic)';
-
-  @override
-  String get langFrench => 'Français (French)';
-
-  @override
   String get langComingSoon => 'Coming in a future update';
 
   @override
   String get langFootnote =>
-      'Taqaddum is fully available in English today. Arabic (right-to-left) and French translations are being prepared.';
+      'Changing the language never changes your goals or records. French is coming in a future update.';
 
   @override
   String todayGreetingMorning(Object name) {
@@ -2067,13 +2058,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quranRecent => 'Recent activity';
 
   @override
-  String quranReadN(Object pages) {
-    return 'Read $pages pages';
+  String quranReadN(num count, String pages) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Read $pages pages',
+      one: 'Read $pages page',
+    );
+    return '$_temp0';
   }
 
   @override
-  String quranMemorizedN(Object pages) {
-    return 'Memorized $pages page';
+  String quranMemorizedN(num count, String pages) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Memorized $pages pages',
+      one: 'Memorized $pages page',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -4137,9 +4140,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get activityDismiss => 'Dismiss';
 
   @override
-  String get activityOpen => 'Open';
-
-  @override
   String get activityOpenPlan => 'Open day plan';
 
   @override
@@ -4562,10 +4562,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsLanguage => 'Language';
 
   @override
-  String get settingsLanguagePreview =>
-      'Preview: some screens are still in English';
-
-  @override
   String get settingsReduceMotion => 'Reduce motion';
 
   @override
@@ -4810,6 +4806,256 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsDemoDone => 'Demo data added';
+
+  @override
+  String get activityCheckInTitle => 'Morning check-in';
+
+  @override
+  String get activityNightReviewTitle => 'Night review completed';
+
+  @override
+  String get activityWeeklyReviewTitle => 'Weekly review completed';
+
+  @override
+  String get activityMonthlyReviewTitle => 'Monthly review completed';
+
+  @override
+  String activityPrioritiesSet(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count priorities set',
+      one: '1 priority set',
+      zero: 'No priorities set',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String activityDayRated(int rating) {
+    return 'Day rated $rating of 5';
+  }
+
+  @override
+  String activityDateRange(String start, String end) {
+    return '$start – $end';
+  }
+
+  @override
+  String get activityHabitAdded => 'Habit added';
+
+  @override
+  String get activityHabit => 'Habit';
+
+  @override
+  String get activityGoalCreated => 'Goal created';
+
+  @override
+  String get activityGoalUpdated => 'Goal updated';
+
+  @override
+  String get activityGoalCompleted => 'Goal completed';
+
+  @override
+  String get activityProgressLogged => 'Progress logged';
+
+  @override
+  String get activityNote => 'Note';
+
+  @override
+  String activityStudySession(String topic) {
+    return 'Study session · $topic';
+  }
+
+  @override
+  String activityWalkTitle(String duration) {
+    return 'Walk · $duration';
+  }
+
+  @override
+  String activitySleepTitle(String duration) {
+    return 'Sleep · $duration';
+  }
+
+  @override
+  String activitySteps(int count, String steps) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$steps steps',
+      one: '1 step',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String activitySleepWindow(String bed, String wake) {
+    return 'Bed $bed · Wake $wake';
+  }
+
+  @override
+  String activityOpenArea(String area) {
+    return 'Open $area';
+  }
+
+  @override
+  String get unitNamePages => 'pages';
+
+  @override
+  String get unitNameJuz => 'juz';
+
+  @override
+  String get unitNameHours => 'hours';
+
+  @override
+  String get unitNameMinutes => 'minutes';
+
+  @override
+  String get unitNameSessions => 'sessions';
+
+  @override
+  String get unitNameBooks => 'books';
+
+  @override
+  String get unitNameKm => 'km';
+
+  @override
+  String get unitNameTimes => 'times';
+
+  @override
+  String qtyPages(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value pages',
+      one: '$value page',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String qtyJuz(num count, String value) {
+    return '$value juz';
+  }
+
+  @override
+  String qtyHours(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value hours',
+      one: '$value hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String qtyMinutes(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value minutes',
+      one: '$value minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String qtySessions(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value sessions',
+      one: '$value session',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String qtyBooks(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value books',
+      one: '$value book',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String qtyKm(num count, String value) {
+    return '$value km';
+  }
+
+  @override
+  String qtyTimes(num count, String value) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$value times',
+      one: '$value time',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get currencyDzd => 'Algerian Dinar';
+
+  @override
+  String get currencyMad => 'Moroccan Dirham';
+
+  @override
+  String get currencyTnd => 'Tunisian Dinar';
+
+  @override
+  String get currencySar => 'Saudi Riyal';
+
+  @override
+  String get currencyAed => 'UAE Dirham';
+
+  @override
+  String get currencyEgp => 'Egyptian Pound';
+
+  @override
+  String get currencyEur => 'Euro';
+
+  @override
+  String get currencyUsd => 'US Dollar';
+
+  @override
+  String get currencyGbp => 'British Pound';
+
+  @override
+  String settingsCurrencyOption(String code, String name) {
+    return '$code — $name';
+  }
+
+  @override
+  String get notifChannelName => 'Reminders';
+
+  @override
+  String get notifChannelDescription =>
+      'Gentle local reminders you configure in Taqaddum';
+
+  @override
+  String progressWeekAxis(int week) {
+    return 'W$week';
+  }
+
+  @override
+  String progressChartLabel(String period) {
+    return 'Progress over time, $period';
+  }
+
+  @override
+  String commonOfTargetMinutes(int target) {
+    return '/ $target min';
+  }
+
+  @override
+  String commonMinutesOfTarget(int minutes, int target) {
+    return '$minutes / $target min';
+  }
 
   @override
   String get appName => 'Taqaddum';

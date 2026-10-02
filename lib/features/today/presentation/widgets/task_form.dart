@@ -21,6 +21,7 @@ import '../../../../core/widgets/pickers.dart';
 import '../../../goals/data/goals_repository.dart';
 import '../../../settings/data/preferences.dart';
 import '../../data/tasks_repository.dart';
+import '../../../../core/utilities/bidi.dart';
 
 const taskDurations = [15, 30, 45, 60, 90, 120];
 
@@ -135,7 +136,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
         for (final g in goals)
           SheetOption(
             value: g.id,
-            label: g.title,
+            label: bidiSafe(g.title),
             subtitle: g.area.label(context),
           ),
       ],
@@ -322,7 +323,7 @@ class _OptionTile extends StatelessWidget {
         borderRadius: AppRadius.cardAll,
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 8, 10),
+          padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 8, 10),
           child: Row(
             children: [
               Icon(icon, color: AppColors.primaryStrong, size: 20),

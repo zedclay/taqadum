@@ -6211,6 +6211,17 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _templateIdMeta = const VerificationMeta(
+    'templateId',
+  );
+  @override
+  late final GeneratedColumn<String> templateId = GeneratedColumn<String>(
+    'template_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _reminderMinuteMeta = const VerificationMeta(
     'reminderMinute',
   );
@@ -6266,6 +6277,7 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
     name,
     area,
     label,
+    templateId,
     reminderMinute,
     archived,
     sortOrder,
@@ -6300,6 +6312,12 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
       context.handle(
         _labelMeta,
         label.isAcceptableOrUnknown(data['label']!, _labelMeta),
+      );
+    }
+    if (data.containsKey('template_id')) {
+      context.handle(
+        _templateIdMeta,
+        templateId.isAcceptableOrUnknown(data['template_id']!, _templateIdMeta),
       );
     }
     if (data.containsKey('reminder_minute')) {
@@ -6358,6 +6376,10 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
         DriftSqlType.string,
         data['${effectivePrefix}label'],
       ),
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      ),
       reminderMinute: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}reminder_minute'],
@@ -6391,6 +6413,10 @@ class Habit extends DataClass implements Insertable<Habit> {
   final String name;
   final LifeArea area;
   final String? label;
+
+  /// Built-in starter habit id (e.g. `health1`); the name is then localized at
+  /// display time. Cleared when the user renames the habit.
+  final String? templateId;
   final int? reminderMinute;
   final bool archived;
   final int sortOrder;
@@ -6400,6 +6426,7 @@ class Habit extends DataClass implements Insertable<Habit> {
     required this.name,
     required this.area,
     this.label,
+    this.templateId,
     this.reminderMinute,
     required this.archived,
     required this.sortOrder,
@@ -6415,6 +6442,9 @@ class Habit extends DataClass implements Insertable<Habit> {
     }
     if (!nullToAbsent || label != null) {
       map['label'] = Variable<String>(label);
+    }
+    if (!nullToAbsent || templateId != null) {
+      map['template_id'] = Variable<String>(templateId);
     }
     if (!nullToAbsent || reminderMinute != null) {
       map['reminder_minute'] = Variable<int>(reminderMinute);
@@ -6433,6 +6463,9 @@ class Habit extends DataClass implements Insertable<Habit> {
       label: label == null && nullToAbsent
           ? const Value.absent()
           : Value(label),
+      templateId: templateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateId),
       reminderMinute: reminderMinute == null && nullToAbsent
           ? const Value.absent()
           : Value(reminderMinute),
@@ -6454,6 +6487,7 @@ class Habit extends DataClass implements Insertable<Habit> {
         serializer.fromJson<String>(json['area']),
       ),
       label: serializer.fromJson<String?>(json['label']),
+      templateId: serializer.fromJson<String?>(json['templateId']),
       reminderMinute: serializer.fromJson<int?>(json['reminderMinute']),
       archived: serializer.fromJson<bool>(json['archived']),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
@@ -6470,6 +6504,7 @@ class Habit extends DataClass implements Insertable<Habit> {
         $HabitsTable.$converterarea.toJson(area),
       ),
       'label': serializer.toJson<String?>(label),
+      'templateId': serializer.toJson<String?>(templateId),
       'reminderMinute': serializer.toJson<int?>(reminderMinute),
       'archived': serializer.toJson<bool>(archived),
       'sortOrder': serializer.toJson<int>(sortOrder),
@@ -6482,6 +6517,7 @@ class Habit extends DataClass implements Insertable<Habit> {
     String? name,
     LifeArea? area,
     Value<String?> label = const Value.absent(),
+    Value<String?> templateId = const Value.absent(),
     Value<int?> reminderMinute = const Value.absent(),
     bool? archived,
     int? sortOrder,
@@ -6491,6 +6527,7 @@ class Habit extends DataClass implements Insertable<Habit> {
     name: name ?? this.name,
     area: area ?? this.area,
     label: label.present ? label.value : this.label,
+    templateId: templateId.present ? templateId.value : this.templateId,
     reminderMinute: reminderMinute.present
         ? reminderMinute.value
         : this.reminderMinute,
@@ -6504,6 +6541,9 @@ class Habit extends DataClass implements Insertable<Habit> {
       name: data.name.present ? data.name.value : this.name,
       area: data.area.present ? data.area.value : this.area,
       label: data.label.present ? data.label.value : this.label,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
       reminderMinute: data.reminderMinute.present
           ? data.reminderMinute.value
           : this.reminderMinute,
@@ -6520,6 +6560,7 @@ class Habit extends DataClass implements Insertable<Habit> {
           ..write('name: $name, ')
           ..write('area: $area, ')
           ..write('label: $label, ')
+          ..write('templateId: $templateId, ')
           ..write('reminderMinute: $reminderMinute, ')
           ..write('archived: $archived, ')
           ..write('sortOrder: $sortOrder, ')
@@ -6534,6 +6575,7 @@ class Habit extends DataClass implements Insertable<Habit> {
     name,
     area,
     label,
+    templateId,
     reminderMinute,
     archived,
     sortOrder,
@@ -6547,6 +6589,7 @@ class Habit extends DataClass implements Insertable<Habit> {
           other.name == this.name &&
           other.area == this.area &&
           other.label == this.label &&
+          other.templateId == this.templateId &&
           other.reminderMinute == this.reminderMinute &&
           other.archived == this.archived &&
           other.sortOrder == this.sortOrder &&
@@ -6558,6 +6601,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
   final Value<String> name;
   final Value<LifeArea> area;
   final Value<String?> label;
+  final Value<String?> templateId;
   final Value<int?> reminderMinute;
   final Value<bool> archived;
   final Value<int> sortOrder;
@@ -6568,6 +6612,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     this.name = const Value.absent(),
     this.area = const Value.absent(),
     this.label = const Value.absent(),
+    this.templateId = const Value.absent(),
     this.reminderMinute = const Value.absent(),
     this.archived = const Value.absent(),
     this.sortOrder = const Value.absent(),
@@ -6579,6 +6624,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     required String name,
     required LifeArea area,
     this.label = const Value.absent(),
+    this.templateId = const Value.absent(),
     this.reminderMinute = const Value.absent(),
     this.archived = const Value.absent(),
     this.sortOrder = const Value.absent(),
@@ -6593,6 +6639,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     Expression<String>? name,
     Expression<String>? area,
     Expression<String>? label,
+    Expression<String>? templateId,
     Expression<int>? reminderMinute,
     Expression<bool>? archived,
     Expression<int>? sortOrder,
@@ -6604,6 +6651,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
       if (name != null) 'name': name,
       if (area != null) 'area': area,
       if (label != null) 'label': label,
+      if (templateId != null) 'template_id': templateId,
       if (reminderMinute != null) 'reminder_minute': reminderMinute,
       if (archived != null) 'archived': archived,
       if (sortOrder != null) 'sort_order': sortOrder,
@@ -6617,6 +6665,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     Value<String>? name,
     Value<LifeArea>? area,
     Value<String?>? label,
+    Value<String?>? templateId,
     Value<int?>? reminderMinute,
     Value<bool>? archived,
     Value<int>? sortOrder,
@@ -6628,6 +6677,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
       name: name ?? this.name,
       area: area ?? this.area,
       label: label ?? this.label,
+      templateId: templateId ?? this.templateId,
       reminderMinute: reminderMinute ?? this.reminderMinute,
       archived: archived ?? this.archived,
       sortOrder: sortOrder ?? this.sortOrder,
@@ -6652,6 +6702,9 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     }
     if (label.present) {
       map['label'] = Variable<String>(label.value);
+    }
+    if (templateId.present) {
+      map['template_id'] = Variable<String>(templateId.value);
     }
     if (reminderMinute.present) {
       map['reminder_minute'] = Variable<int>(reminderMinute.value);
@@ -6678,6 +6731,7 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
           ..write('name: $name, ')
           ..write('area: $area, ')
           ..write('label: $label, ')
+          ..write('templateId: $templateId, ')
           ..write('reminderMinute: $reminderMinute, ')
           ..write('archived: $archived, ')
           ..write('sortOrder: $sortOrder, ')
@@ -11273,6 +11327,15 @@ class $ActivityEventsTable extends ActivityEvents
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _factsMeta = const VerificationMeta('facts');
+  @override
+  late final GeneratedColumn<String> facts = GeneratedColumn<String>(
+    'facts',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _occurredAtMeta = const VerificationMeta(
     'occurredAt',
   );
@@ -11294,6 +11357,7 @@ class $ActivityEventsTable extends ActivityEvents
     amountMinor,
     entityType,
     entityId,
+    facts,
     occurredAt,
   ];
   @override
@@ -11346,6 +11410,12 @@ class $ActivityEventsTable extends ActivityEvents
       context.handle(
         _entityIdMeta,
         entityId.isAcceptableOrUnknown(data['entity_id']!, _entityIdMeta),
+      );
+    }
+    if (data.containsKey('facts')) {
+      context.handle(
+        _factsMeta,
+        facts.isAcceptableOrUnknown(data['facts']!, _factsMeta),
       );
     }
     if (data.containsKey('occurred_at')) {
@@ -11401,6 +11471,10 @@ class $ActivityEventsTable extends ActivityEvents
         DriftSqlType.string,
         data['${effectivePrefix}entity_id'],
       ),
+      facts: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}facts'],
+      ),
       occurredAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}occurred_at'],
@@ -11430,6 +11504,10 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
   final int? amountMinor;
   final String? entityType;
   final String? entityId;
+
+  /// JSON facts (minutes, rating, kind…) used to render system titles in the
+  /// active language; [title] and [subtitle] keep a readable fallback.
+  final String? facts;
   final DateTime occurredAt;
   const ActivityEvent({
     required this.id,
@@ -11440,6 +11518,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
     this.amountMinor,
     this.entityType,
     this.entityId,
+    this.facts,
     required this.occurredAt,
   });
   @override
@@ -11469,6 +11548,9 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
     if (!nullToAbsent || entityId != null) {
       map['entity_id'] = Variable<String>(entityId);
     }
+    if (!nullToAbsent || facts != null) {
+      map['facts'] = Variable<String>(facts);
+    }
     map['occurred_at'] = Variable<DateTime>(occurredAt);
     return map;
   }
@@ -11491,6 +11573,9 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
       entityId: entityId == null && nullToAbsent
           ? const Value.absent()
           : Value(entityId),
+      facts: facts == null && nullToAbsent
+          ? const Value.absent()
+          : Value(facts),
       occurredAt: Value(occurredAt),
     );
   }
@@ -11513,6 +11598,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
       amountMinor: serializer.fromJson<int?>(json['amountMinor']),
       entityType: serializer.fromJson<String?>(json['entityType']),
       entityId: serializer.fromJson<String?>(json['entityId']),
+      facts: serializer.fromJson<String?>(json['facts']),
       occurredAt: serializer.fromJson<DateTime>(json['occurredAt']),
     );
   }
@@ -11532,6 +11618,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
       'amountMinor': serializer.toJson<int?>(amountMinor),
       'entityType': serializer.toJson<String?>(entityType),
       'entityId': serializer.toJson<String?>(entityId),
+      'facts': serializer.toJson<String?>(facts),
       'occurredAt': serializer.toJson<DateTime>(occurredAt),
     };
   }
@@ -11545,6 +11632,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
     Value<int?> amountMinor = const Value.absent(),
     Value<String?> entityType = const Value.absent(),
     Value<String?> entityId = const Value.absent(),
+    Value<String?> facts = const Value.absent(),
     DateTime? occurredAt,
   }) => ActivityEvent(
     id: id ?? this.id,
@@ -11555,6 +11643,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
     amountMinor: amountMinor.present ? amountMinor.value : this.amountMinor,
     entityType: entityType.present ? entityType.value : this.entityType,
     entityId: entityId.present ? entityId.value : this.entityId,
+    facts: facts.present ? facts.value : this.facts,
     occurredAt: occurredAt ?? this.occurredAt,
   );
   ActivityEvent copyWithCompanion(ActivityEventsCompanion data) {
@@ -11571,6 +11660,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
           ? data.entityType.value
           : this.entityType,
       entityId: data.entityId.present ? data.entityId.value : this.entityId,
+      facts: data.facts.present ? data.facts.value : this.facts,
       occurredAt: data.occurredAt.present
           ? data.occurredAt.value
           : this.occurredAt,
@@ -11588,6 +11678,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
           ..write('amountMinor: $amountMinor, ')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
+          ..write('facts: $facts, ')
           ..write('occurredAt: $occurredAt')
           ..write(')'))
         .toString();
@@ -11603,6 +11694,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
     amountMinor,
     entityType,
     entityId,
+    facts,
     occurredAt,
   );
   @override
@@ -11617,6 +11709,7 @@ class ActivityEvent extends DataClass implements Insertable<ActivityEvent> {
           other.amountMinor == this.amountMinor &&
           other.entityType == this.entityType &&
           other.entityId == this.entityId &&
+          other.facts == this.facts &&
           other.occurredAt == this.occurredAt);
 }
 
@@ -11629,6 +11722,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
   final Value<int?> amountMinor;
   final Value<String?> entityType;
   final Value<String?> entityId;
+  final Value<String?> facts;
   final Value<DateTime> occurredAt;
   final Value<int> rowid;
   const ActivityEventsCompanion({
@@ -11640,6 +11734,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
     this.amountMinor = const Value.absent(),
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
+    this.facts = const Value.absent(),
     this.occurredAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -11652,6 +11747,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
     this.amountMinor = const Value.absent(),
     this.entityType = const Value.absent(),
     this.entityId = const Value.absent(),
+    this.facts = const Value.absent(),
     required DateTime occurredAt,
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -11667,6 +11763,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
     Expression<int>? amountMinor,
     Expression<String>? entityType,
     Expression<String>? entityId,
+    Expression<String>? facts,
     Expression<DateTime>? occurredAt,
     Expression<int>? rowid,
   }) {
@@ -11679,6 +11776,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
       if (amountMinor != null) 'amount_minor': amountMinor,
       if (entityType != null) 'entity_type': entityType,
       if (entityId != null) 'entity_id': entityId,
+      if (facts != null) 'facts': facts,
       if (occurredAt != null) 'occurred_at': occurredAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -11693,6 +11791,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
     Value<int?>? amountMinor,
     Value<String?>? entityType,
     Value<String?>? entityId,
+    Value<String?>? facts,
     Value<DateTime>? occurredAt,
     Value<int>? rowid,
   }) {
@@ -11705,6 +11804,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
       amountMinor: amountMinor ?? this.amountMinor,
       entityType: entityType ?? this.entityType,
       entityId: entityId ?? this.entityId,
+      facts: facts ?? this.facts,
       occurredAt: occurredAt ?? this.occurredAt,
       rowid: rowid ?? this.rowid,
     );
@@ -11741,6 +11841,9 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
     if (entityId.present) {
       map['entity_id'] = Variable<String>(entityId.value);
     }
+    if (facts.present) {
+      map['facts'] = Variable<String>(facts.value);
+    }
     if (occurredAt.present) {
       map['occurred_at'] = Variable<DateTime>(occurredAt.value);
     }
@@ -11761,6 +11864,7 @@ class ActivityEventsCompanion extends UpdateCompanion<ActivityEvent> {
           ..write('amountMinor: $amountMinor, ')
           ..write('entityType: $entityType, ')
           ..write('entityId: $entityId, ')
+          ..write('facts: $facts, ')
           ..write('occurredAt: $occurredAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -16935,6 +17039,7 @@ typedef $$HabitsTableCreateCompanionBuilder = HabitsCompanion Function({
   required String name,
   required LifeArea area,
   Value<String?> label,
+  Value<String?> templateId,
   Value<int?> reminderMinute,
   Value<bool> archived,
   Value<int> sortOrder,
@@ -16946,6 +17051,7 @@ typedef $$HabitsTableUpdateCompanionBuilder = HabitsCompanion Function({
   Value<String> name,
   Value<LifeArea> area,
   Value<String?> label,
+  Value<String?> templateId,
   Value<int?> reminderMinute,
   Value<bool> archived,
   Value<int> sortOrder,
@@ -17021,6 +17127,11 @@ class $$HabitsTableFilterComposer
 
   ColumnFilters<String> get label => $composableBuilder(
     column: $table.label,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateId => $composableBuilder(
+    column: $table.templateId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -17124,6 +17235,11 @@ class $$HabitsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get templateId => $composableBuilder(
+    column: $table.templateId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get reminderMinute => $composableBuilder(
     column: $table.reminderMinute,
     builder: (column) => ColumnOrderings(column),
@@ -17165,6 +17281,11 @@ class $$HabitsTableAnnotationComposer
 
   GeneratedColumn<String> get label =>
       $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumn<String> get templateId => $composableBuilder(
+    column: $table.templateId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get reminderMinute => $composableBuilder(
     column: $table.reminderMinute,
@@ -17263,6 +17384,7 @@ class $$HabitsTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<LifeArea> area = const Value.absent(),
                 Value<String?> label = const Value.absent(),
+                Value<String?> templateId = const Value.absent(),
                 Value<int?> reminderMinute = const Value.absent(),
                 Value<bool> archived = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
@@ -17273,6 +17395,7 @@ class $$HabitsTableTableManager
                 name: name,
                 area: area,
                 label: label,
+                templateId: templateId,
                 reminderMinute: reminderMinute,
                 archived: archived,
                 sortOrder: sortOrder,
@@ -17285,6 +17408,7 @@ class $$HabitsTableTableManager
                 required String name,
                 required LifeArea area,
                 Value<String?> label = const Value.absent(),
+                Value<String?> templateId = const Value.absent(),
                 Value<int?> reminderMinute = const Value.absent(),
                 Value<bool> archived = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
@@ -17295,6 +17419,7 @@ class $$HabitsTableTableManager
                 name: name,
                 area: area,
                 label: label,
+                templateId: templateId,
                 reminderMinute: reminderMinute,
                 archived: archived,
                 sortOrder: sortOrder,
@@ -20438,6 +20563,7 @@ typedef $$ActivityEventsTableCreateCompanionBuilder =
       Value<int?> amountMinor,
       Value<String?> entityType,
       Value<String?> entityId,
+      Value<String?> facts,
       required DateTime occurredAt,
       Value<int> rowid,
     });
@@ -20451,6 +20577,7 @@ typedef $$ActivityEventsTableUpdateCompanionBuilder =
       Value<int?> amountMinor,
       Value<String?> entityType,
       Value<String?> entityId,
+      Value<String?> facts,
       Value<DateTime> occurredAt,
       Value<int> rowid,
     });
@@ -20503,6 +20630,11 @@ class $$ActivityEventsTableFilterComposer
 
   ColumnFilters<String> get entityId => $composableBuilder(
     column: $table.entityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get facts => $composableBuilder(
+    column: $table.facts,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -20561,6 +20693,11 @@ class $$ActivityEventsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get facts => $composableBuilder(
+    column: $table.facts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get occurredAt => $composableBuilder(
     column: $table.occurredAt,
     builder: (column) => ColumnOrderings(column),
@@ -20603,6 +20740,9 @@ class $$ActivityEventsTableAnnotationComposer
 
   GeneratedColumn<String> get entityId =>
       $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  GeneratedColumn<String> get facts =>
+      $composableBuilder(column: $table.facts, builder: (column) => column);
 
   GeneratedColumn<DateTime> get occurredAt => $composableBuilder(
     column: $table.occurredAt,
@@ -20651,6 +20791,7 @@ class $$ActivityEventsTableTableManager
                 Value<int?> amountMinor = const Value.absent(),
                 Value<String?> entityType = const Value.absent(),
                 Value<String?> entityId = const Value.absent(),
+                Value<String?> facts = const Value.absent(),
                 Value<DateTime> occurredAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ActivityEventsCompanion(
@@ -20662,6 +20803,7 @@ class $$ActivityEventsTableTableManager
                 amountMinor: amountMinor,
                 entityType: entityType,
                 entityId: entityId,
+                facts: facts,
                 occurredAt: occurredAt,
                 rowid: rowid,
               ),
@@ -20675,6 +20817,7 @@ class $$ActivityEventsTableTableManager
                 Value<int?> amountMinor = const Value.absent(),
                 Value<String?> entityType = const Value.absent(),
                 Value<String?> entityId = const Value.absent(),
+                Value<String?> facts = const Value.absent(),
                 required DateTime occurredAt,
                 Value<int> rowid = const Value.absent(),
               }) => ActivityEventsCompanion.insert(
@@ -20686,6 +20829,7 @@ class $$ActivityEventsTableTableManager
                 amountMinor: amountMinor,
                 entityType: entityType,
                 entityId: entityId,
+                facts: facts,
                 occurredAt: occurredAt,
                 rowid: rowid,
               ),

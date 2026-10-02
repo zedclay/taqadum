@@ -9,6 +9,7 @@ import '../../../core/utilities/ids.dart';
 import '../../goals/data/goals_repository.dart';
 import '../../goals/domain/goal_progress.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class WorkRepository {
   WorkRepository(this._db, this._goals, this._activity);
@@ -87,13 +88,18 @@ class WorkRepository {
       type: ActivityType.logged,
       title: title.trim(),
       subtitle: [
-        _kindLabel(kind),
+        ActivityFallback.workKind(kind),
         ?_clean(counterpart),
-        if (minutes != null) Fmt.minutes(minutes),
+        if (minutes != null) ActivityFallback.duration(minutes),
       ].join(' · '),
       amountMinor: kind == WorkKind.clientWon ? valueMinor : null,
       entityType: 'work',
       entityId: id,
+      facts: {
+        'kind': kind.name,
+        'counterpart': _clean(counterpart),
+        'minutes': minutes,
+      },
       at: when,
     );
   });
@@ -105,15 +111,6 @@ class WorkRepository {
       _db.workActivities,
     )..where((t) => t.id.equals(a.id))).go();
   });
-
-  static String _kindLabel(WorkKind k) => switch (k) {
-    WorkKind.deepWork => 'Deep work',
-    WorkKind.lead => 'Lead contacted',
-    WorkKind.followUp => 'Follow-up',
-    WorkKind.meeting => 'Meeting',
-    WorkKind.proposal => 'Proposal sent',
-    WorkKind.clientWon => 'Client won',
-  };
 
   static String? _clean(String? v) =>
       v == null || v.trim().isEmpty ? null : v.trim();

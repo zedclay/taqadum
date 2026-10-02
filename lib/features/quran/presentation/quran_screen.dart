@@ -252,7 +252,7 @@ class _RoutineCard extends ConsumerWidget {
                 borderRadius: AppRadius.mdAll,
                 onTap: () => showQuranLogSheet(context, kind: r.$1),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 12, 16, 14),
+                  padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 16, 14),
                   child: Column(
                     children: [
                       Row(
@@ -321,7 +321,7 @@ class _MemorizationCard extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  surahNames[memo.surah - 1],
+                  surahName(memo.surah, arabic: context.isArabic),
                   style: AppTypography.headline,
                 ),
               ),
@@ -403,7 +403,13 @@ class _RevisionCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(item.title, style: AppTypography.bodyMedium),
+                          Text(
+                            localizeSurahLabel(
+                              item.title,
+                              arabic: context.isArabic,
+                            ),
+                            style: AppTypography.bodyMedium,
+                          ),
                           const SizedBox(height: 2),
                           Text(
                             l.quranLastReviewed(
@@ -547,8 +553,12 @@ class _RecentCard extends ConsumerWidget {
   String _title(BuildContext context, QuranLog log) {
     final l = context.l10n;
     return switch (log.kind) {
-      QuranKind.reading => l.quranReadN(QuranRepository.pagesLabel(log.pages)),
+      QuranKind.reading => l.quranReadN(
+        log.pages,
+        QuranRepository.pagesLabel(log.pages),
+      ),
       QuranKind.memorization => l.quranMemorizedN(
+        log.pages,
         QuranRepository.pagesLabel(log.pages),
       ),
       QuranKind.revision => l.quranRevisedN(log.minutes),
@@ -598,7 +608,11 @@ class _RecentCard extends ConsumerWidget {
               title: _title(context, log),
               subtitle: [
                 whenLabel(context, log.occurredAt, use24h: use24h),
-                if (log.surah != null) QuranStats.displayTitle(log.surah!),
+                if (log.surah != null)
+                  localizeSurahLabel(
+                    QuranStats.displayTitle(log.surah!),
+                    arabic: context.isArabic,
+                  ),
               ].join(' · '),
               trailing: quranKindLabel(context, log.kind),
               onTap: () => _delete(context, ref, log),

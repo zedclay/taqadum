@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -68,6 +70,7 @@ class ActivityRepository {
     int? amountMinor,
     String? entityType,
     String? entityId,
+    Map<String, Object?>? facts,
     DateTime? at,
   }) => _db
       .into(_db.activityEvents)
@@ -81,6 +84,7 @@ class ActivityRepository {
           amountMinor: Value(amountMinor),
           entityType: Value(entityType),
           entityId: Value(entityId),
+          facts: Value(facts == null ? null : jsonEncode(facts)),
           occurredAt: (at ?? DateTime.now()).toUtc(),
         ),
       );
@@ -111,6 +115,8 @@ class ActivityRepository {
     return q.watch();
   }
 
+  /// Applies every filter except [ActivityFilter.query]; text search runs on
+  /// the localized display text (see `ActivityText.matches`).
   Stream<List<ActivityEvent>> watchFiltered(ActivityFilter filter) {
     final q = _db.select(_db.activityEvents);
     q.where((t) {
@@ -127,11 +133,6 @@ class ActivityRepository {
         e = e & t.area.equalsValue(filter.area);
       }
       if (filter.type != null) e = e & t.type.equalsValue(filter.type);
-      final query = filter.query.trim();
-      if (query.isNotEmpty) {
-        final like = '%${query.replaceAll('%', r'\%')}%';
-        e = e & (t.title.like(like) | t.subtitle.like(like));
-      }
       return e;
     });
     q.orderBy([(t) => OrderingTerm.desc(t.occurredAt)]);

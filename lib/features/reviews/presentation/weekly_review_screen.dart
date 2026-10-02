@@ -32,6 +32,7 @@ import '../../today/data/tasks_repository.dart';
 import '../data/reviews_repository.dart';
 import '../domain/review_insights.dart';
 import 'widgets/review_widgets.dart';
+import '../../../core/utilities/bidi.dart';
 
 String weekRangeLabel(PeriodRange r) =>
     '${Fmt.monthDay(r.start)} – ${Fmt.monthDay(addDays(r.end, -1))}';
@@ -263,7 +264,7 @@ class _WeeklyReviewScreenState extends ConsumerState<WeeklyReviewScreen> {
         : null;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.sm,
         AppSpacing.screen,
@@ -561,7 +562,7 @@ class _BiggestWin extends StatelessWidget {
       );
     }
     return AppCard(
-      padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 4, 12),
       child: Row(
         children: [
           Expanded(
@@ -576,7 +577,10 @@ class _BiggestWin extends StatelessWidget {
                       ),
                       AppSpacing.gap12,
                       Expanded(
-                        child: Text(custom!, style: AppTypography.bodyMedium),
+                        child: Text(
+                          bidiSafe(custom!),
+                          style: AppTypography.bodyMedium,
+                        ),
                       ),
                     ],
                   )

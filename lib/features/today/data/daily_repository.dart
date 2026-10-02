@@ -8,6 +8,7 @@ import '../../../core/domain/period.dart';
 import '../../../core/providers.dart';
 import '../../history/data/activity_repository.dart';
 import 'tasks_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class NightReviewDraft {
   const NightReviewDraft({
@@ -100,10 +101,11 @@ class DailyRepository {
     if (existing == null) {
       await _activity.record(
         type: ActivityType.reviewed,
-        title: 'Morning check-in',
-        subtitle: '${ids.length} priorities set',
+        title: ActivityFallback.checkIn,
+        subtitle: ActivityFallback.priorities(ids.length),
         entityType: 'checkin',
         entityId: dayKey,
+        facts: {'count': ids.length},
       );
     }
   });
@@ -133,10 +135,11 @@ class DailyRepository {
     if (existing == null) {
       await _activity.record(
         type: ActivityType.reviewed,
-        title: 'Night review completed',
-        subtitle: 'Day rated ${d.rating} of 5',
+        title: ActivityFallback.nightReview,
+        subtitle: ActivityFallback.dayRated(d.rating),
         entityType: 'nightReview',
         entityId: d.dayKey,
+        facts: {'rating': d.rating},
       );
     }
   });

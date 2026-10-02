@@ -1714,24 +1714,6 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get langTitle;
 
-  /// No description provided for @langEnglish.
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get langEnglish;
-
-  /// No description provided for @langArabic.
-  ///
-  /// In en, this message translates to:
-  /// **'العربية (Arabic)'**
-  String get langArabic;
-
-  /// No description provided for @langFrench.
-  ///
-  /// In en, this message translates to:
-  /// **'Français (French)'**
-  String get langFrench;
-
   /// No description provided for @langComingSoon.
   ///
   /// In en, this message translates to:
@@ -1741,7 +1723,7 @@ abstract class AppLocalizations {
   /// No description provided for @langFootnote.
   ///
   /// In en, this message translates to:
-  /// **'Taqaddum is fully available in English today. Arabic (right-to-left) and French translations are being prepared.'**
+  /// **'Changing the language never changes your goals or records. French is coming in a future update.'**
   String get langFootnote;
 
   /// No description provided for @todayGreetingMorning.
@@ -3727,14 +3709,14 @@ abstract class AppLocalizations {
   /// No description provided for @quranReadN.
   ///
   /// In en, this message translates to:
-  /// **'Read {pages} pages'**
-  String quranReadN(Object pages);
+  /// **'{count, plural, =1{Read {pages} page} other{Read {pages} pages}}'**
+  String quranReadN(num count, String pages);
 
   /// No description provided for @quranMemorizedN.
   ///
   /// In en, this message translates to:
-  /// **'Memorized {pages} page'**
-  String quranMemorizedN(Object pages);
+  /// **'{count, plural, =1{Memorized {pages} page} other{Memorized {pages} pages}}'**
+  String quranMemorizedN(num count, String pages);
 
   /// No description provided for @quranRevisedN.
   ///
@@ -7066,12 +7048,6 @@ abstract class AppLocalizations {
   /// **'Dismiss'**
   String get activityDismiss;
 
-  /// No description provided for @activityOpen.
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get activityOpen;
-
   /// No description provided for @activityOpenPlan.
   ///
   /// In en, this message translates to:
@@ -7798,12 +7774,6 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get settingsLanguage;
 
-  /// No description provided for @settingsLanguagePreview.
-  ///
-  /// In en, this message translates to:
-  /// **'Preview: some screens are still in English'**
-  String get settingsLanguagePreview;
-
   /// No description provided for @settingsReduceMotion.
   ///
   /// In en, this message translates to:
@@ -8265,6 +8235,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Demo data added'**
   String get settingsDemoDone;
+
+  /// No description provided for @activityCheckInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning check-in'**
+  String get activityCheckInTitle;
+
+  /// No description provided for @activityNightReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Night review completed'**
+  String get activityNightReviewTitle;
+
+  /// No description provided for @activityWeeklyReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly review completed'**
+  String get activityWeeklyReviewTitle;
+
+  /// No description provided for @activityMonthlyReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly review completed'**
+  String get activityMonthlyReviewTitle;
+
+  /// No description provided for @activityPrioritiesSet.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No priorities set} =1{1 priority set} other{{count} priorities set}}'**
+  String activityPrioritiesSet(int count);
+
+  /// No description provided for @activityDayRated.
+  ///
+  /// In en, this message translates to:
+  /// **'Day rated {rating} of 5'**
+  String activityDayRated(int rating);
+
+  /// No description provided for @activityDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} – {end}'**
+  String activityDateRange(String start, String end);
+
+  /// No description provided for @activityHabitAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit added'**
+  String get activityHabitAdded;
+
+  /// No description provided for @activityHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit'**
+  String get activityHabit;
+
+  /// No description provided for @activityGoalCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal created'**
+  String get activityGoalCreated;
+
+  /// No description provided for @activityGoalUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal updated'**
+  String get activityGoalUpdated;
+
+  /// No description provided for @activityGoalCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal completed'**
+  String get activityGoalCompleted;
+
+  /// No description provided for @activityProgressLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress logged'**
+  String get activityProgressLogged;
+
+  /// No description provided for @activityNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get activityNote;
+
+  /// No description provided for @activityStudySession.
+  ///
+  /// In en, this message translates to:
+  /// **'Study session · {topic}'**
+  String activityStudySession(String topic);
+
+  /// No description provided for @activityWalkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk · {duration}'**
+  String activityWalkTitle(String duration);
+
+  /// No description provided for @activitySleepTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep · {duration}'**
+  String activitySleepTitle(String duration);
+
+  /// No description provided for @activitySteps.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 step} other{{steps} steps}}'**
+  String activitySteps(int count, String steps);
+
+  /// No description provided for @activitySleepWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Bed {bed} · Wake {wake}'**
+  String activitySleepWindow(String bed, String wake);
+
+  /// No description provided for @activityOpenArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Open {area}'**
+  String activityOpenArea(String area);
+
+  /// No description provided for @unitNamePages.
+  ///
+  /// In en, this message translates to:
+  /// **'pages'**
+  String get unitNamePages;
+
+  /// No description provided for @unitNameJuz.
+  ///
+  /// In en, this message translates to:
+  /// **'juz'**
+  String get unitNameJuz;
+
+  /// No description provided for @unitNameHours.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get unitNameHours;
+
+  /// No description provided for @unitNameMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get unitNameMinutes;
+
+  /// No description provided for @unitNameSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'sessions'**
+  String get unitNameSessions;
+
+  /// No description provided for @unitNameBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'books'**
+  String get unitNameBooks;
+
+  /// No description provided for @unitNameKm.
+  ///
+  /// In en, this message translates to:
+  /// **'km'**
+  String get unitNameKm;
+
+  /// No description provided for @unitNameTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'times'**
+  String get unitNameTimes;
+
+  /// No description provided for @qtyPages.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} page} other{{value} pages}}'**
+  String qtyPages(num count, String value);
+
+  /// No description provided for @qtyJuz.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} juz'**
+  String qtyJuz(num count, String value);
+
+  /// No description provided for @qtyHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} hour} other{{value} hours}}'**
+  String qtyHours(num count, String value);
+
+  /// No description provided for @qtyMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} minute} other{{value} minutes}}'**
+  String qtyMinutes(num count, String value);
+
+  /// No description provided for @qtySessions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} session} other{{value} sessions}}'**
+  String qtySessions(num count, String value);
+
+  /// No description provided for @qtyBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} book} other{{value} books}}'**
+  String qtyBooks(num count, String value);
+
+  /// No description provided for @qtyKm.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} km'**
+  String qtyKm(num count, String value);
+
+  /// No description provided for @qtyTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{value} time} other{{value} times}}'**
+  String qtyTimes(num count, String value);
+
+  /// No description provided for @currencyDzd.
+  ///
+  /// In en, this message translates to:
+  /// **'Algerian Dinar'**
+  String get currencyDzd;
+
+  /// No description provided for @currencyMad.
+  ///
+  /// In en, this message translates to:
+  /// **'Moroccan Dirham'**
+  String get currencyMad;
+
+  /// No description provided for @currencyTnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Tunisian Dinar'**
+  String get currencyTnd;
+
+  /// No description provided for @currencySar.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Riyal'**
+  String get currencySar;
+
+  /// No description provided for @currencyAed.
+  ///
+  /// In en, this message translates to:
+  /// **'UAE Dirham'**
+  String get currencyAed;
+
+  /// No description provided for @currencyEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'Egyptian Pound'**
+  String get currencyEgp;
+
+  /// No description provided for @currencyEur.
+  ///
+  /// In en, this message translates to:
+  /// **'Euro'**
+  String get currencyEur;
+
+  /// No description provided for @currencyUsd.
+  ///
+  /// In en, this message translates to:
+  /// **'US Dollar'**
+  String get currencyUsd;
+
+  /// No description provided for @currencyGbp.
+  ///
+  /// In en, this message translates to:
+  /// **'British Pound'**
+  String get currencyGbp;
+
+  /// No description provided for @settingsCurrencyOption.
+  ///
+  /// In en, this message translates to:
+  /// **'{code} — {name}'**
+  String settingsCurrencyOption(String code, String name);
+
+  /// No description provided for @notifChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get notifChannelName;
+
+  /// No description provided for @notifChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle local reminders you configure in Taqaddum'**
+  String get notifChannelDescription;
+
+  /// No description provided for @progressWeekAxis.
+  ///
+  /// In en, this message translates to:
+  /// **'W{week}'**
+  String progressWeekAxis(int week);
+
+  /// No description provided for @progressChartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress over time, {period}'**
+  String progressChartLabel(String period);
+
+  /// No description provided for @commonOfTargetMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'/ {target} min'**
+  String commonOfTargetMinutes(int target);
+
+  /// No description provided for @commonMinutesOfTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} / {target} min'**
+  String commonMinutesOfTarget(int minutes, int target);
 
   /// No description provided for @appName.
   ///

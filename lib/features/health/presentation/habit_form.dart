@@ -20,6 +20,8 @@ import '../../../core/widgets/pickers.dart';
 import '../../notifications/data/reminders_repository.dart';
 import '../../settings/data/preferences.dart';
 import '../data/health_repository.dart';
+import '../domain/habit_names.dart';
+import '../../../core/utilities/bidi.dart';
 
 Future<void> showHabitSheet(
   BuildContext context, {
@@ -191,7 +193,7 @@ class _HabitRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      habit.name,
+                      bidiSafe(habitDisplayName(context.l10n, habit)),
                       style: AppTypography.bodyMedium.copyWith(
                         color: AppColors.textPrimary,
                         decoration: done ? TextDecoration.lineThrough : null,

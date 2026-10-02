@@ -19,7 +19,7 @@ cloud SDK, and no runtime network access. All user data lives in a local SQLite 
 | Export | `path_provider` + `share_plus` | JSON/CSV written locally, shared via the OS sheet |
 | Icons | `material_symbols_icons` | Same Material Symbols glyphs as Stitch, bundled locally |
 | Formatting | `intl`, `uuid` | Dates, numbers, IDs |
-| i18n | `flutter_localizations` + ARB (`gen-l10n`) | English complete; Arabic (RTL) and French ready |
+| i18n | `flutter_localizations` + ARB (`gen-l10n`) | English and Arabic (`ar_DZ`, RTL) complete; French disabled until finished. See `docs/arabic_localization_review.md` |
 
 ## 2. Folder structure
 
@@ -32,7 +32,7 @@ lib/
   core/
     database/                   Drift tables, AppDatabase, migrations
     domain/                     shared enums/value types (LifeArea, day keys, periods)
-    localization/               BuildContext.l10n extension
+    localization/               BuildContext.l10n extension, AppLanguages / AppLocale
     routing/                    AppRoutes, router, shell scaffold, redirect logic
     services/                   notifications, credentials, password hashing, export, clock
     theme/                      app_colors, app_typography, app_spacing, app_radius, app_motion, app_theme
@@ -79,7 +79,7 @@ otherwise                            → /today
 A router `redirect` protects all app routes: without a session every route resolves to
 `/auth`.
 
-## 4. Database model (Drift, schema v1)
+## 4. Database model (Drift, schema v2)
 
 Day-bound records use a `dayKey` string (`yyyy-MM-dd`, local calendar day). Moments use UTC
 `DateTime` columns and are rendered in the device timezone. Money is stored as integer minor
@@ -97,15 +97,15 @@ units (`amountMinor`, ×100) to avoid floating point errors. IDs are UUID v4 str
 | `night_reviews` | dayKey PK, rating 1–5, tags + notes for "went well" / "better", biggestWin |
 | `quran_logs` | kind (reading/memorization/revision), pages, minutes, surah, occurredAt, goalId? |
 | `work_activities` | kind (deepWork/lead/followUp/meeting/proposal/clientWon), title, counterpart, valueMinor, minutes, scheduledAt, occurredAt, goalId? |
-| `finance_transactions` | type (income/expense/saving), amountMinor, category, note, tag (personal/business), occurredAt, goalId? |
-| `habits` / `habit_logs` | Habit definitions (area, label, reminderMinute) and one log per habit per dayKey |
+| `finance_transactions` | type (income/expense/saving), amountMinor, category (stable id such as `clientPayment` for built-ins, or the user's own text), note, tag (personal/business), occurredAt, goalId? |
+| `habits` / `habit_logs` | Habit definitions (area, label, templateId for built-in starter habits, reminderMinute) and one log per habit per dayKey |
 | `workout_logs`, `walking_logs`, `sleep_logs` | Manual health tracking |
 | `learning_resources` / `learning_sessions` | Resources with unit progress; sessions with minutes, takeaway, applied action |
 | `notes` | Quick Add notes |
 | `weekly_reviews` | weekStart dayKey PK, reflections (tags + notes), biggest win, next-week priorities (JSON), completedAt |
 | `monthly_reviews` | monthKey PK (`yyyy-MM`), three reflection questions, lesson, priorities (JSON), completedAt |
 | `reminders` | id (stable key), kind, enabled, minuteOfDay, weekdays mask, habitId? |
-| `activity_events` | Unified history: area, type, title, subtitle, amountMinor, entityType/entityId, occurredAt |
+| `activity_events` | Unified history: area, type, title, subtitle (English fallback), facts (JSON used to render system rows in the active language), amountMinor, entityType/entityId, occurredAt |
 | `app_settings` | key/value for user-domain settings (focus areas, pace, learning focus, quiet hours) |
 
 Relationships: goals ⟶ actions / milestones / progress events (cascade delete). Tasks,
@@ -116,8 +116,10 @@ reference a goal. When a log references a goal, the repository writes the log, t
 Derived, never stored: goal percentage, today's completion, weekly/monthly totals, area
 consistency, active days, calendar day strength, finance totals, study totals.
 
-Migrations: `schemaVersion = 1`, `MigrationStrategy` with `onCreate` + indexes and an
-`onUpgrade` stepper scaffold for future versions.
+Migrations: `schemaVersion = 2`. `onCreate` builds tables + indexes. `onUpgrade` from v1
+adds `habits.templateId` and `activity_events.facts`, then `LegacyTextMigration` (one
+transaction) maps English starter habits and built-in finance categories to stable ids and
+backfills facts from the source rows. User-written text is never rewritten.
 
 ## 5. State management
 
@@ -132,7 +134,9 @@ Migrations: `schemaVersion = 1`, `MigrationStrategy` with `onCreate` + indexes a
 - **Screen/form state** is local (`StatefulWidget`/`Notifier`) and never persisted until
   the user saves.
 - **Preferences** (`PreferencesController`, a `Notifier`) expose language, week start,
-  currency, time format, reduce motion.
+  currency, time format, reduce motion. Changing the language re-applies `AppLocale`
+  (Intl locale, Latin digits) and the Arabic or Latin type scale, rebuilds the tree and
+  reschedules reminders in the new language; no stored data changes.
 
 ## 6. Offline strategy
 
@@ -170,13 +174,14 @@ Release builds without the define start empty and never seed.
 
 ## 9. Testing
 
-Run everything with `flutter test` (85 tests, fully offline).
+Run everything with `flutter test` (119 tests, fully offline).
 
 | Folder | What it covers |
 | --- | --- |
 | `test/unit/` | Period ranges (week start, trailing, shifting), goal progress and health, goal contributions, progress calculator (day scores, strength bands, summaries, trends), review insights (review week/month choice, movements, wins, gaps, check-in lift), reminder planner (quiet hours, suppression, weekday masks, last-day-of-month, cap), finance/Quran/work stats, Today summary, PBKDF2 vectors and hashing, validators, launch decisions and `guardRoute` |
 | `test/data/` | Repositories on an in-memory Drift database: account creation stores only a salted hash, sign-in/out, continue on this device, password setup, delete account wipes everything, goal save/edit/primary, module logs feeding linked goals, task completion contributions, onboarding persistence, demo seeder, JSON/CSV export, persistence across database re-open |
-| `test/widget/` | The real app booted on test doubles: every screen with demo data and empty data at 360 px and 430 px and at 1.35× text, bottom navigation and focused flows, first launch → device profile → onboarding → first goal → Today, every Quick Add form, saving a note |
+| `test/widget/` | The real app booted on test doubles: every screen with demo data and empty data at 360 px and 430 px and at 1.35× text, bottom navigation and focused flows, first launch → device profile → onboarding → first goal → Today, every Quick Add form, saving a note. Arabic: RTL launch, every screen at 360/430 px and 1.35×, a sweep for leftover English, Arabic onboarding, mixed-script titles, live language switching, and Arabic goldens (`test/widget/goldens/`) |
+| `test/unit/arabic_localization_test.dart`, `test/data/localization_test.dart` | Arabic formatting (dates, money, durations, signs), plurals, search folding, bidi isolation, activity text, ARB parity; locale persistence, language switch leaves the database untouched, reminders in the current language, v1 → v2 text migration |
 
 `test/flutter_test_config.dart` loads the bundled Inter and IBM Plex Sans Arabic fonts so
 layout tests use real text metrics; any `RenderFlex` overflow fails the suite.

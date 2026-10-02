@@ -7,6 +7,7 @@ import '../../../../core/localization/l10n.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/localization/app_locale.dart';
 
 String strengthLabel(BuildContext context, DayStrength s) {
   final l = context.l10n;
@@ -26,12 +27,14 @@ Color strengthFill(DayStrength s) => switch (s) {
   DayStrength.none || DayStrength.future => AppColors.surfaceMuted,
 };
 
-/// Weekday header labels starting at [weekStart].
+/// Weekday header labels starting at [weekStart]. Arabic has no short
+/// weekday forms, so it always uses the one-letter calendar labels.
 List<String> weekdayHeaders(int weekStart, {String pattern = 'EEEEE'}) {
+  final effective = AppLocale.isArabic ? 'EEEEE' : pattern;
   // 2024-01-01 was a Monday.
   return [
     for (var i = 0; i < 7; i++)
-      DateFormat(pattern)
+      DateFormat(effective)
           .format(DateTime(2024, 1, 1 + (weekStart - 1 + i) % 7)),
   ];
 }

@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
@@ -31,9 +30,9 @@ import '../../today/presentation/quick_add/quick_add_sheet.dart';
 import '../data/progress_providers.dart';
 import '../domain/progress_calculator.dart';
 import 'widgets/month_grid.dart';
+import '../../../core/utilities/bidi.dart';
 
-String weekdayName(int weekday) =>
-    DateFormat('EEEE').format(DateTime(2024, 1, weekday));
+String weekdayName(int weekday) => Fmt.weekdayLong(DateTime(2024, 1, weekday));
 
 class ProgressScreen extends ConsumerStatefulWidget {
   const ProgressScreen({super.key});
@@ -56,7 +55,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
       body: SafeArea(
         bottom: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(
+          padding: const EdgeInsetsDirectional.fromSTEB(
             AppSpacing.screen,
             AppSpacing.md,
             AppSpacing.screen,
@@ -281,14 +280,11 @@ class _TrendCard extends StatelessWidget {
       PeriodKind.month => l.progressWeeklyTrajectory,
       PeriodKind.year => l.progressMonthlyTrajectory,
     };
-    String label(int i) {
-      final p = points[i];
-      return switch (kind) {
-        PeriodKind.week || PeriodKind.day => Fmt.weekdayNarrow(s.range.days[i]),
-        PeriodKind.month => p.label,
-        PeriodKind.year => DateFormat('MMMMM').format(DateTime(2024, i + 1)),
-      };
-    }
+    String label(int i) => switch (kind) {
+      PeriodKind.week || PeriodKind.day => Fmt.weekdayNarrow(s.range.days[i]),
+      PeriodKind.month => l.progressWeekAxis(i + 1),
+      PeriodKind.year => Fmt.monthNarrow(DateTime(2024, i + 1)),
+    };
 
     final spots = [
       for (final (i, p) in points.indexed)
@@ -325,7 +321,7 @@ class _TrendCard extends StatelessWidget {
           SizedBox(
             height: 150,
             child: Semantics(
-              label: '${l.progressOverTime}, $subtitle',
+              label: l.progressChartLabel(subtitle),
               child: LineChart(
                 LineChartData(
                   minX: 0,
@@ -687,7 +683,7 @@ class _GoalsSection extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              v.goal.title,
+                              bidiSafe(v.goal.title),
                               style: AppTypography.bodyMedium,
                             ),
                           ),

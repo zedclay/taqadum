@@ -26,6 +26,7 @@ import '../data/goals_repository.dart';
 import '../domain/goal_progress.dart';
 import 'widgets/goal_mini_card.dart';
 import 'widgets/goal_widgets.dart';
+import '../../../core/utilities/bidi.dart';
 
 enum _GoalFilter { all, active, completed }
 
@@ -59,7 +60,7 @@ class _GoalsScreenState extends ConsumerState<GoalsScreen> {
                 .where((v) => v.goal.status == GoalStatus.completed)
                 .toList();
             return ListView(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                 AppSpacing.screen,
                 AppSpacing.md,
                 AppSpacing.screen,
@@ -320,11 +321,11 @@ class _PrimaryCard extends ConsumerWidget {
             ],
           ),
           AppSpacing.gap16,
-          Text(g.title, style: AppTypography.headline),
+          Text(bidiSafe(g.title), style: AppTypography.headline),
           if (g.description != null || g.why != null) ...[
             const SizedBox(height: 4),
             Text(
-              g.description ?? g.why!,
+              bidiSafe(g.description ?? g.why!),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppTypography.body,
@@ -344,7 +345,7 @@ class _PrimaryCard extends ConsumerWidget {
                               style: AppTypography.display.tabular,
                             ),
                             TextSpan(
-                              text: ' / ${goalValue(g, p.target)}',
+                              text: ' / ${goalValue(l, g, p.target)}',
                               style: AppTypography.caption,
                             ),
                           ],
@@ -371,7 +372,7 @@ class _PrimaryCard extends ConsumerWidget {
               color: AppColors.surfaceMuted,
               borderRadius: AppRadius.mdAll,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 8, 10),
                 child: Row(
                   children: [
                     CircleCheck(
@@ -392,7 +393,10 @@ class _PrimaryCard extends ConsumerWidget {
                               color: AppColors.primaryStrong,
                             ),
                           ),
-                          Text(next.title, style: AppTypography.bodyMedium),
+                          Text(
+                            bidiSafe(next.title),
+                            style: AppTypography.bodyMedium,
+                          ),
                         ],
                       ),
                     ),
@@ -531,7 +535,7 @@ class _GoalCard extends ConsumerWidget {
       };
     }
     if (p.health == GoalHealth.needsAttention && g.type == GoalType.target) {
-      return l.goalsRemaining(goalValue(g, p.remaining, compact: true));
+      return l.goalsRemaining(goalValue(l, g, p.remaining, compact: true));
     }
     if (g.targetDate != null) return Fmt.monthDay(g.targetDate!.toLocal());
     return '';
@@ -582,11 +586,13 @@ class _GoalCard extends ConsumerWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(child: Text(g.title, style: AppTypography.cardTitle)),
+              Expanded(
+                child: Text(bidiSafe(g.title), style: AppTypography.cardTitle),
+              ),
               AppSpacing.gap8,
               Text(
                 g.type == GoalType.target
-                    ? '${Fmt.compact(p.current)} / ${goalValue(g, p.target, compact: true)}'
+                    ? '${Fmt.compact(p.current)} / ${goalValue(l, g, p.target, compact: true)}'
                     : '${Fmt.number(p.current)} / ${Fmt.number(p.target)}',
                 style: AppTypography.label.tabular,
               ),
@@ -608,7 +614,7 @@ class _GoalCard extends ConsumerWidget {
               if (next != null)
                 Flexible(
                   child: Text(
-                    l.goalsNextShort(next.title),
+                    l.goalsNextShort(bidiSafe(next.title)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.end,
@@ -677,7 +683,7 @@ class _CompletedArchiveState extends State<_CompletedArchive> {
           ),
           if (_open)
             Padding(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const EdgeInsetsDirectional.fromSTEB(
                 AppSpacing.lg,
                 0,
                 AppSpacing.lg,
@@ -715,7 +721,7 @@ class _CompletedList extends StatelessWidget {
       for (final v in sorted)
         ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: flat ? 0 : 16),
-          title: Text(v.goal.title, style: AppTypography.bodyMedium),
+          title: Text(bidiSafe(v.goal.title), style: AppTypography.bodyMedium),
           subtitle: Text(
             l.goalsCompletedOn(
               Fmt.monthDayYear(

@@ -2,13 +2,14 @@ import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/database/legacy_text_migration.dart';
 import '../../../core/domain/period.dart';
 import '../../../core/providers.dart';
-import '../../../core/utilities/formatters.dart';
 import '../../../core/utilities/ids.dart';
 import '../../goals/data/goals_repository.dart';
 import '../../goals/domain/goal_progress.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class HealthRepository {
   HealthRepository(this._db, this._goals, this._activity);
@@ -65,6 +66,7 @@ class HealthRepository {
     required String name,
     required LifeArea area,
     String? label,
+    String? templateId,
     int? reminderMinute,
   }) async {
     final id = newId();
@@ -77,6 +79,7 @@ class HealthRepository {
             name: name.trim(),
             area: area,
             label: Value(label),
+            templateId: Value(templateId),
             reminderMinute: Value(reminderMinute),
             sortOrder: Value(count),
             createdAt: DateTime.now().toUtc(),
@@ -86,9 +89,10 @@ class HealthRepository {
       area: area,
       type: ActivityType.created,
       title: name.trim(),
-      subtitle: 'Habit added',
+      subtitle: ActivityFallback.habitAdded,
       entityType: 'habit',
       entityId: id,
+      facts: templateId == null ? null : {'template': templateId},
     );
     return id;
   }
@@ -96,42 +100,54 @@ class HealthRepository {
   Future<void> updateHabit(Habit habit) =>
       _db.update(_db.habits).replace(habit);
 
+  /// A renamed starter habit becomes the user's own text, so its template
+  /// link is dropped.
+  Future<void> renameHabit(Habit habit, String name) =>
+      (_db.update(_db.habits)..where((t) => t.id.equals(habit.id))).write(
+        HabitsCompanion(
+          name: Value(name.trim()),
+          templateId: const Value(null),
+        ),
+      );
+
   Future<void> archiveHabit(Habit habit) =>
       (_db.update(_db.habits)..where((t) => t.id.equals(habit.id))).write(
         const HabitsCompanion(archived: Value(true)),
       );
 
-  Future<void> setHabitDone(Habit habit, String dayKey, bool done) =>
-      _db.transaction(() async {
-        final logId = '${habit.id}:$dayKey';
-        if (done) {
-          await _db
-              .into(_db.habitLogs)
-              .insert(
-                HabitLogsCompanion.insert(
-                  id: logId,
-                  habitId: habit.id,
-                  dayKey: dayKey,
-                  createdAt: DateTime.now().toUtc(),
-                ),
-                mode: InsertMode.insertOrIgnore,
-              );
-          await _activity.record(
-            area: habit.area,
-            type: ActivityType.completed,
-            title: habit.name,
-            subtitle: habit.label ?? 'Habit',
-            entityType: 'habitLog',
-            entityId: logId,
-            at: _momentFor(dayKey),
+  Future<void> setHabitDone(
+    Habit habit,
+    String dayKey,
+    bool done,
+  ) => _db.transaction(() async {
+    final logId = '${habit.id}:$dayKey';
+    if (done) {
+      await _db
+          .into(_db.habitLogs)
+          .insert(
+            HabitLogsCompanion.insert(
+              id: logId,
+              habitId: habit.id,
+              dayKey: dayKey,
+              createdAt: DateTime.now().toUtc(),
+            ),
+            mode: InsertMode.insertOrIgnore,
           );
-        } else {
-          await (_db.delete(
-            _db.habitLogs,
-          )..where((t) => t.id.equals(logId))).go();
-          await _activity.removeFor('habitLog', logId);
-        }
-      });
+      await _activity.record(
+        area: habit.area,
+        type: ActivityType.completed,
+        title: habit.name,
+        subtitle: habit.label ?? ActivityFallback.habit,
+        entityType: 'habitLog',
+        entityId: logId,
+        facts: habit.templateId == null ? null : {'template': habit.templateId},
+        at: _momentFor(dayKey),
+      );
+    } else {
+      await (_db.delete(_db.habitLogs)..where((t) => t.id.equals(logId))).go();
+      await _activity.removeFor('habitLog', logId);
+    }
+  });
 
   Future<void> logWorkout({
     required String title,
@@ -167,9 +183,10 @@ class HealthRepository {
       area: LifeArea.health,
       type: ActivityType.logged,
       title: title.trim(),
-      subtitle: [?detail, Fmt.minutes(minutes)].join(' · '),
+      subtitle: [?detail, ActivityFallback.duration(minutes)].join(' · '),
       entityType: 'workout',
       entityId: id,
+      facts: {'minutes': minutes, 'detail': detail},
       at: when,
     );
   });
@@ -191,10 +208,11 @@ class HealthRepository {
         await _activity.record(
           area: LifeArea.health,
           type: ActivityType.logged,
-          title: 'Walk · ${Fmt.minutes(minutes)}',
-          subtitle: steps == null ? null : '${Fmt.number(steps)} steps',
+          title: ActivityFallback.walk(minutes),
+          subtitle: steps == null ? null : ActivityFallback.steps(steps),
           entityType: 'walk',
           entityId: id,
+          facts: {'minutes': minutes, 'steps': steps},
           at: when,
         );
       });
@@ -225,12 +243,11 @@ class HealthRepository {
     await _activity.record(
       area: LifeArea.health,
       type: ActivityType.logged,
-      title: 'Sleep · ${Fmt.minutes(wakeTime.difference(bedTime).inMinutes)}',
-      subtitle:
-          'Bed ${Fmt.time(bedTime, use24h: true)} · '
-          'Wake ${Fmt.time(wakeTime, use24h: true)}',
+      title: ActivityFallback.sleep(wakeTime.difference(bedTime).inMinutes),
+      subtitle: ActivityFallback.sleepWindow(bedTime, wakeTime),
       entityType: 'sleep',
       entityId: dayKey,
+      facts: LegacyTextMigration.sleepFacts(bedTime, wakeTime),
       at: wakeTime,
     );
   });

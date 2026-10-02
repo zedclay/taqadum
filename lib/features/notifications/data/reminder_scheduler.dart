@@ -8,9 +8,11 @@ import '../../../core/database/app_database.dart';
 import '../../../core/domain/period.dart';
 import '../../../core/localization/l10n.dart';
 import '../../../core/providers.dart';
+import '../../../core/services/notification_service.dart';
 import '../../settings/data/preferences.dart';
 import '../domain/reminder_planner.dart';
 import 'reminders_repository.dart';
+import '../../health/domain/habit_names.dart';
 
 class ReminderScheduler {
   ReminderScheduler(this._ref);
@@ -25,14 +27,15 @@ class ReminderScheduler {
     final reminders = await _ref.read(remindersRepositoryProvider).all();
     final habits = await db.select(db.habits).get();
     final done = await _doneToday(db, now, prefs.weekStart);
-    final l10n = lookupAppLocalizations(Locale(prefs.localeCode));
+    final l10n = lookupAppLocalizations(prefs.locale);
 
     final plan = ReminderPlanner.plan(
       PlannerInput(
         now: now,
         reminders: reminders,
         habitNames: {
-          for (final h in habits.where((h) => !h.archived)) h.id: h.name,
+          for (final h in habits.where((h) => !h.archived))
+            h.id: habitDisplayName(l10n, h),
         },
         masterOn: prefs.notificationsOn,
         quietEnabled: prefs.quietEnabled,
@@ -46,7 +49,13 @@ class ReminderScheduler {
       ),
     );
     try {
-      await service.replaceAll(plan);
+      await service.replaceAll(
+        plan,
+        channel: ReminderChannel(
+          name: l10n.notifChannelName,
+          description: l10n.notifChannelDescription,
+        ),
+      );
     } catch (error) {
       debugPrint('Reminder scheduling failed: $error');
     }

@@ -12,6 +12,7 @@ import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/area_style.dart';
 import '../../data/goals_repository.dart';
 import '../../domain/goal_progress.dart';
+import '../../../../core/utilities/bidi.dart';
 
 /// Resolves the goal a log should count toward: the explicit choice, or the
 /// default active goal for [area]. An empty string means "no goal".
@@ -64,7 +65,7 @@ class GoalLinkField extends ConsumerWidget {
               for (final g in sorted)
                 SheetOption(
                   value: g.id,
-                  label: g.title,
+                  label: bidiSafe(g.title),
                   subtitle: g.area.label(context),
                 ),
             ],
@@ -72,7 +73,7 @@ class GoalLinkField extends ConsumerWidget {
           if (picked != null) onChanged(picked);
         },
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 12, 10),
+          padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 12, 10),
           child: Row(
             children: [
               Icon(
@@ -87,7 +88,9 @@ class GoalLinkField extends ConsumerWidget {
                   children: [
                     Text(l.commonLinkedGoal, style: AppTypography.caption),
                     Text(
-                      linked?.title ?? l.commonNoLinkedGoal,
+                      linked == null
+                          ? l.commonNoLinkedGoal
+                          : bidiSafe(linked.title),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyMedium.copyWith(

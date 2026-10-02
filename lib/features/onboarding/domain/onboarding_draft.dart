@@ -26,6 +26,24 @@ List<StarterTarget> starterTargetsFor(AppLocalizations l) => [
   StarterTarget('personal2', LifeArea.personal, l.onbTargetPersonal2),
 ];
 
+/// Localized label for a built-in starter target id, or null for unknown ids.
+String? starterTargetLabel(AppLocalizations l, String id) => switch (id) {
+  'quran1' => l.onbTargetQuran1,
+  'quran2' => l.onbTargetQuran2,
+  'quran3' => l.onbTargetQuran3,
+  'work1' => l.onbTargetWork1,
+  'work2' => l.onbTargetWork2,
+  'finance1' => l.onbTargetFinance1,
+  'finance2' => l.onbTargetFinance2,
+  'health1' => l.onbTargetHealth1,
+  'health2' => l.onbTargetHealth2,
+  'learning1' => l.onbTargetLearning1,
+  'learning2' => l.onbTargetLearning2,
+  'personal1' => l.onbTargetPersonal1,
+  'personal2' => l.onbTargetPersonal2,
+  _ => null,
+};
+
 /// Everything collected across the four onboarding steps.
 class OnboardingDraft {
   const OnboardingDraft({

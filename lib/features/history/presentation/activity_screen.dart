@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
@@ -25,6 +24,7 @@ import '../../../core/widgets/states.dart';
 import '../../../core/widgets/top_bar.dart';
 import '../../settings/data/preferences.dart';
 import '../data/activity_repository.dart';
+import 'activity_text.dart';
 
 enum _RangeChoice { day, all, week, month, lastMonth, year }
 
@@ -160,14 +160,29 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
     final l = context.l10n;
     final today = ref.watch(currentDayProvider);
     final weekStart = ref.watch(preferencesProvider.select((p) => p.weekStart));
+    final query = _search.text.trim();
     final filter = ActivityFilter(
-      query: _search.text,
       area: _area,
       reviewsOnly: _reviews,
       range: _rangeFor(_choice, today, weekStart),
     );
-    final events = ref.watch(filteredActivityProvider(filter));
-    final filtered = !filter.isDefault;
+    final use24h = ref.watch(preferencesProvider.select((p) => p.use24h));
+    final events = ref
+        .watch(filteredActivityProvider(filter))
+        .whenData(
+          (all) => query.isEmpty
+              ? all
+              : [
+                  for (final e in all)
+                    if (ActivityText(
+                      l,
+                      e,
+                      use24h: use24h,
+                    ).matches(query, areaLabel: e.area?.label(context)))
+                      e,
+                ],
+        );
+    final filtered = !filter.isDefault || query.isNotEmpty;
 
     return Scaffold(
       appBar: AppTopBar(
@@ -185,7 +200,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.sm,
               AppSpacing.screen,
@@ -256,7 +271,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
               builder: (items) {
                 final areas = items.map((e) => e.area).nonNulls.toSet().length;
                 return ListView(
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: const EdgeInsetsDirectional.fromSTEB(
                     AppSpacing.screen,
                     0,
                     AppSpacing.screen,
@@ -324,7 +339,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
                     ? l.activityToday
                     : key == yesterdayKey
                     ? l.activityYesterday
-                    : DateFormat('EEEE').format(dateOfKey(key)),
+                    : Fmt.weekdayLong(dateOfKey(key)),
                 style: AppTypography.sectionTitle,
               ),
               AppSpacing.gap8,
@@ -377,7 +392,7 @@ class _SummaryBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return Container(
-      padding: const EdgeInsets.fromLTRB(12, 4, 4, 4),
+      padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 4, 4),
       decoration: BoxDecoration(
         color: AppColors.infoSoft,
         borderRadius: AppRadius.mdAll,
@@ -442,13 +457,14 @@ class _EventRow extends ConsumerWidget {
     final areaLabel = e.area?.label(context) ?? l.activityReview;
     final time = Fmt.time(e.occurredAt.toLocal(), use24h: use24h);
     final amount = e.amountMinor;
+    final text = ActivityText(l, e, use24h: use24h);
     return ActivityRow(
       icon: activityIcon(e),
       color: activityColor(e),
       background: activitySoft(e),
       dotColor: activityColor(e),
-      title: e.title,
-      subtitle: [areaLabel, ?e.subtitle].join(' · '),
+      title: text.title,
+      subtitle: [areaLabel, ?text.subtitle].join(' · '),
       trailingTop: amount == null
           ? null
           : Fmt.money(amount, currency, signed: true),
@@ -488,7 +504,7 @@ class _EventDetail extends ConsumerWidget {
       'checkin' ||
       'nightReview' => (l.activityOpenPlan, AppRoutes.planOn(dayKeyOf(local))),
       _ when e.area?.route != null => (
-        '${l.activityOpen} ${e.area!.label(context)}',
+        l.activityOpenArea(e.area!.label(context)),
         e.area!.route,
       ),
       _ => (null, null),
@@ -499,11 +515,12 @@ class _EventDetail extends ConsumerWidget {
       if (e.amountMinor != null)
         (l.activityAmount, Fmt.money(e.amountMinor!, currency, signed: true)),
     ];
+    final text = ActivityText(l, e, use24h: use24h);
     return AppBottomSheet(
-      title: e.title,
+      title: text.title,
       subtitle: [
         e.area?.label(context) ?? l.activityReview,
-        ?e.subtitle,
+        ?text.subtitle,
       ].join(' · '),
       leading: IconTile(
         icon: activityIcon(e),

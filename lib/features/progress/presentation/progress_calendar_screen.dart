@@ -30,6 +30,8 @@ import '../data/progress_providers.dart';
 import '../domain/progress_calculator.dart';
 import 'progress_screen.dart' show weekdayName;
 import 'widgets/month_grid.dart';
+import '../../history/presentation/activity_text.dart';
+import '../../../core/utilities/bidi.dart';
 
 const _overall = 'overall';
 
@@ -65,7 +67,7 @@ class _ProgressCalendarScreenState
         title: l.calTitle,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.sm),
+            padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
             child: AppTextButton(
               key: const Key('calendar-today'),
               label: l.calToday,
@@ -117,7 +119,7 @@ class _ProgressCalendarScreenState
           final areas = s?.areas.map((a) => a.area).toList() ?? const [];
 
           return ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.sm,
               AppSpacing.screen,
@@ -337,10 +339,12 @@ class _SelectedDayCard extends StatelessWidget {
 
     final byArea = <LifeArea, List<String>>{};
     for (final t in tasks.where((t) => t.completedAt != null)) {
-      (byArea[t.area] ??= []).add(t.title);
+      (byArea[t.area] ??= []).add(bidiSafe(t.title));
     }
     for (final e in logs) {
-      if (e.area != null) (byArea[e.area!] ??= []).add(e.title);
+      if (e.area != null) {
+        (byArea[e.area!] ??= []).add(bidiSafe(ActivityText(l, e).title));
+      }
     }
     final hasContent = tasks.isNotEmpty || logs.isNotEmpty;
 
@@ -462,7 +466,7 @@ class _SelectedDayCard extends StatelessWidget {
                       AppSpacing.gap12,
                       Expanded(
                         child: Text(
-                          t.title,
+                          bidiSafe(t.title),
                           style: AppTypography.body.copyWith(
                             color: t.completedAt != null
                                 ? AppColors.textSecondary

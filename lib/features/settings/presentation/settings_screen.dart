@@ -6,6 +6,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/demo/demo_data_seeder.dart';
+import '../../../core/localization/app_locale.dart';
 import '../../../core/localization/l10n.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
@@ -20,9 +21,10 @@ import '../../goals/data/goals_repository.dart';
 import '../../profile/data/profile_repository.dart';
 import '../data/preferences.dart';
 import '../data/settings_store.dart';
+import 'currency_names.dart';
+import 'language_sheet.dart';
 import 'settings_sheets.dart';
-
-const _languages = [('en', 'English'), ('ar', 'العربية'), ('fr', 'Français')];
+import '../../../core/utilities/bidi.dart';
 
 String _weekdayName(int weekday) =>
     DateFormat.EEEE().format(DateTime(2024, 1, weekday));
@@ -42,10 +44,9 @@ class SettingsScreen extends ConsumerWidget {
         .where((g) => g.status == GoalStatus.active)
         .toList();
     final primary = goals.where((g) => g.isPrimary).firstOrNull;
-    final currencyName = supportedCurrencies
-        .where((c) => c.$1 == prefs.currency)
-        .map((c) => c.$2)
-        .firstOrNull;
+    final currencyName = supportedCurrencies.contains(prefs.currency)
+        ? currencyDisplayName(l, prefs.currency)
+        : null;
 
     Future<void> update(Future<void> Function() change) async {
       await change();
@@ -55,7 +56,7 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppTopBar(title: l.settingsTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           AppSpacing.screen,
           AppSpacing.sm,
           AppSpacing.screen,
@@ -82,7 +83,10 @@ class SettingsScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(profile.name, style: AppTypography.sectionTitle),
+                        Text(
+                          bidiSafe(profile.name),
+                          style: AppTypography.sectionTitle,
+                        ),
                         Text(
                           session.email ?? l.profileMember,
                           style: AppTypography.caption,
@@ -102,27 +106,14 @@ class SettingsScreen extends ConsumerWidget {
                 key: const Key('settings-language'),
                 icon: Symbols.language,
                 title: l.settingsLanguage,
-                value: _languages
-                    .firstWhere(
-                      (e) => e.$1 == prefs.localeCode,
-                      orElse: () => _languages.first,
-                    )
-                    .$2,
+                value: AppLanguages.nativeNames[prefs.localeCode],
                 onTap: () async {
                   final code = await showOptionSheet<String>(
                     context,
                     title: l.settingsLanguage,
                     selected: prefs.localeCode,
-                    options: [
-                      for (final (code, name) in _languages)
-                        SheetOption(
-                          value: code,
-                          label: name,
-                          subtitle: code == 'en'
-                              ? null
-                              : l.settingsLanguagePreview,
-                        ),
-                    ],
+                    footnote: l.langFootnote,
+                    options: languageOptions(l),
                   );
                   if (code != null && code != prefs.localeCode) {
                     await update(() => notifier.setLocale(code));
@@ -176,15 +167,21 @@ class SettingsScreen extends ConsumerWidget {
                 title: l.settingsCurrency,
                 value: currencyName == null
                     ? prefs.currency
-                    : '${prefs.currency} — $currencyName',
+                    : l.settingsCurrencyOption(prefs.currency, currencyName),
                 onTap: () async {
                   final code = await showOptionSheet<String>(
                     context,
                     title: l.settingsCurrency,
                     selected: prefs.currency,
                     options: [
-                      for (final (code, name) in supportedCurrencies)
-                        SheetOption(value: code, label: '$code — $name'),
+                      for (final code in supportedCurrencies)
+                        SheetOption(
+                          value: code,
+                          label: l.settingsCurrencyOption(
+                            code,
+                            currencyDisplayName(l, code),
+                          ),
+                        ),
                     ],
                   );
                   if (code != null && code != prefs.currency) {
@@ -245,7 +242,9 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Symbols.adjust,
                 title: l.settingsPrimaryFocus,
                 subtitle: l.settingsPrimaryFocusBody,
-                value: primary?.title ?? (goals.isEmpty ? null : '—'),
+                value: primary == null
+                    ? (goals.isEmpty ? null : '—')
+                    : bidiSafe(primary.title),
                 onTap: goals.isEmpty
                     ? () => context.push(AppRoutes.newGoal)
                     : () => showPrimaryFocusSheet(context, ref),

@@ -23,5 +23,5 @@ abstract final class GoalUnits {
   };
 
   static bool isCurrency(String unit) =>
-      supportedCurrencies.any((c) => c.$1 == unit.toUpperCase());
+      supportedCurrencies.contains(unit.toUpperCase());
 }

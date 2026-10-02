@@ -5,6 +5,7 @@ import '../../../core/database/app_database.dart';
 import '../../../core/providers.dart';
 import '../../../core/utilities/ids.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class NotesRepository {
   NotesRepository(this._db, this._activity);
@@ -32,7 +33,7 @@ class NotesRepository {
       title: firstLine.length > 60
           ? '${firstLine.substring(0, 60)}…'
           : firstLine,
-      subtitle: 'Note',
+      subtitle: ActivityFallback.note,
       entityType: 'note',
       entityId: id,
     );

@@ -152,6 +152,10 @@ class Habits extends Table with _Id {
   TextColumn get name => text()();
   TextColumn get area => textEnum<LifeArea>()();
   TextColumn get label => text().nullable()();
+
+  /// Built-in starter habit id (e.g. `health1`); the name is then localized at
+  /// display time. Cleared when the user renames the habit.
+  TextColumn get templateId => text().nullable()();
   IntColumn get reminderMinute => integer().nullable()();
   BoolColumn get archived => boolean().withDefault(const Constant(false))();
   IntColumn get sortOrder => integer().withDefault(const Constant(0))();
@@ -273,6 +277,10 @@ class ActivityEvents extends Table with _Id {
   IntColumn get amountMinor => integer().nullable()();
   TextColumn get entityType => text().nullable()();
   TextColumn get entityId => text().nullable()();
+
+  /// JSON facts (minutes, rating, kind…) used to render system titles in the
+  /// active language; [title] and [subtitle] keep a readable fallback.
+  TextColumn get facts => text().nullable()();
   DateTimeColumn get occurredAt => dateTime()();
 }
 

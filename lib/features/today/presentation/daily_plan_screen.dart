@@ -28,6 +28,7 @@ import '../domain/today_summary.dart';
 import 'widgets/day_labels.dart';
 import 'widgets/task_labels.dart';
 import 'widgets/task_sheets.dart';
+import '../../../core/utilities/bidi.dart';
 
 class DailyPlanScreen extends ConsumerStatefulWidget {
   const DailyPlanScreen({super.key, this.initialDayKey});
@@ -149,7 +150,7 @@ class _DateStrip extends StatelessWidget {
     final center = dateOfKey(selectedKey);
     final days = [for (var i = -3; i <= 3; i++) addDays(center, i)];
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen - 4,
         AppSpacing.xs,
         AppSpacing.screen - 4,
@@ -333,7 +334,7 @@ class _PlanBody extends ConsumerWidget {
     }
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         0,
         AppSpacing.screen,
@@ -565,7 +566,7 @@ class _PriorityCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: AppCard(
-        padding: const EdgeInsets.fromLTRB(16, 12, 4, 12),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 4, 12),
         onTap: onTap,
         child: Row(
           children: [
@@ -581,7 +582,7 @@ class _PriorityCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    task.title,
+                    bidiSafe(task.title),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.cardTitle.copyWith(

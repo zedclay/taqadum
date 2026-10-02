@@ -1,3 +1,4 @@
+// l10n-ignore-file: demo-only sample content, seeded on request in debug builds.
 import 'dart:math';
 
 import 'package:drift/drift.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/finance/data/finance_repository.dart';
+import '../../features/finance/domain/finance_categories.dart';
 import '../../features/goals/data/goals_repository.dart';
 import '../../features/health/data/health_repository.dart';
 import '../../features/history/data/activity_repository.dart';
@@ -144,11 +146,11 @@ class DemoDataSeeder {
       'Kaizen Studio',
     ];
     const expenses = [
-      ('Groceries', 4500, 9000),
-      ('Transport', 800, 2000),
-      ('Utilities', 3000, 6000),
-      ('Software', 2500, 4000),
-      ('Family', 3000, 12000),
+      (FinanceCategories.food, 4500, 9000),
+      (FinanceCategories.transport, 800, 2000),
+      (FinanceCategories.bills, 3000, 6000),
+      (FinanceCategories.business, 2500, 4000),
+      (FinanceCategories.family, 3000, 12000),
     ];
     const taskPool = [
       ('Review client proposal', LifeArea.work),
@@ -202,7 +204,6 @@ class DemoDataSeeder {
             area: area,
             type: ActivityType.completed,
             title: title,
-            subtitle: 'Action completed',
             entityType: 'task',
             at: completedAt,
           );
@@ -298,14 +299,14 @@ class DemoDataSeeder {
         await finance.add(
           type: TransactionType.income,
           amountMinor: 27000000,
-          category: 'Client payment',
+          category: FinanceCategories.clientPayment,
           currency: currency,
           at: at(day, 10),
         );
         await finance.add(
           type: TransactionType.saving,
           amountMinor: 4750000,
-          category: 'Reserve fund',
+          category: FinanceCategories.emergency,
           goal: savings,
           currency: currency,
           at: at(day, 10, 30),

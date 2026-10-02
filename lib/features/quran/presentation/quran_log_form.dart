@@ -16,6 +16,7 @@ import '../../goals/data/goals_repository.dart';
 import '../../goals/presentation/widgets/goal_link_field.dart';
 import '../data/quran_repository.dart';
 import '../domain/surahs.dart';
+import '../../../core/utilities/search_text.dart';
 
 String quranKindLabel(BuildContext context, QuranKind kind) {
   final l = context.l10n;
@@ -178,7 +179,10 @@ class _QuranLogFormState extends ConsumerState<QuranLogForm> {
                         child: Text(
                           _surah == null
                               ? l.quranPickSurah
-                              : surahLabel(_surah!),
+                              : localizeSurahLabel(
+                                  surahLabel(_surah!),
+                                  arabic: context.isArabic,
+                                ),
                           style: AppTypography.bodyLarge.copyWith(
                             fontSize: 15,
                             color: _surah == null
@@ -277,12 +281,11 @@ class _SurahPickerState extends State<_SurahPicker> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final q = _query.toLowerCase();
+    final arabic = context.isArabic;
     final matches = [
       for (var i = 1; i <= surahNames.length; i++)
-        if (q.isEmpty ||
-            surahNames[i - 1].toLowerCase().contains(q) ||
-            '$i' == q)
+        if (_query == '$i' ||
+            matchesSearch([surahNames[i - 1], surahNamesAr[i - 1]], _query))
           i,
     ];
     return AppBottomSheet(
@@ -310,7 +313,7 @@ class _SurahPickerState extends State<_SurahPicker> {
                     child: Text('$n', style: AppTypography.caption.tabular),
                   ),
                   title: Text(
-                    surahNames[n - 1],
+                    surahName(n, arabic: arabic),
                     style: AppTypography.bodyMedium,
                   ),
                   trailing: n == widget.selected

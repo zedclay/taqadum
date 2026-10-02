@@ -25,7 +25,11 @@ class OnboardingService {
       await store.setFocusAreas(draft.orderedAreas);
       await store.setDayPace(draft.pace);
       for (final target in draft.selectedTargets(starters)) {
-        await health.addHabit(name: target.label, area: target.area);
+        await health.addHabit(
+          name: target.label,
+          area: target.area,
+          templateId: target.custom ? null : target.id,
+        );
       }
       await reminders.ensureDefaults();
       await reminders.setTime(ReminderIds.morningCheckIn, draft.morningMinute);

@@ -2,112 +2,38 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+/// Type scale. English uses Inter; Arabic uses IBM Plex Sans Arabic with zero
+/// letter spacing (tracking breaks joined Arabic letters). Both families are
+/// bundled in `assets/fonts/` at weights 400–700.
 abstract final class AppTypography {
-  static const fontFamily = 'Inter';
-  static const fontFallback = ['IBMPlexSansArabic'];
-  static const _tabular = [FontFeature.tabularFigures()];
+  static const latinFamily = 'Inter';
+  static const arabicFamily = 'IBMPlexSansArabic';
 
-  static const _base = TextStyle(
-    fontFamily: fontFamily,
-    fontFamilyFallback: fontFallback,
-    color: AppColors.textPrimary,
-    leadingDistribution: TextLeadingDistribution.even,
-  );
+  static _TypeScale _scale = _TypeScale(arabic: false);
 
-  static final display = _base.copyWith(
-    fontSize: 32,
-    height: 38 / 32,
-    fontWeight: FontWeight.w700,
-    letterSpacing: -0.6,
-    fontFeatures: _tabular,
-  );
+  static bool get isArabic => _scale.arabic;
+  static String get fontFamily => _scale.family;
+  static List<String> get fontFallback => _scale.fallback;
 
-  static final pageTitle = _base.copyWith(
-    fontSize: 28,
-    height: 34 / 28,
-    fontWeight: FontWeight.w700,
-    letterSpacing: -0.5,
-  );
+  /// Switches every style to the script of the active language.
+  static void useArabic(bool arabic) {
+    if (_scale.arabic != arabic) _scale = _TypeScale(arabic: arabic);
+  }
 
-  static final headline = _base.copyWith(
-    fontSize: 22,
-    height: 28 / 22,
-    fontWeight: FontWeight.w600,
-    letterSpacing: -0.3,
-  );
-
-  static final sectionTitle = _base.copyWith(
-    fontSize: 18,
-    height: 24 / 18,
-    fontWeight: FontWeight.w600,
-    letterSpacing: -0.2,
-  );
-
-  static final cardTitle = _base.copyWith(
-    fontSize: 16,
-    height: 22 / 16,
-    fontWeight: FontWeight.w600,
-  );
-
-  static final bodyLarge = _base.copyWith(
-    fontSize: 16,
-    height: 24 / 16,
-    fontWeight: FontWeight.w400,
-  );
-
-  static final body = _base.copyWith(
-    fontSize: 14,
-    height: 20 / 14,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
-  );
-
-  static final bodyMedium = _base.copyWith(
-    fontSize: 14,
-    height: 20 / 14,
-    fontWeight: FontWeight.w500,
-  );
-
-  static final label = _base.copyWith(
-    fontSize: 12,
-    height: 16 / 12,
-    fontWeight: FontWeight.w600,
-  );
-
-  static final caption = _base.copyWith(
-    fontSize: 12,
-    height: 16 / 12,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textSecondary,
-  );
-
-  static final captionSmall = _base.copyWith(
-    fontSize: 11,
-    height: 14 / 11,
-    fontWeight: FontWeight.w500,
-    color: AppColors.textSecondary,
-  );
-
-  static final overline = _base.copyWith(
-    fontSize: 11,
-    height: 14 / 11,
-    fontWeight: FontWeight.w600,
-    letterSpacing: 0.8,
-    color: AppColors.textSecondary,
-  );
-
-  static final button = _base.copyWith(
-    fontSize: 16,
-    height: 22 / 16,
-    fontWeight: FontWeight.w600,
-  );
-
-  static final metric = _base.copyWith(
-    fontSize: 22,
-    height: 28 / 22,
-    fontWeight: FontWeight.w700,
-    fontFeatures: _tabular,
-  );
+  static TextStyle get display => _scale.display;
+  static TextStyle get pageTitle => _scale.pageTitle;
+  static TextStyle get headline => _scale.headline;
+  static TextStyle get sectionTitle => _scale.sectionTitle;
+  static TextStyle get cardTitle => _scale.cardTitle;
+  static TextStyle get bodyLarge => _scale.bodyLarge;
+  static TextStyle get body => _scale.body;
+  static TextStyle get bodyMedium => _scale.bodyMedium;
+  static TextStyle get label => _scale.label;
+  static TextStyle get caption => _scale.caption;
+  static TextStyle get captionSmall => _scale.captionSmall;
+  static TextStyle get overline => _scale.overline;
+  static TextStyle get button => _scale.button;
+  static TextStyle get metric => _scale.metric;
 
   static TextTheme textTheme() => TextTheme(
     displayLarge: display,
@@ -125,6 +51,124 @@ abstract final class AppTypography {
     labelLarge: button,
     labelMedium: label,
     labelSmall: captionSmall,
+  );
+}
+
+class _TypeScale {
+  _TypeScale({required this.arabic});
+
+  final bool arabic;
+
+  static const _tabular = [FontFeature.tabularFigures()];
+
+  String get family =>
+      arabic ? AppTypography.arabicFamily : AppTypography.latinFamily;
+  List<String> get fallback => [
+    arabic ? AppTypography.latinFamily : AppTypography.arabicFamily,
+  ];
+
+  double _tracking(double latin) => arabic ? 0 : latin;
+
+  late final TextStyle _base = TextStyle(
+    fontFamily: family,
+    fontFamilyFallback: fallback,
+    color: AppColors.textPrimary,
+    leadingDistribution: TextLeadingDistribution.even,
+  );
+
+  late final TextStyle display = _base.copyWith(
+    fontSize: 32,
+    height: 38 / 32,
+    fontWeight: FontWeight.w700,
+    letterSpacing: _tracking(-0.6),
+    fontFeatures: _tabular,
+  );
+
+  late final TextStyle pageTitle = _base.copyWith(
+    fontSize: 28,
+    height: 34 / 28,
+    fontWeight: FontWeight.w700,
+    letterSpacing: _tracking(-0.5),
+  );
+
+  late final TextStyle headline = _base.copyWith(
+    fontSize: 22,
+    height: 28 / 22,
+    fontWeight: FontWeight.w600,
+    letterSpacing: _tracking(-0.3),
+  );
+
+  late final TextStyle sectionTitle = _base.copyWith(
+    fontSize: 18,
+    height: 24 / 18,
+    fontWeight: FontWeight.w600,
+    letterSpacing: _tracking(-0.2),
+  );
+
+  late final TextStyle cardTitle = _base.copyWith(
+    fontSize: 16,
+    height: 22 / 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  late final TextStyle bodyLarge = _base.copyWith(
+    fontSize: 16,
+    height: 24 / 16,
+    fontWeight: FontWeight.w400,
+  );
+
+  late final TextStyle body = _base.copyWith(
+    fontSize: 14,
+    height: 20 / 14,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
+  late final TextStyle bodyMedium = _base.copyWith(
+    fontSize: 14,
+    height: 20 / 14,
+    fontWeight: FontWeight.w500,
+  );
+
+  late final TextStyle label = _base.copyWith(
+    fontSize: 12,
+    height: 16 / 12,
+    fontWeight: FontWeight.w600,
+  );
+
+  late final TextStyle caption = _base.copyWith(
+    fontSize: 12,
+    height: 16 / 12,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textSecondary,
+  );
+
+  late final TextStyle captionSmall = _base.copyWith(
+    fontSize: 11,
+    height: 14 / 11,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textSecondary,
+  );
+
+  late final TextStyle overline = _base.copyWith(
+    fontSize: 11,
+    height: 14 / 11,
+    fontWeight: FontWeight.w600,
+    letterSpacing: _tracking(0.8),
+    color: AppColors.textSecondary,
+  );
+
+  late final TextStyle button = _base.copyWith(
+    fontSize: 16,
+    height: 22 / 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  late final TextStyle metric = _base.copyWith(
+    fontSize: 22,
+    height: 28 / 22,
+    fontWeight: FontWeight.w700,
+    fontFeatures: _tabular,
   );
 }
 

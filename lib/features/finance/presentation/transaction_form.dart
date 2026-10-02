@@ -21,44 +21,39 @@ import '../../goals/data/goals_repository.dart';
 import '../../goals/presentation/widgets/goal_link_field.dart';
 import '../../settings/data/preferences.dart';
 import '../data/finance_repository.dart';
+import '../domain/finance_categories.dart';
 
-String transactionTypeLabel(BuildContext context, TransactionType t) {
-  final l = context.l10n;
-  return switch (t) {
-    TransactionType.expense => l.moneyExpense,
-    TransactionType.income => l.moneyIncome,
-    TransactionType.saving => l.moneySaving,
-  };
-}
+String transactionTypeLabel(BuildContext context, TransactionType t) =>
+    transactionTypeText(context.l10n, t);
 
-List<String> categoriesFor(BuildContext context, TransactionType type) {
-  final l = context.l10n;
-  return switch (type) {
-    TransactionType.expense => [
-      l.catFood,
-      l.catTransport,
-      l.catHome,
-      l.catBills,
-      l.catFamily,
-      l.catHealth,
-      l.catEducation,
-      l.catBusiness,
-      l.catShopping,
-    ],
-    TransactionType.income => [
-      l.catSalary,
-      l.catClientPayment,
-      l.catBusiness,
-      l.catFreelance,
-      l.catGift,
-    ],
-    TransactionType.saving => [
-      l.catEmergency,
-      l.catSavingsGoal,
-      l.catInvestment,
-    ],
-  };
-}
+String transactionTypeText(AppLocalizations l, TransactionType t) =>
+    switch (t) {
+      TransactionType.expense => l.moneyExpense,
+      TransactionType.income => l.moneyIncome,
+      TransactionType.saving => l.moneySaving,
+    };
+
+/// Localized name for a stored category; custom categories show verbatim.
+String financeCategoryLabel(AppLocalizations l, String category) =>
+    switch (category) {
+      FinanceCategories.food => l.catFood,
+      FinanceCategories.transport => l.catTransport,
+      FinanceCategories.home => l.catHome,
+      FinanceCategories.bills => l.catBills,
+      FinanceCategories.family => l.catFamily,
+      FinanceCategories.health => l.catHealth,
+      FinanceCategories.education => l.catEducation,
+      FinanceCategories.business => l.catBusiness,
+      FinanceCategories.shopping => l.catShopping,
+      FinanceCategories.salary => l.catSalary,
+      FinanceCategories.clientPayment => l.catClientPayment,
+      FinanceCategories.freelance => l.catFreelance,
+      FinanceCategories.gift => l.catGift,
+      FinanceCategories.emergency => l.catEmergency,
+      FinanceCategories.savingsGoal => l.catSavingsGoal,
+      FinanceCategories.investment => l.catInvestment,
+      _ => category,
+    };
 
 Future<void> showTransactionSheet(
   BuildContext context, {
@@ -171,7 +166,10 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final currency = ref.watch(preferencesProvider.select((p) => p.currency));
-    final categories = [...categoriesFor(context, _type), ..._customCategories];
+    final categories = [
+      ...FinanceCategories.forType(_type),
+      ..._customCategories,
+    ];
     final color = switch (_type) {
       TransactionType.expense => AppColors.danger,
       TransactionType.income => AppColors.success,
@@ -241,7 +239,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
                       ),
                     ),
                     Text(
-                      currency,
+                      Fmt.currency(currency),
                       style: AppTypography.sectionTitle.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -260,7 +258,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
             children: [
               for (final c in categories)
                 ChoiceTag(
-                  label: c,
+                  label: financeCategoryLabel(l, c),
                   selected: (_category ?? categories.first) == c,
                   color: AppColors.finance,
                   soft: AppColors.financeSoft,

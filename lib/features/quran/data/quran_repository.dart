@@ -9,6 +9,7 @@ import '../../../core/utilities/ids.dart';
 import '../../goals/data/goals_repository.dart';
 import '../../goals/domain/goal_progress.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class QuranRepository {
   QuranRepository(this._db, this._goals, this._activity);
@@ -70,10 +71,15 @@ class QuranRepository {
     await _activity.record(
       area: LifeArea.quran,
       type: ActivityType.logged,
-      title: titleFor(kind, pages, minutes),
+      title: ActivityFallback.quran(
+        kind,
+        kind == QuranKind.reading ? Fmt.number(pages) : pagesLabel(pages),
+        minutes,
+      ),
       subtitle: surah,
       entityType: 'quran',
       entityId: id,
+      facts: {'kind': kind.name, 'pages': pages, 'minutes': minutes},
       at: when,
     );
   });
@@ -83,13 +89,6 @@ class QuranRepository {
     await _activity.removeFor('quran', log.id);
     await (_db.delete(_db.quranLogs)..where((t) => t.id.equals(log.id))).go();
   });
-
-  static String titleFor(QuranKind kind, double pages, int minutes) =>
-      switch (kind) {
-        QuranKind.reading => 'Read ${Fmt.number(pages)} pages',
-        QuranKind.memorization => 'Memorized ${pagesLabel(pages)} page',
-        QuranKind.revision => 'Revised $minutes min',
-      };
 
   static String pagesLabel(double pages) {
     const fractions = {25: '¼', 50: '½', 75: '¾'};

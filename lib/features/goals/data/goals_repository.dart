@@ -7,6 +7,7 @@ import '../../../core/utilities/ids.dart';
 import '../../history/data/activity_repository.dart';
 import '../../settings/data/preferences.dart';
 import '../domain/goal_progress.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class GoalActionDraft {
   const GoalActionDraft({
@@ -146,7 +147,9 @@ class GoalsRepository {
       area: draft.area,
       type: existing == null ? ActivityType.created : ActivityType.updated,
       title: draft.title.trim(),
-      subtitle: existing == null ? 'Goal created' : 'Goal updated',
+      subtitle: existing == null
+          ? ActivityFallback.goalCreated
+          : ActivityFallback.goalUpdated,
       entityType: 'goal',
       entityId: id,
     );
@@ -285,7 +288,7 @@ class GoalsRepository {
       area: goal.area,
       type: ActivityType.logged,
       title: goal.title,
-      subtitle: note ?? 'Progress logged',
+      subtitle: note ?? ActivityFallback.progressLogged,
       entityType: 'goalProgress',
       entityId: eventId,
       at: at,
@@ -311,7 +314,7 @@ class GoalsRepository {
             area: goal.area,
             type: ActivityType.completed,
             title: goal.title,
-            subtitle: 'Goal completed',
+            subtitle: ActivityFallback.goalCompleted,
             entityType: 'goal',
             entityId: goal.id,
           );

@@ -4,12 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/domain/period.dart';
 import '../../../core/providers.dart';
-import '../../../core/utilities/formatters.dart';
 import '../../../core/utilities/ids.dart';
 import '../../goals/data/goals_repository.dart';
 import '../../goals/domain/goal_progress.dart';
 import '../../history/data/activity_repository.dart';
 import '../../today/data/tasks_repository.dart';
+import '../../../core/database/activity_fallback.dart';
+
+/// Note marking a task created from a learning session's "apply it" step.
+abstract final class LearningTaskNote {
+  static const applied = 'applied';
+}
 
 class LearningRepository {
   LearningRepository(this._db, this._goals, this._tasks, this._activity);
@@ -91,17 +96,18 @@ class LearningRepository {
           area: LifeArea.learning,
           dayKey: dayKeyOf(addDays(DateTime.now(), 1)),
           badge: skill,
-          note: 'applied',
+          note: LearningTaskNote.applied,
         ),
       );
     }
     await _activity.record(
       area: LifeArea.learning,
       type: ActivityType.logged,
-      title: 'Study session · ${topic.trim()}',
-      subtitle: [?skill, Fmt.minutes(minutes)].join(' · '),
+      title: ActivityFallback.studySession(topic.trim()),
+      subtitle: [?skill, ActivityFallback.duration(minutes)].join(' · '),
       entityType: 'learning',
       entityId: id,
+      facts: {'topic': topic.trim(), 'skill': skill, 'minutes': minutes},
       at: when,
     );
   });

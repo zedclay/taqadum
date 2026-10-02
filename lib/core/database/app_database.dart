@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 import '../domain/enums.dart';
+import 'legacy_text_migration.dart';
 import 'tables.dart';
 
 export '../domain/enums.dart';
@@ -41,7 +42,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'taqaddum'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -50,7 +51,11 @@ class AppDatabase extends _$AppDatabase {
       await _createIndexes();
     },
     onUpgrade: (m, from, to) async {
-      // Future schema versions add ordered steps here (from < 2, from < 3 …).
+      if (from < 2) {
+        await m.addColumn(habits, habits.templateId);
+        await m.addColumn(activityEvents, activityEvents.facts);
+        await LegacyTextMigration(this).run();
+      }
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');

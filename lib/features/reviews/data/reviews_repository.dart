@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/providers.dart';
 import '../../history/data/activity_repository.dart';
+import '../../../core/database/activity_fallback.dart';
 
 class ReviewPriority {
   const ReviewPriority({required this.title, required this.area, this.goal});
@@ -90,7 +91,7 @@ class ReviewsRepository {
     if (complete && existing?.completedAt == null) {
       await _activity.record(
         type: ActivityType.reviewed,
-        title: 'Weekly review completed',
+        title: ActivityFallback.weeklyReview,
         subtitle: rangeLabel,
         entityType: 'weeklyReview',
         entityId: weekStart,
@@ -137,7 +138,7 @@ class ReviewsRepository {
     if (complete && existing?.completedAt == null) {
       await _activity.record(
         type: ActivityType.reviewed,
-        title: 'Monthly review completed',
+        title: ActivityFallback.monthlyReview,
         subtitle: monthLabel,
         entityType: 'monthlyReview',
         entityId: monthKey,

@@ -32,6 +32,7 @@ import '../data/tasks_repository.dart';
 import '../domain/today_summary.dart';
 import 'widgets/task_labels.dart';
 import 'widgets/task_sheets.dart';
+import '../../../core/utilities/bidi.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -54,7 +55,7 @@ class TodayScreen extends ConsumerWidget {
           onRefresh: () async =>
               ref.read(currentDayProvider.notifier).refresh(),
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(
+            padding: const EdgeInsetsDirectional.fromSTEB(
               AppSpacing.screen,
               AppSpacing.md,
               AppSpacing.screen,
@@ -456,7 +457,7 @@ class _PriorityRow extends StatelessWidget {
             AppSpacing.gap12,
             Expanded(
               child: Text(
-                task.title,
+                bidiSafe(task.title),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.bodyMedium.copyWith(

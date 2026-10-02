@@ -33,6 +33,7 @@ import '../../today/data/tasks_repository.dart';
 import '../../today/presentation/widgets/task_sheets.dart';
 import '../data/learning_repository.dart';
 import 'learning_sheets.dart';
+import '../../../core/utilities/bidi.dart';
 
 class LearningScreen extends ConsumerWidget {
   const LearningScreen({super.key});
@@ -229,7 +230,7 @@ class _TodayCard extends ConsumerWidget {
                           .tabular,
                     ),
                     TextSpan(
-                      text: ' / $target min',
+                      text: ' ${l.commonOfTargetMinutes(target)}',
                       style: AppTypography.caption,
                     ),
                   ],
@@ -622,7 +623,7 @@ class _ResourcesSection extends ConsumerWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                r.title,
+                                bidiSafe(r.title),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTypography.bodyMedium,

@@ -7,6 +7,7 @@ import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 import 'app_card.dart';
+import '../utilities/bidi.dart';
 
 class CircleCheck extends StatelessWidget {
   const CircleCheck({
@@ -116,7 +117,7 @@ class TaskRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    title,
+                    bidiSafe(title),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.bodyMedium.copyWith(
@@ -128,7 +129,7 @@ class TaskRow extends StatelessWidget {
                   if (subtitle != null) ...[
                     const SizedBox(height: 2),
                     Text(
-                      subtitle!,
+                      bidiSafe(subtitle!),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.caption,
@@ -203,7 +204,7 @@ class ActivityRow extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          title,
+                          bidiSafe(title),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.bodyMedium.copyWith(
@@ -227,7 +228,7 @@ class ActivityRow extends StatelessWidget {
                   if (subtitle != null) ...[
                     const SizedBox(height: 2),
                     Text(
-                      subtitle!,
+                      bidiSafe(subtitle!),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.caption,
@@ -315,7 +316,7 @@ class TransactionRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    bidiSafe(title),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.bodyMedium.copyWith(
@@ -327,7 +328,7 @@ class TransactionRow extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          meta,
+                          bidiSafe(meta),
                           style: AppTypography.caption,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -366,9 +367,9 @@ class SettingsGroup extends StatelessWidget {
       children: [
         if (title != null)
           Padding(
-            padding: const EdgeInsets.only(
-              left: 4,
-              right: 4,
+            padding: const EdgeInsetsDirectional.only(
+              start: 4,
+              end: 4,
               bottom: AppSpacing.sm,
             ),
             child: Text(title!.toUpperCase(), style: AppTypography.overline),

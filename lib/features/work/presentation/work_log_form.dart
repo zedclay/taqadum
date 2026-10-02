@@ -18,17 +18,17 @@ import '../../goals/presentation/widgets/goal_link_field.dart';
 import '../../settings/data/preferences.dart';
 import '../data/work_repository.dart';
 
-String workKindLabel(BuildContext context, WorkKind kind) {
-  final l = context.l10n;
-  return switch (kind) {
-    WorkKind.deepWork => l.workDeepWork,
-    WorkKind.lead => l.workLead,
-    WorkKind.followUp => l.workFollowUp,
-    WorkKind.meeting => l.workMeeting,
-    WorkKind.proposal => l.workProposal,
-    WorkKind.clientWon => l.workClientWon,
-  };
-}
+String workKindLabel(BuildContext context, WorkKind kind) =>
+    workKindText(context.l10n, kind);
+
+String workKindText(AppLocalizations l, WorkKind kind) => switch (kind) {
+  WorkKind.deepWork => l.workDeepWork,
+  WorkKind.lead => l.workLead,
+  WorkKind.followUp => l.workFollowUp,
+  WorkKind.meeting => l.workMeeting,
+  WorkKind.proposal => l.workProposal,
+  WorkKind.clientWon => l.workClientWon,
+};
 
 IconData workKindIcon(WorkKind kind) => switch (kind) {
   WorkKind.deepWork => Symbols.target,

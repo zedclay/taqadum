@@ -8,6 +8,7 @@ import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 import 'buttons.dart';
+import '../utilities/bidi.dart';
 
 Future<T?> showAppSheet<T>(
   BuildContext context, {
@@ -56,7 +57,7 @@ class AppBottomSheet extends StatelessWidget {
     final insets = MediaQuery.viewInsetsOf(context).bottom;
     final bottomSafe = MediaQuery.paddingOf(context).bottom;
     final body = Padding(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.xl,
         0,
         AppSpacing.xl,
@@ -77,7 +78,7 @@ class AppBottomSheet extends StatelessWidget {
             const _DragHandle(),
             if (title != null)
               Padding(
-                padding: const EdgeInsets.fromLTRB(
+                padding: const EdgeInsetsDirectional.fromSTEB(
                   AppSpacing.xl,
                   AppSpacing.sm,
                   AppSpacing.md,
@@ -94,10 +95,13 @@ class AppBottomSheet extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(title!, style: AppTypography.headline),
+                          Text(bidiSafe(title!), style: AppTypography.headline),
                           if (subtitle != null) ...[
                             const SizedBox(height: 4),
-                            Text(subtitle!, style: AppTypography.body),
+                            Text(
+                              bidiSafe(subtitle!),
+                              style: AppTypography.body,
+                            ),
                           ],
                         ],
                       ),
@@ -118,7 +122,7 @@ class AppBottomSheet extends StatelessWidget {
             ),
             if (action != null)
               Padding(
-                padding: EdgeInsets.fromLTRB(
+                padding: EdgeInsetsDirectional.fromSTEB(
                   AppSpacing.xl,
                   AppSpacing.sm,
                   AppSpacing.xl,
@@ -240,7 +244,7 @@ Future<bool> showConfirmDialog(
     builder: (context) => AlertDialog(
       title: Text(title),
       content: Text(message, style: AppTypography.body),
-      actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      actionsPadding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),

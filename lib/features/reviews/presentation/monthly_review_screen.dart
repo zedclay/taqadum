@@ -34,6 +34,7 @@ import '../data/reviews_repository.dart';
 import '../domain/review_insights.dart';
 import 'widgets/monthly_snapshots.dart';
 import 'widgets/review_widgets.dart';
+import '../../../core/utilities/bidi.dart';
 
 class MonthlyReviewScreen extends ConsumerStatefulWidget {
   const MonthlyReviewScreen({super.key});
@@ -248,7 +249,7 @@ class _MonthlyReviewScreenState extends ConsumerState<MonthlyReviewScreen> {
     final priorityAreas = _priorities.map((p) => p.area).toSet();
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.sm,
         AppSpacing.screen,
@@ -697,7 +698,10 @@ class _GoalMovementRow extends StatelessWidget {
     final (icon, line) = m.milestones > 0
         ? (Symbols.flag, l.monthlyGoalMilestones(m.milestones))
         : m.moved > 0
-        ? (Symbols.arrow_upward, l.monthlyGoalMoved(movementLabel(g, m.moved)))
+        ? (
+            Symbols.arrow_upward,
+            l.monthlyGoalMoved(movementLabel(l, g, m.moved)),
+          )
         : (Symbols.remove, l.monthlyGoalNoMove);
     return InkWell(
       onTap: () => context.push(AppRoutes.goal(g.id)),
@@ -706,7 +710,9 @@ class _GoalMovementRow extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(g.title, style: AppTypography.bodyMedium)),
+              Expanded(
+                child: Text(bidiSafe(g.title), style: AppTypography.bodyMedium),
+              ),
               Text(
                 '${p.percent}%',
                 style: AppTypography.label.copyWith(color: g.area.color),
@@ -738,7 +744,7 @@ class _GoalMovementRow extends StatelessWidget {
                 child: Text(
                   g.type == GoalType.target
                       ? l.monthlyTarget(
-                          goalValue(g, g.targetValue, compact: true),
+                          goalValue(l, g, g.targetValue, compact: true),
                         )
                       : goalProgressLine(context, m.view),
                   textAlign: TextAlign.end,

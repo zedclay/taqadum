@@ -29,6 +29,8 @@ import '../../settings/data/preferences.dart';
 import '../data/reminder_scheduler.dart';
 import '../data/reminders_repository.dart';
 import '../domain/reminder_planner.dart';
+import '../../health/domain/habit_names.dart';
+import '../../../core/utilities/bidi.dart';
 
 final notificationPermissionProvider = FutureProvider.autoDispose<bool?>(
   (ref) => ref.watch(notificationServiceProvider).permissionGranted(),
@@ -74,7 +76,7 @@ class _Body extends ConsumerWidget {
         .where((h) => !h.archived)
         .toList();
     final byId = {for (final r in reminders) r.id: r};
-    final habitNames = {for (final h in habits) h.id: h.name};
+    final habitNames = {for (final h in habits) h.id: habitDisplayName(l, h)};
     final habitReminders =
         reminders
             .where(
@@ -119,7 +121,7 @@ class _Body extends ConsumerWidget {
     final monthly = byId[ReminderIds.monthlyReview];
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.sm,
         AppSpacing.screen,
@@ -405,7 +407,10 @@ class _Section extends StatelessWidget {
       children: [
         AppSpacing.gap28,
         Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.sm, left: 4),
+          padding: const EdgeInsetsDirectional.only(
+            bottom: AppSpacing.sm,
+            start: 4,
+          ),
           child: OverlineLabel(title),
         ),
         AppCard(
@@ -537,7 +542,7 @@ class _ReminderTile extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.md,
         AppSpacing.md,
         AppSpacing.sm,
@@ -640,7 +645,7 @@ class _SwitchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.md,
         AppSpacing.md,
         AppSpacing.sm,
@@ -806,7 +811,7 @@ class _HabitRemindersSheet extends ConsumerWidget {
                             AppSpacing.gap12,
                             Expanded(
                               child: Text(
-                                h.name,
+                                bidiSafe(habitDisplayName(l, h)),
                                 style: AppTypography.bodyMedium,
                               ),
                             ),

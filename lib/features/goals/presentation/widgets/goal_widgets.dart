@@ -13,6 +13,8 @@ import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/chips.dart';
 import '../../data/goals_repository.dart';
 import '../../domain/goal_progress.dart';
+import '../goal_labels.dart';
+import '../../../../core/utilities/bidi.dart';
 
 String goalHealthLabel(BuildContext context, GoalHealth health) {
   final l = context.l10n;
@@ -132,7 +134,7 @@ class _LogProgressSheetState extends ConsumerState<_LogProgressSheet> {
     final unit = widget.goal.unit.trim();
     return AppBottomSheet(
       title: l.goalLogTitle,
-      subtitle: widget.goal.title,
+      subtitle: bidiSafe(widget.goal.title),
       action: PrimaryButton(
         key: const Key('goal-log-save'),
         label: l.goalLogSave,
@@ -169,7 +171,10 @@ class _LogProgressSheetState extends ConsumerState<_LogProgressSheet> {
                       padding: const EdgeInsetsDirectional.only(
                         end: AppSpacing.lg,
                       ),
-                      child: Center(widthFactor: 1, child: Text(unit)),
+                      child: Center(
+                        widthFactor: 1,
+                        child: Text(unitName(l, unit)),
+                      ),
                     ),
             ),
           AppSpacing.gap16,

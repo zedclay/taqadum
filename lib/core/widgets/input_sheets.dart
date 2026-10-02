@@ -86,7 +86,7 @@ class _NumberSheetState extends State<_NumberSheet> {
         suffixIcon: widget.suffix == null || widget.suffix!.isEmpty
             ? null
             : Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsetsDirectional.only(end: 16),
                 child: Center(widthFactor: 1, child: Text(widget.suffix!)),
               ),
       ),

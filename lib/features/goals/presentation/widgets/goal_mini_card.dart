@@ -17,15 +17,24 @@ import '../../../../core/widgets/progress.dart';
 import '../../data/goals_repository.dart';
 import '../../domain/goal_progress.dart';
 import '../../domain/goal_units.dart';
+import '../goal_labels.dart';
+import '../../../../core/utilities/bidi.dart';
 
 /// Formats a goal quantity with its unit, e.g. "170,000 DZD" or "0.8 juz".
-String goalValue(Goal goal, double value, {bool compact = false}) {
+String goalValue(
+  AppLocalizations l,
+  Goal goal,
+  double value, {
+  bool compact = false,
+}) {
   final unit = goal.unit.trim();
   final number = compact ? Fmt.compact(value) : Fmt.number(value);
-  if (unit.isEmpty) return number;
-  return GoalUnits.isCurrency(unit)
-      ? '$number ${unit.toUpperCase()}'
-      : '$number $unit';
+  return unitQuantity(
+    l,
+    GoalUnits.isCurrency(unit) ? unit.toUpperCase() : unit,
+    value,
+    number,
+  );
 }
 
 /// One-line description of where a goal stands.
@@ -49,7 +58,8 @@ String goalProgressLine(BuildContext context, GoalView view) {
       ),
       _ => l.goalMiniRoutineWeek(p.current.round(), p.target.round()),
     },
-    GoalType.target => '${Fmt.number(p.current)} / ${goalValue(g, p.target)}',
+    GoalType.target =>
+      '${Fmt.number(p.current)} / ${goalValue(l, g, p.target)}',
   };
 }
 
@@ -85,7 +95,7 @@ class GoalMiniCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  g.title,
+                  bidiSafe(g.title),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.cardTitle,

@@ -83,7 +83,7 @@ class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
                   child: centerTitle
                       ? Center(child: titleWidget)
                       : Padding(
-                          padding: const EdgeInsets.only(left: 4),
+                          padding: const EdgeInsetsDirectional.only(start: 4),
                           child: Align(
                             alignment: AlignmentDirectional.centerStart,
                             child: titleWidget,

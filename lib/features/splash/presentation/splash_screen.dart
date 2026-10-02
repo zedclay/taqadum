@@ -70,6 +70,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Stack(
+        fit: StackFit.expand,
         children: [
           const Positioned.fill(child: _Glow()),
           SafeArea(

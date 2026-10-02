@@ -30,7 +30,7 @@ class ModuleScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppTopBar(actions: actions),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const EdgeInsetsDirectional.fromSTEB(
           AppSpacing.screen,
           AppSpacing.xs,
           AppSpacing.screen,
@@ -80,13 +80,16 @@ class StatTile extends StatelessWidget {
         children: [
           Text(label, style: AppTypography.caption, maxLines: 1),
           const SizedBox(height: 2),
-          Text(
-            value,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTypography.cardTitle
-                .copyWith(fontSize: 18, color: valueColor)
-                .tabular,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: AppTypography.cardTitle
+                  .copyWith(fontSize: 18, color: valueColor)
+                  .tabular,
+            ),
           ),
           if (caption != null)
             Text(

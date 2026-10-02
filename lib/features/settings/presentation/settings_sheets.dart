@@ -19,6 +19,7 @@ import '../../profile/data/profile_repository.dart';
 import '../data/export_service.dart';
 import '../data/preferences.dart';
 import '../data/settings_store.dart';
+import '../../../core/utilities/bidi.dart';
 
 const appVersion = '1.0.0';
 
@@ -148,7 +149,7 @@ Future<void> showPrimaryFocusSheet(BuildContext context, WidgetRef ref) async {
       for (final g in goals)
         SheetOption(
           value: g.id,
-          label: g.title,
+          label: bidiSafe(g.title),
           subtitle: g.area.label(context),
         ),
     ],

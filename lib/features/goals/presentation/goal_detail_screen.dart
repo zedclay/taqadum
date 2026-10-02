@@ -29,6 +29,7 @@ import 'goal_editor_sheets.dart';
 import 'goal_labels.dart';
 import 'widgets/goal_mini_card.dart';
 import 'widgets/goal_widgets.dart';
+import '../../../core/utilities/bidi.dart';
 
 enum _Menu { edit, pause, resume, complete, reopen, primary, archive, delete }
 
@@ -186,7 +187,7 @@ class _Body extends ConsumerWidget {
             .toList()
           ..sort((a, b) => a.occurredAt.compareTo(b.occurredAt));
     return ListView(
-      padding: const EdgeInsets.fromLTRB(
+      padding: const EdgeInsetsDirectional.fromSTEB(
         AppSpacing.screen,
         AppSpacing.xs,
         AppSpacing.screen,
@@ -207,7 +208,7 @@ class _Body extends ConsumerWidget {
           ],
         ),
         AppSpacing.gap12,
-        Text(g.title, style: AppTypography.pageTitle),
+        Text(bidiSafe(g.title), style: AppTypography.pageTitle),
         if (g.description != null) ...[
           const SizedBox(height: 4),
           Text(g.description!, style: AppTypography.body),
@@ -241,7 +242,7 @@ class _Body extends ConsumerWidget {
             color: AppColors.surfaceMuted,
             borderColor: null,
             shadow: false,
-            child: Text(g.why!, style: AppTypography.bodyLarge),
+            child: Text(bidiSafe(g.why!), style: AppTypography.bodyLarge),
           ),
         ],
       ],
@@ -282,7 +283,7 @@ class _Trajectory extends StatelessWidget {
                   style: AppTypography.display.tabular,
                 ),
                 TextSpan(
-                  text: '  ${l.goalOfTarget(goalValue(g, p.target))}',
+                  text: '  ${l.goalOfTarget(goalValue(l, g, p.target))}',
                   style: AppTypography.caption,
                 ),
               ],
@@ -368,7 +369,7 @@ class _ActionsSection extends ConsumerWidget {
               : TaskRow(
                   title: next.title,
                   subtitle: [
-                    next.detail,
+                    if (next.detail != null) bidiSafe(next.detail!),
                     frequencyLabel(context, next.frequency),
                   ].whereType<String>().join(' · '),
                   done: false,
@@ -410,7 +411,9 @@ class _ActionsSection extends ConsumerWidget {
                         title: a.title,
                         subtitle: [
                           frequencyLabel(context, a.frequency),
-                          done ? l.goalDoneForPeriod : a.detail,
+                          done
+                              ? l.goalDoneForPeriod
+                              : (a.detail == null ? null : bidiSafe(a.detail!)),
                         ].whereType<String>().join(' · '),
                         done: done,
                         onToggle: editable
@@ -587,10 +590,11 @@ class _History extends ConsumerWidget {
                     color: AppColors.primaryStrong,
                     background: AppColors.brandSoft,
                     title:
-                        e.note ?? l.goalProgressAdded(goalValue(goal, e.delta)),
+                        e.note ??
+                        l.goalProgressAdded(goalValue(l, goal, e.delta)),
                     subtitle: e.note == null
                         ? null
-                        : l.goalProgressAdded(goalValue(goal, e.delta)),
+                        : l.goalProgressAdded(goalValue(l, goal, e.delta)),
                     trailing: Fmt.monthDay(e.occurredAt.toLocal()),
                   ),
               ],
