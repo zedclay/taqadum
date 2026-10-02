@@ -33,11 +33,12 @@ class TaskDraft {
 }
 
 class TasksRepository {
-  TasksRepository(this._db, this._goals, this._activity);
+  TasksRepository(this._db, this._goals, this._activity, this._now);
 
   final AppDatabase _db;
   final GoalsRepository _goals;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<List<Task>> watchDay(String dayKey) =>
       (_db.select(_db.tasks)
@@ -77,7 +78,7 @@ class TasksRepository {
             note: Value(draft.note),
             priorityRank: Value(draft.priorityRank),
             sortOrder: Value(siblings.length),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     return id;
@@ -93,7 +94,7 @@ class TasksRepository {
 
   Future<void> setDone(Task task, bool done) => _db.transaction(() async {
     await (_db.update(_db.tasks)..where((t) => t.id.equals(task.id))).write(
-      TasksCompanion(completedAt: Value(done ? DateTime.now().toUtc() : null)),
+      TasksCompanion(completedAt: Value(done ? _now().toUtc() : null)),
     );
     if (done) {
       await _activity.record(
@@ -159,6 +160,7 @@ final tasksRepositoryProvider = Provider<TasksRepository>(
     ref.watch(databaseProvider),
     ref.watch(goalsRepositoryProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

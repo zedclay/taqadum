@@ -5,9 +5,10 @@ import '../../../core/database/app_database.dart';
 import '../../../core/providers.dart';
 
 class ProfileRepository {
-  ProfileRepository(this._db);
+  ProfileRepository(this._db, this._now);
 
   final AppDatabase _db;
+  final Clock _now;
 
   Stream<UserProfile?> watch() =>
       (_db.select(_db.userProfiles)..limit(1)).watchSingleOrNull();
@@ -27,7 +28,7 @@ class ProfileRepository {
           name: name,
           email: Value(email),
           avatarColor: Value(name.hashCode.abs() % 6),
-          createdAt: DateTime.now().toUtc(),
+          createdAt: _now().toUtc(),
         ),
       );
 
@@ -48,7 +49,8 @@ class ProfileRepository {
 }
 
 final profileRepositoryProvider = Provider<ProfileRepository>(
-  (ref) => ProfileRepository(ref.watch(databaseProvider)),
+  (ref) =>
+      ProfileRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
 );
 
 final profileProvider = StreamProvider<UserProfile?>(

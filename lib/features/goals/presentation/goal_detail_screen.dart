@@ -250,14 +250,14 @@ class _Body extends ConsumerWidget {
   }
 }
 
-class _Trajectory extends StatelessWidget {
+class _Trajectory extends ConsumerWidget {
   const _Trajectory({required this.view, required this.hasMilestones});
 
   final GoalView view;
   final bool hasMilestones;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final g = view.goal;
     final p = view.progress;
@@ -307,7 +307,7 @@ class _Trajectory extends StatelessWidget {
               if (g.targetDate != null)
                 Text(
                   '${l.goalsTargetOn(Fmt.monthDayYear(g.targetDate!.toLocal()))} · '
-                  '${timeLeftLabel(context, g.targetDate!.toLocal())}',
+                  '${timeLeftLabel(context, g.targetDate!.toLocal(), now: ref.watch(currentDayProvider))}',
                   style: AppTypography.caption,
                 ),
             ],
@@ -571,7 +571,11 @@ class _History extends ConsumerWidget {
           title: l.goalHistory,
           trailingText: events.isEmpty
               ? null
-              : daysAgoLabel(context, events.last.occurredAt),
+              : daysAgoLabel(
+                  context,
+                  events.last.occurredAt,
+                  now: ref.watch(currentDayProvider),
+                ),
         ),
         if (events.isEmpty)
           AppCard(child: Text(l.goalNoHistory, style: AppTypography.caption))

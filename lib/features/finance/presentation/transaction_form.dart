@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/localization/l10n.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -83,7 +84,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   String? _category;
   final List<String> _customCategories = [];
   MoneyTag _tag = MoneyTag.personal;
-  DateTime _date = DateTime.now();
+  late DateTime _date = ref.read(clockProvider)();
   String? _goalChoice;
   bool _saving = false;
 
@@ -121,9 +122,9 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
   }
 
   Future<void> _pickDate() async {
-    final date = await pickDate(context, initial: _date, last: DateTime.now());
+    final now = ref.read(clockProvider)();
+    final date = await pickDate(context, initial: _date, last: now);
     if (date == null) return;
-    final now = DateTime.now();
     setState(
       () => _date = DateTime(
         date.year,
@@ -175,7 +176,7 @@ class _TransactionFormState extends ConsumerState<TransactionForm> {
       TransactionType.income => AppColors.success,
       TransactionType.saving => AppColors.finance,
     };
-    final isToday = DateUtils.isSameDay(_date, DateTime.now());
+    final isToday = DateUtils.isSameDay(_date, ref.watch(currentDayProvider));
     return AppBottomSheet(
       title: l.moneyTitle,
       leading: widget.onBack == null

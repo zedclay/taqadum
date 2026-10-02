@@ -12,11 +12,12 @@ import '../../history/data/activity_repository.dart';
 import '../../../core/database/activity_fallback.dart';
 
 class FinanceRepository {
-  FinanceRepository(this._db, this._goals, this._activity);
+  FinanceRepository(this._db, this._goals, this._activity, this._now);
 
   final AppDatabase _db;
   final GoalsRepository _goals;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<List<FinanceTransaction>> watchRange(PeriodRange range) =>
       (_db.select(_db.financeTransactions)
@@ -43,7 +44,7 @@ class FinanceRepository {
     required String currency,
   }) => _db.transaction(() async {
     final id = newId();
-    final when = (at ?? DateTime.now()).toUtc();
+    final when = (at ?? _now()).toUtc();
     await _db
         .into(_db.financeTransactions)
         .insert(
@@ -104,6 +105,7 @@ final financeRepositoryProvider = Provider<FinanceRepository>(
     ref.watch(databaseProvider),
     ref.watch(goalsRepositoryProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

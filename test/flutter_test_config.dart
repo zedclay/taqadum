@@ -4,7 +4,11 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Loads the bundled fonts so widget tests lay text out with real metrics.
+const _symbolsFamily =
+    'packages/material_symbols_icons/MaterialSymbolsOutlined';
+
+/// Loads the bundled fonts so widget tests lay text out with real metrics and
+/// goldens show real icon glyphs.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   const families = {
@@ -19,5 +23,11 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
     }
     await loader.load();
   }
+  await (FontLoader(_symbolsFamily)..addFont(
+        rootBundle.load(
+          'packages/material_symbols_icons/lib/fonts/MaterialSymbolsOutlined.ttf',
+        ),
+      ))
+      .load();
   await testMain();
 }

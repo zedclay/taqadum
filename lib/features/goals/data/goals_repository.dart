@@ -68,10 +68,11 @@ class GoalDraft {
 }
 
 class GoalsRepository {
-  GoalsRepository(this._db, this._activity);
+  GoalsRepository(this._db, this._activity, this._now);
 
   final AppDatabase _db;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<List<Goal>> watchGoals() =>
       (_db.select(_db.goals)..orderBy([
@@ -112,7 +113,7 @@ class GoalsRepository {
           .get();
 
   Future<String> save(GoalDraft draft) => _db.transaction(() async {
-    final now = DateTime.now().toUtc();
+    final now = _now().toUtc();
     final id = draft.id ?? newId();
     final existing = draft.id == null ? null : await getGoal(draft.id!);
     final companion = GoalsCompanion(
@@ -208,7 +209,7 @@ class GoalsRepository {
         .go();
     for (var i = 0; i < drafts.length; i++) {
       final d = drafts[i];
-      final completedAt = Value(d.completed ? DateTime.now().toUtc() : null);
+      final completedAt = Value(d.completed ? _now().toUtc() : null);
       if (d.id != null) {
         final current = await (_db.select(
           _db.goalMilestones,
@@ -260,7 +261,7 @@ class GoalsRepository {
             note: Value(note),
             source: Value(source),
             sourceId: Value(sourceId),
-            occurredAt: (at ?? DateTime.now()).toUtc(),
+            occurredAt: (at ?? _now()).toUtc(),
           ),
         );
   }
@@ -301,12 +302,12 @@ class GoalsRepository {
           GoalsCompanion(
             status: Value(status),
             completedAt: Value(
-              status == GoalStatus.completed ? DateTime.now().toUtc() : null,
+              status == GoalStatus.completed ? _now().toUtc() : null,
             ),
             isPrimary: status == GoalStatus.active
                 ? const Value.absent()
                 : const Value(false),
-            updatedAt: Value(DateTime.now().toUtc()),
+            updatedAt: Value(_now().toUtc()),
           ),
         );
         if (status == GoalStatus.completed) {
@@ -343,7 +344,7 @@ class GoalsRepository {
           _db.goalMilestones,
         )..where((t) => t.id.equals(m.id))).write(
           GoalMilestonesCompanion(
-            completedAt: Value(done ? DateTime.now().toUtc() : null),
+            completedAt: Value(done ? _now().toUtc() : null),
           ),
         );
         if (done) {
@@ -366,7 +367,7 @@ class GoalsRepository {
           _db.goalActions,
         )..where((t) => t.id.equals(action.id))).write(
           GoalActionsCompanion(
-            lastCompletedAt: Value(done ? DateTime.now().toUtc() : null),
+            lastCompletedAt: Value(done ? _now().toUtc() : null),
           ),
         );
         if (done) {
@@ -375,8 +376,7 @@ class GoalsRepository {
               goalId: goal.id,
               delta: 1,
               source: ProgressSource.task,
-              sourceId:
-                  'action:${action.id}:${DateTime.now().toIso8601String()}',
+              sourceId: 'action:${action.id}:${_now().toIso8601String()}',
             );
           }
           await _activity.record(
@@ -402,7 +402,7 @@ class GoalsRepository {
             detail: Value(_blankToNull(draft.detail)),
             frequency: Value(draft.frequency),
             sortOrder: Value(count),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
   }
@@ -415,6 +415,7 @@ final goalsRepositoryProvider = Provider<GoalsRepository>(
   (ref) => GoalsRepository(
     ref.watch(databaseProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

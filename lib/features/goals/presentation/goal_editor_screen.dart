@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/localization/l10n.dart';
+import '../../../core/providers.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_radius.dart';
@@ -279,7 +280,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
   }
 
   Future<void> _pickDate() async {
-    final now = DateTime.now();
+    final now = ref.read(clockProvider)();
     final date = await pickDate(
       context,
       initial: _date ?? DateTime(now.year, 12, 31),
@@ -511,7 +512,14 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
               muted: _date == null,
               trailing: _date == null
                   ? null
-                  : Pill(label: timeLeftLabel(context, _date!), dense: true),
+                  : Pill(
+                      label: timeLeftLabel(
+                        context,
+                        _date!,
+                        now: ref.watch(currentDayProvider),
+                      ),
+                      dense: true,
+                    ),
             ),
             if (_date != null)
               Align(
@@ -851,7 +859,7 @@ class _GoalEditorScreenState extends ConsumerState<GoalEditorScreen> {
     } else if (_date == null || target <= 0) {
       message = l.goalTrajectoryNoDate;
     } else {
-      final now = DateTime.now();
+      final now = ref.watch(clockProvider)();
       final months = ((_date!.difference(now).inDays) / 30.44).clamp(
         1.0,
         double.infinity,

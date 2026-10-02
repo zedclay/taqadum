@@ -23,9 +23,8 @@ Future<DateTime?> pickDate(
   DateTime? first,
   DateTime? last,
 }) {
-  final now = DateTime.now();
-  final firstDate = first ?? DateTime(now.year - 5);
-  final lastDate = last ?? DateTime(now.year + 10);
+  final firstDate = first ?? DateTime(initial.year - 5);
+  final lastDate = last ?? DateTime(initial.year + 10);
   var start = initial;
   if (start.isBefore(firstDate)) start = firstDate;
   if (start.isAfter(lastDate)) start = lastDate;

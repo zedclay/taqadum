@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/localization/l10n.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/utilities/formatters.dart';
@@ -290,7 +291,7 @@ class _FocusFormState extends ConsumerState<_FocusForm> {
     // Keep the start date when only details change.
     final startedOn = _initial != null && _initial.skill == skill
         ? _initial.startedOn
-        : DateTime.now();
+        : ref.read(clockProvider)();
     await ref
         .read(settingsStoreProvider)
         .setLearningFocus(

@@ -70,7 +70,8 @@ abstract final class QuranStats {
   }
 
   /// The surah of the most recent memorization entry, with pages memorized
-  /// in it across all entries.
+  /// in it across all entries. Entries beyond the surah's length (re-logged
+  /// portions) count it as complete rather than exceeding it.
   static CurrentMemorization? currentMemorization(List<QuranLog> logs) {
     final memo =
         logs
@@ -86,10 +87,11 @@ abstract final class QuranStats {
     final pages = memo
         .where((l) => surahNumberOf(l.surah) == surah)
         .fold<double>(0, (s, l) => s + l.pages);
+    final total = surahPageCount(surah);
     return CurrentMemorization(
       surah: surah,
-      memorizedPages: pages,
-      totalPages: surahPageCount(surah),
+      memorizedPages: pages.clamp(0, total).toDouble(),
+      totalPages: total,
     );
   }
 

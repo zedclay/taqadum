@@ -1962,8 +1962,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String quranPagesOfSurah(Object done, Object total) {
-    return '$done of $total pages';
+  String quranPagesOfSurah(String done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total pages',
+      one: '1 page',
+    );
+    return '$done of $_temp0';
   }
 
   @override

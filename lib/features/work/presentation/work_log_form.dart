@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/localization/l10n.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/utilities/formatters.dart';
@@ -118,7 +119,7 @@ class _WorkLogFormState extends ConsumerState<WorkLogForm> {
 
   Future<void> _pickSchedule() async {
     final use24h = ref.read(preferencesProvider).use24h;
-    final now = DateTime.now();
+    final now = ref.read(clockProvider)();
     final date = await pickDate(
       context,
       initial: _scheduledAt ?? now,

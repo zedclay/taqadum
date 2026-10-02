@@ -8,10 +8,11 @@ import '../../history/data/activity_repository.dart';
 import '../../../core/database/activity_fallback.dart';
 
 class NotesRepository {
-  NotesRepository(this._db, this._activity);
+  NotesRepository(this._db, this._activity, this._now);
 
   final AppDatabase _db;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Future<void> add(String body, {LifeArea? area}) => _db.transaction(() async {
     final id = newId();
@@ -23,7 +24,7 @@ class NotesRepository {
             id: id,
             body: text,
             area: Value(area),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     final firstLine = text.split('\n').first;
@@ -44,5 +45,6 @@ final notesRepositoryProvider = Provider<NotesRepository>(
   (ref) => NotesRepository(
     ref.watch(databaseProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );

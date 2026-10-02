@@ -58,9 +58,10 @@ class ActivityFilter {
 }
 
 class ActivityRepository {
-  ActivityRepository(this._db);
+  ActivityRepository(this._db, this._now);
 
   final AppDatabase _db;
+  final Clock _now;
 
   Future<void> record({
     LifeArea? area,
@@ -85,7 +86,7 @@ class ActivityRepository {
           entityType: Value(entityType),
           entityId: Value(entityId),
           facts: Value(facts == null ? null : jsonEncode(facts)),
-          occurredAt: (at ?? DateTime.now()).toUtc(),
+          occurredAt: (at ?? _now()).toUtc(),
         ),
       );
 
@@ -147,7 +148,8 @@ class ActivityRepository {
 }
 
 final activityRepositoryProvider = Provider<ActivityRepository>(
-  (ref) => ActivityRepository(ref.watch(databaseProvider)),
+  (ref) =>
+      ActivityRepository(ref.watch(databaseProvider), ref.watch(clockProvider)),
 );
 
 final activityInRangeProvider =

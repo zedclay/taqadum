@@ -3547,8 +3547,8 @@ abstract class AppLocalizations {
   /// No description provided for @quranPagesOfSurah.
   ///
   /// In en, this message translates to:
-  /// **'{done} of {total} pages'**
-  String quranPagesOfSurah(Object done, Object total);
+  /// **'{done} of {total, plural, =1{1 page} other{{total} pages}}'**
+  String quranPagesOfSurah(String done, int total);
 
   /// No description provided for @quranNextStep.
   ///

@@ -12,11 +12,12 @@ import '../../history/data/activity_repository.dart';
 import '../../../core/database/activity_fallback.dart';
 
 class HealthRepository {
-  HealthRepository(this._db, this._goals, this._activity);
+  HealthRepository(this._db, this._goals, this._activity, this._now);
 
   final AppDatabase _db;
   final GoalsRepository _goals;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<List<Habit>> watchHabits() =>
       (_db.select(_db.habits)
@@ -82,7 +83,7 @@ class HealthRepository {
             templateId: Value(templateId),
             reminderMinute: Value(reminderMinute),
             sortOrder: Value(count),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     await _activity.record(
@@ -129,7 +130,7 @@ class HealthRepository {
               id: logId,
               habitId: habit.id,
               dayKey: dayKey,
-              createdAt: DateTime.now().toUtc(),
+              createdAt: _now().toUtc(),
             ),
             mode: InsertMode.insertOrIgnore,
           );
@@ -157,7 +158,7 @@ class HealthRepository {
     DateTime? at,
   }) => _db.transaction(() async {
     final id = newId();
-    final when = (at ?? DateTime.now()).toUtc();
+    final when = (at ?? _now()).toUtc();
     await _db
         .into(_db.workoutLogs)
         .insert(
@@ -194,7 +195,7 @@ class HealthRepository {
   Future<void> logWalk({required int minutes, int? steps, DateTime? at}) =>
       _db.transaction(() async {
         final id = newId();
-        final when = (at ?? DateTime.now()).toUtc();
+        final when = (at ?? _now()).toUtc();
         await _db
             .into(_db.walkingLogs)
             .insert(
@@ -236,7 +237,7 @@ class HealthRepository {
             bedTime: bedTime.toUtc(),
             wakeTime: wakeTime.toUtc(),
             energy: Value(energy),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     await _activity.removeFor('sleep', dayKey);
@@ -252,8 +253,8 @@ class HealthRepository {
     );
   });
 
-  static DateTime _momentFor(String dayKey) {
-    final now = DateTime.now();
+  DateTime _momentFor(String dayKey) {
+    final now = _now();
     if (dayKeyOf(now) == dayKey) return now;
     return dateOfKey(dayKey).add(const Duration(hours: 12));
   }
@@ -264,6 +265,7 @@ final healthRepositoryProvider = Provider<HealthRepository>(
     ref.watch(databaseProvider),
     ref.watch(goalsRepositoryProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

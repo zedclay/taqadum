@@ -13,8 +13,12 @@ import 'package:taqadum/features/notifications/data/reminders_repository.dart';
 import 'package:taqadum/features/onboarding/data/onboarding_service.dart';
 import 'package:taqadum/features/onboarding/domain/onboarding_draft.dart';
 import 'package:taqadum/features/quran/data/quran_repository.dart';
+import 'package:taqadum/features/quran/domain/quran_stats.dart';
+import 'package:taqadum/features/quran/domain/surahs.dart';
+import 'package:taqadum/features/reviews/data/reviews_repository.dart';
 import 'package:taqadum/features/settings/data/export_service.dart';
 import 'package:taqadum/features/settings/data/settings_store.dart';
+import 'package:taqadum/features/today/data/notes_repository.dart';
 import 'package:taqadum/features/today/data/tasks_repository.dart';
 import 'package:taqadum/l10n/generated/app_localizations.dart';
 
@@ -247,6 +251,113 @@ void main() {
     expect(activity.every((a) => !a.occurredAt.isAfter(env.now)), isTrue);
   });
 
+  test('demo memorization stays within surah lengths and its goal', () async {
+    await c.read(demoDataSeederProvider).seed();
+    final logs = await env.db.select(env.db.quranLogs).get();
+    final memorized = <int, double>{};
+    for (final log in logs.where((l) => l.kind == QuranKind.memorization)) {
+      final surah = surahNumberOf(log.surah)!;
+      memorized[surah] = (memorized[surah] ?? 0) + log.pages;
+    }
+    expect(memorized.keys, isNotEmpty);
+    for (final MapEntry(key: surah, value: pages) in memorized.entries) {
+      expect(pages, lessThanOrEqualTo(surahPageCount(surah)), reason: '$surah');
+      expect(surah, inInclusiveRange(78, 114), reason: 'Juz Amma');
+    }
+    final memo = QuranStats.currentMemorization(logs)!;
+    expect(memo.memorizedPages, lessThanOrEqualTo(memo.totalPages));
+
+    final goal = (await env.db.select(env.db.goals).get()).singleWhere(
+      (g) => g.area == LifeArea.quran,
+    );
+    final events = await (env.db.select(
+      env.db.goalProgressEvents,
+    )..where((e) => e.goalId.equals(goal.id))).get();
+    final current = events.fold<double>(0, (s, e) => s + e.delta);
+    expect(
+      current,
+      closeTo(memorized.values.fold<double>(0, (a, b) => a + b), 1e-9),
+    );
+    expect(current, lessThanOrEqualTo(goal.targetValue));
+  });
+
+  group('writes without an explicit time use the injected clock', () {
+    final pinned = DateTime(2026, 10, 22, 9, 30);
+    final atPinned = predicate<DateTime>(
+      (d) => d.isAtSameMomentAs(pinned),
+      'the pinned moment',
+    );
+
+    setUp(() async {
+      c.dispose();
+      await env.db.close();
+      env = await TestEnv.create(session: readySession, now: pinned);
+      c = env.container();
+    });
+
+    test('logs, goal events, activity, tasks and notes', () async {
+      final goal = await saveGoal(
+        const GoalDraft(
+          title: 'Memorize',
+          area: LifeArea.quran,
+          type: GoalType.target,
+          unit: 'pages',
+          targetValue: 20,
+        ),
+      );
+      await c
+          .read(quranRepositoryProvider)
+          .add(kind: QuranKind.memorization, pages: 1, goal: goal);
+      await goals().logProgress(goal: goal, delta: 1);
+      final tasks = c.read(tasksRepositoryProvider);
+      await tasks.add(
+        const TaskDraft(
+          title: 'Plan',
+          area: LifeArea.personal,
+          dayKey: '2026-10-22',
+        ),
+      );
+      await tasks.setDone((await tasks.dayTasks('2026-10-22')).single, true);
+      await c.read(notesRepositoryProvider).add('Idea');
+
+      final log = await env.db.select(env.db.quranLogs).getSingle();
+      expect(log.occurredAt, atPinned);
+      final events = await env.db.select(env.db.goalProgressEvents).get();
+      expect(events.map((e) => e.occurredAt), everyElement(atPinned));
+      final task = await env.db.select(env.db.tasks).getSingle();
+      expect(task.createdAt, atPinned);
+      expect(task.completedAt, atPinned);
+      final note = await env.db.select(env.db.notes).getSingle();
+      expect(note.createdAt, atPinned);
+      final activity = await env.db.select(env.db.activityEvents).get();
+      expect(activity.map((a) => a.occurredAt), everyElement(atPinned));
+      final saved = await goals().getGoal(goal.id);
+      expect(saved!.createdAt, atPinned);
+    });
+
+    test('a completed weekly review is stamped with the app date', () async {
+      await c
+          .read(reviewsRepositoryProvider)
+          .saveWeekly(
+            weekStart: '2026-10-12',
+            wentWellTags: const [],
+            changeTags: const [],
+            priorities: const [],
+            complete: true,
+            rangeLabel: '2026-10-12 – 2026-10-18',
+          );
+      final review = await env.db.select(env.db.weeklyReviews).getSingle();
+      expect(review.completedAt, atPinned);
+      final activity = await env.db.select(env.db.activityEvents).getSingle();
+      expect(activity.occurredAt, atPinned);
+    });
+
+    test('export metadata uses the app date', () async {
+      final json = await c.read(exportServiceProvider).buildJson();
+      expect(json['exportedAt'], pinned.toUtc().toIso8601String());
+    });
+  });
+
   test('JSON export contains every table', () async {
     await saveGoal(
       const GoalDraft(
@@ -256,7 +367,7 @@ void main() {
         targetValue: 12,
       ),
     );
-    final json = await ExportService(env.db).buildJson();
+    final json = await ExportService(env.db, () => env.now).buildJson();
     final tables = json['tables']! as Map<String, Object?>;
     expect(tables.keys, containsAll(['goals', 'tasks', 'activity_events']));
     expect(tables['goals'], hasLength(1));

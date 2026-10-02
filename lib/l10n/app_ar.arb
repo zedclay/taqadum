@@ -574,7 +574,7 @@
   "quranLogProgress": "تسجيل التقدّم",
   "quranCurrentMemo": "الحفظ الحالي",
   "quranSurahBadge": "السورة {n}",
-  "quranPagesOfSurah": "{done} من {total} صفحة",
+  "quranPagesOfSurah": "{done} من {total, plural, =1{صفحة واحدة} =2{صفحتين} few{{total} صفحات} many{{total} صفحة} other{{total} صفحة}}",
   "quranNextStep": "التالي · {amount} صفحة",
   "quranContinue": "متابعة",
   "quranNoMemoTitle": "لا يوجد حفظ بعد",

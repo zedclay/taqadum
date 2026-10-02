@@ -3,6 +3,7 @@ import 'package:taqadum/core/database/app_database.dart';
 import 'package:taqadum/core/domain/period.dart';
 import 'package:taqadum/features/finance/domain/finance_stats.dart';
 import 'package:taqadum/features/quran/domain/quran_stats.dart';
+import 'package:taqadum/features/quran/domain/surahs.dart';
 import 'package:taqadum/features/today/domain/today_summary.dart';
 import 'package:taqadum/features/work/domain/work_stats.dart';
 
@@ -22,14 +23,20 @@ FinanceTransaction _tx(
   occurredAt: at,
 );
 
-QuranLog _quran(QuranKind kind, DateTime at, {double pages = 0, int min = 0}) =>
-    QuranLog(
-      id: '$kind-${at.microsecondsSinceEpoch}',
-      kind: kind,
-      pages: pages,
-      minutes: min,
-      occurredAt: at,
-    );
+QuranLog _quran(
+  QuranKind kind,
+  DateTime at, {
+  double pages = 0,
+  int min = 0,
+  String? surah,
+}) => QuranLog(
+  id: '$kind-${at.microsecondsSinceEpoch}',
+  kind: kind,
+  pages: pages,
+  minutes: min,
+  surah: surah,
+  occurredAt: at,
+);
 
 WorkActivity _work(
   WorkKind kind,
@@ -117,6 +124,44 @@ void main() {
       expect(t.readPages, 6);
       expect(t.memorizedPages, 1);
       expect(t.revisionMinutes, 20);
+    });
+
+    test('current memorization never exceeds the surah length', () {
+      final logs = [
+        for (var i = 0; i < 16; i++)
+          _quran(
+            QuranKind.memorization,
+            today.subtract(Duration(days: i)),
+            pages: 0.5,
+            surah: 'An-Naba (Surah 78)',
+          ),
+      ];
+      final memo = QuranStats.currentMemorization(logs)!;
+      expect(memo.surah, 78);
+      expect(memo.totalPages, surahPageCount(78));
+      expect(memo.memorizedPages, memo.totalPages);
+      expect(memo.ratio, 1);
+    });
+
+    test('current memorization follows the latest surah', () {
+      final memo = QuranStats.currentMemorization([
+        _quran(
+          QuranKind.memorization,
+          today.subtract(const Duration(days: 1)),
+          pages: 1,
+          surah: 'An-Naba (Surah 78)',
+        ),
+        _quran(
+          QuranKind.memorization,
+          today,
+          pages: 0.5,
+          surah: 'An-Naziat (Surah 79)',
+        ),
+        _quran(QuranKind.reading, today, pages: 4, surah: 'Al-Kahf (Surah 18)'),
+      ])!;
+      expect(memo.surah, 79);
+      expect(memo.memorizedPages, 0.5);
+      expect(memo.memorizedPages, lessThanOrEqualTo(memo.totalPages));
     });
 
     test('streak counts back from today or yesterday', () {

@@ -2010,8 +2010,17 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String quranPagesOfSurah(Object done, Object total) {
-    return '$done من $total صفحة';
+  String quranPagesOfSurah(String done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total صفحة',
+      many: '$total صفحة',
+      few: '$total صفحات',
+      two: 'صفحتين',
+      one: 'صفحة واحدة',
+    );
+    return '$done من $_temp0';
   }
 
   @override

@@ -33,11 +33,12 @@ class NightReviewDraft {
 }
 
 class DailyRepository {
-  DailyRepository(this._db, this._tasks, this._activity);
+  DailyRepository(this._db, this._tasks, this._activity, this._now);
 
   final AppDatabase _db;
   final TasksRepository _tasks;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<MorningCheckIn?> watchCheckIn(String dayKey) => (_db.select(
     _db.morningCheckIns,
@@ -95,7 +96,7 @@ class DailyRepository {
                   ? null
                   : intention.trim(),
             ),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     if (existing == null) {
@@ -129,7 +130,7 @@ class DailyRepository {
             betterTags: Value(jsonEncode(d.betterTags)),
             betterNote: Value(_clean(d.betterNote)),
             biggestWin: Value(_clean(d.biggestWin)),
-            createdAt: DateTime.now().toUtc(),
+            createdAt: _now().toUtc(),
           ),
         );
     if (existing == null) {
@@ -153,6 +154,7 @@ final dailyRepositoryProvider = Provider<DailyRepository>(
     ref.watch(databaseProvider),
     ref.watch(tasksRepositoryProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

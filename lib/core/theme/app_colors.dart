@@ -46,5 +46,5 @@ abstract final class AppColors {
   static const scrim = Color(0x66101828);
   static const cardShadow = Color(0x0A101828);
   static const sheetShadow = Color(0x14111827);
-  static const fabShadow = Color(0x59F85D27);
+  static const fabShadow = Color(0x29F85D27);
 }

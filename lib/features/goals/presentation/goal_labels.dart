@@ -33,9 +33,13 @@ String frequencyLabel(BuildContext context, GoalFrequency f) {
   };
 }
 
-String timeLeftLabel(BuildContext context, DateTime date, {DateTime? now}) {
+String timeLeftLabel(
+  BuildContext context,
+  DateTime date, {
+  required DateTime now,
+}) {
   final l = context.l10n;
-  final today = now ?? DateTime.now();
+  final today = now;
   final days = DateTime(
     date.year,
     date.month,

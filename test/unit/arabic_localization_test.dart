@@ -105,6 +105,14 @@ void main() {
       expect(ar.goalDaysLeft(11), 'يتبقى 11 يومًا');
       expect(ar.todayActionsLeft(0), 'أنجزت كل شيء');
     });
+
+    test('surah page counts agree with the total', () {
+      expect(en.quranPagesOfSurah('½', 1), '½ of 1 page');
+      expect(en.quranPagesOfSurah('1½', 2), '1½ of 2 pages');
+      expect(ar.quranPagesOfSurah('½', 1), '½ من صفحة واحدة');
+      expect(ar.quranPagesOfSurah('1', 2), '1 من صفحتين');
+      expect(ar.quranPagesOfSurah('3', 5), '3 من 5 صفحات');
+    });
   });
 
   group('search', () {

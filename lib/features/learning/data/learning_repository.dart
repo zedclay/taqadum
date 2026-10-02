@@ -17,12 +17,19 @@ abstract final class LearningTaskNote {
 }
 
 class LearningRepository {
-  LearningRepository(this._db, this._goals, this._tasks, this._activity);
+  LearningRepository(
+    this._db,
+    this._goals,
+    this._tasks,
+    this._activity,
+    this._now,
+  );
 
   final AppDatabase _db;
   final GoalsRepository _goals;
   final TasksRepository _tasks;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<List<LearningSession>> watchSessions(PeriodRange range) =>
       (_db.select(_db.learningSessions)
@@ -52,7 +59,7 @@ class LearningRepository {
     DateTime? at,
   }) => _db.transaction(() async {
     final id = newId();
-    final when = (at ?? DateTime.now()).toUtc();
+    final when = (at ?? _now()).toUtc();
     await _db
         .into(_db.learningSessions)
         .insert(
@@ -94,7 +101,7 @@ class LearningRepository {
         TaskDraft(
           title: appliedAction.trim(),
           area: LifeArea.learning,
-          dayKey: dayKeyOf(addDays(DateTime.now(), 1)),
+          dayKey: dayKeyOf(addDays(_now(), 1)),
           badge: skill,
           note: LearningTaskNote.applied,
         ),
@@ -128,7 +135,7 @@ class LearningRepository {
           totalUnits: totalUnits,
           completedUnits: Value(completedUnits),
           skill: Value(skill),
-          createdAt: DateTime.now().toUtc(),
+          createdAt: _now().toUtc(),
         ),
       );
 
@@ -152,6 +159,7 @@ final learningRepositoryProvider = Provider<LearningRepository>(
     ref.watch(goalsRepositoryProvider),
     ref.watch(tasksRepositoryProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

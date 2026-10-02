@@ -328,7 +328,7 @@ class _MemorizationCard extends ConsumerWidget {
               Text(
                 l.quranPagesOfSurah(
                   QuranRepository.pagesLabel(memo.memorizedPages),
-                  '${memo.totalPages}',
+                  memo.totalPages,
                 ),
                 style: AppTypography.label.copyWith(
                   color: AppColors.primaryStrong,
@@ -372,13 +372,13 @@ class _MemorizationCard extends ConsumerWidget {
   }
 }
 
-class _RevisionCard extends StatelessWidget {
+class _RevisionCard extends ConsumerWidget {
   const _RevisionCard({required this.items});
 
   final List<RevisionItem> items;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     if (items.isEmpty) {
       return AppCard(child: Text(l.quranNoRevision, style: AppTypography.body));
@@ -413,7 +413,11 @@ class _RevisionCard extends StatelessWidget {
                           const SizedBox(height: 2),
                           Text(
                             l.quranLastReviewed(
-                              daysAgoLabel(context, item.lastReviewed),
+                              daysAgoLabel(
+                                context,
+                                item.lastReviewed,
+                                now: ref.watch(currentDayProvider),
+                              ),
                             ),
                             style: AppTypography.caption,
                           ),
@@ -607,7 +611,12 @@ class _RecentCard extends ConsumerWidget {
               background: AppColors.brandSoft,
               title: _title(context, log),
               subtitle: [
-                whenLabel(context, log.occurredAt, use24h: use24h),
+                whenLabel(
+                  context,
+                  log.occurredAt,
+                  use24h: use24h,
+                  now: ref.watch(currentDayProvider),
+                ),
                 if (log.surah != null)
                   localizeSurahLabel(
                     QuranStats.displayTitle(log.surah!),

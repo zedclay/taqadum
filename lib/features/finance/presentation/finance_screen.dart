@@ -639,6 +639,7 @@ class _RecentSectionState extends ConsumerState<_RecentSection> {
     final l = context.l10n;
     final currency = ref.watch(preferencesProvider.select((p) => p.currency));
     final use24h = ref.watch(preferencesProvider.select((p) => p.use24h));
+    final today = ref.watch(currentDayProvider);
     final filtered =
         widget.items.where((t) => _filter == null || t.type == _filter).toList()
           ..sort((a, b) => b.occurredAt.compareTo(a.occurredAt));
@@ -683,8 +684,13 @@ class _RecentSectionState extends ConsumerState<_RecentSection> {
                         icon: categoryIcon(t.category),
                         title: t.note ?? financeCategoryLabel(l, t.category),
                         meta: t.note == null
-                            ? whenLabel(context, t.occurredAt, use24h: use24h)
-                            : '${financeCategoryLabel(l, t.category)} · ${whenLabel(context, t.occurredAt, use24h: use24h)}',
+                            ? whenLabel(
+                                context,
+                                t.occurredAt,
+                                use24h: use24h,
+                                now: today,
+                              )
+                            : '${financeCategoryLabel(l, t.category)} · ${whenLabel(context, t.occurredAt, use24h: use24h, now: today)}',
                         amount: Fmt.money(
                           t.type == TransactionType.income
                               ? t.amountMinor

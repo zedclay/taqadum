@@ -596,13 +596,13 @@ class _LeadCard extends ConsumerWidget {
 
   final PipelineLead lead;
 
-  String _next(BuildContext context, bool use24h) {
+  String _next(BuildContext context, bool use24h, DateTime today) {
     final l = context.l10n;
     final next = lead.next;
     if (next == null) return l.workNextNone;
     final at = next.scheduledAt!.toLocal();
     final kind = workKindLabel(context, next.kind);
-    final when = daysBetween(DateTime.now(), at) == 0
+    final when = daysBetween(at, today) == 0
         ? '${l.commonToday.toLowerCase()} · ${Fmt.time(at, use24h: use24h)}'
         : '${Fmt.monthDay(at)} · ${Fmt.time(at, use24h: use24h)}';
     return l.workNext('$kind $when');
@@ -674,7 +674,7 @@ class _LeadCard extends ConsumerWidget {
               AppSpacing.gap4,
               Expanded(
                 child: Text(
-                  _next(context, use24h),
+                  _next(context, use24h, ref.watch(currentDayProvider)),
                   style: AppTypography.captionSmall.copyWith(
                     color: lead.next == null
                         ? AppColors.textSecondary
@@ -725,17 +725,17 @@ class _MeetingsSection extends ConsumerWidget {
   }
 }
 
-class _MeetingRow extends StatelessWidget {
+class _MeetingRow extends ConsumerWidget {
   const _MeetingRow({required this.meeting, required this.use24h});
 
   final WorkActivity meeting;
   final bool use24h;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final at = meeting.scheduledAt!.toLocal();
-    final isToday = daysBetween(DateTime.now(), at) == 0;
+    final isToday = daysBetween(at, ref.watch(currentDayProvider)) == 0;
     return AppCard(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(

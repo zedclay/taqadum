@@ -532,7 +532,12 @@ class _SessionsCard extends ConsumerWidget {
               background: AppColors.learningSoft,
               title: s.topic,
               subtitle: [
-                whenLabel(context, s.occurredAt, use24h: use24h),
+                whenLabel(
+                  context,
+                  s.occurredAt,
+                  use24h: use24h,
+                  now: ref.watch(currentDayProvider),
+                ),
                 if (resources[s.resourceId] != null)
                   resources[s.resourceId]!.title
                 else

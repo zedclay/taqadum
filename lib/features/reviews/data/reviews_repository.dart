@@ -35,10 +35,11 @@ List<ReviewPriority> decodePriorities(String raw) => (jsonDecode(raw) as List)
 String encodeList(List<Object> items) => jsonEncode(items);
 
 class ReviewsRepository {
-  ReviewsRepository(this._db, this._activity);
+  ReviewsRepository(this._db, this._activity, this._now);
 
   final AppDatabase _db;
   final ActivityRepository _activity;
+  final Clock _now;
 
   Stream<WeeklyReview?> watchWeekly(String weekStart) => (_db.select(
     _db.weeklyReviews,
@@ -70,7 +71,7 @@ class ReviewsRepository {
     final existing = await (_db.select(
       _db.weeklyReviews,
     )..where((t) => t.weekStart.equals(weekStart))).getSingleOrNull();
-    final now = DateTime.now().toUtc();
+    final now = _now().toUtc();
     await _db
         .into(_db.weeklyReviews)
         .insertOnConflictUpdate(
@@ -115,7 +116,7 @@ class ReviewsRepository {
     final existing = await (_db.select(
       _db.monthlyReviews,
     )..where((t) => t.monthKey.equals(monthKey))).getSingleOrNull();
-    final now = DateTime.now().toUtc();
+    final now = _now().toUtc();
     await _db
         .into(_db.monthlyReviews)
         .insertOnConflictUpdate(
@@ -154,6 +155,7 @@ final reviewsRepositoryProvider = Provider<ReviewsRepository>(
   (ref) => ReviewsRepository(
     ref.watch(databaseProvider),
     ref.watch(activityRepositoryProvider),
+    ref.watch(clockProvider),
   ),
 );
 

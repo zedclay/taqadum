@@ -14,9 +14,10 @@ import '../../../core/providers.dart';
 enum ExportFormat { json, csv }
 
 class ExportService {
-  ExportService(this._db);
+  ExportService(this._db, this._now);
 
   final AppDatabase _db;
+  final Clock _now;
 
   static const formatVersion = 1;
 
@@ -30,7 +31,7 @@ class ExportService {
       'app': 'Taqaddum',
       'formatVersion': formatVersion,
       'schemaVersion': _db.schemaVersion,
-      'exportedAt': DateTime.now().toUtc().toIso8601String(),
+      'exportedAt': _now().toUtc().toIso8601String(),
       'tables': tables,
     };
   }
@@ -87,7 +88,7 @@ class ExportService {
     String currency = 'DZD',
   }) async {
     final dir = await getTemporaryDirectory();
-    final stamp = dayKeyOf(DateTime.now());
+    final stamp = dayKeyOf(_now());
     Future<File> write(String name, String content) =>
         File(p.join(dir.path, name)).writeAsString(content, flush: true);
     return switch (format) {
@@ -119,5 +120,5 @@ class ExportService {
 }
 
 final exportServiceProvider = Provider<ExportService>(
-  (ref) => ExportService(ref.watch(databaseProvider)),
+  (ref) => ExportService(ref.watch(databaseProvider), ref.watch(clockProvider)),
 );

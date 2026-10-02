@@ -19,8 +19,8 @@ abstract final class AppSpacing {
   static const double buttonHeight = 56;
   static const double inputHeight = 54;
   static const double minTouch = 44;
-  static const double navBarHeight = 76;
-  static const double fabSize = 50;
+  static const double navBarHeight = 64;
+  static const double fabSize = 54;
 
   static const screenPadding = EdgeInsets.symmetric(horizontal: screen);
   static const cardPadding = EdgeInsets.all(card);

@@ -12,6 +12,7 @@ import '../../features/health/data/health_repository.dart';
 import '../../features/history/data/activity_repository.dart';
 import '../../features/learning/data/learning_repository.dart';
 import '../../features/quran/data/quran_repository.dart';
+import '../../features/quran/domain/surahs.dart';
 import '../../features/reviews/data/reviews_repository.dart';
 import '../../features/settings/data/preferences.dart';
 import '../../features/settings/data/settings_store.dart';
@@ -167,6 +168,10 @@ class DemoDataSeeder {
         day.add(Duration(hours: hour, minutes: minute));
     bool past(DateTime moment) => !moment.isAfter(now);
 
+    // Memorization moves through Juz Amma from An-Naba, half a page at a time.
+    var memoSurah = 78;
+    var memoPages = 0.0;
+
     for (var offset = days; offset >= 0; offset--) {
       final day = addDays(today, -offset);
       final key = dayKeyOf(day);
@@ -233,13 +238,18 @@ class DemoDataSeeder {
         );
       }
       if (offset.isEven && past(at(day, 5, 50))) {
+        if (memoPages >= surahPageCount(memoSurah)) {
+          memoSurah++;
+          memoPages = 0;
+        }
         await quran.add(
           kind: QuranKind.memorization,
           pages: 0.5,
-          surah: 'An-Naba (Surah 78)',
+          surah: surahLabel(memoSurah),
           goal: memorize,
           at: at(day, 5, 50),
         );
+        memoPages += 0.5;
       }
       if (offset % 3 == 0 && past(at(day, 20, 30))) {
         await quran.add(

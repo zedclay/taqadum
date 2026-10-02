@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/domain/period.dart';
 import '../../../core/localization/l10n.dart';
+import '../../../core/providers.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -215,8 +217,7 @@ class _SleepFormState extends ConsumerState<_SleepForm> {
   /// Bed and wake as moments ending this morning; bedtimes after noon are
   /// the previous evening.
   (DateTime, DateTime) get _moments {
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
+    final today = startOfDay(ref.read(clockProvider)());
     final wake = today.add(Duration(minutes: _wake));
     var bed = today.add(Duration(minutes: _bed));
     if (!bed.isBefore(wake)) bed = bed.subtract(const Duration(days: 1));

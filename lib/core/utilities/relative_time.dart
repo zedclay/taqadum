@@ -13,12 +13,12 @@ String whenLabel(
   BuildContext context,
   DateTime moment, {
   required bool use24h,
-  DateTime? now,
+  required DateTime now,
 }) {
   final l = context.l10n;
   final local = moment.toLocal();
   final time = Fmt.time(local, use24h: use24h);
-  return switch (daysBetween(local, now ?? DateTime.now())) {
+  return switch (daysBetween(local, now)) {
     0 => l.commonTodayAt(time),
     1 => l.commonYesterdayAt(time),
     _ => l.commonDateAt(Fmt.monthDay(local), time),
@@ -26,7 +26,10 @@ String whenLabel(
 }
 
 /// "today", "yesterday" or "4 days ago".
-String daysAgoLabel(BuildContext context, DateTime moment, {DateTime? now}) =>
-    context.l10n.commonDaysAgo(
-      daysBetween(moment.toLocal(), now ?? DateTime.now()).clamp(0, 9999),
-    );
+String daysAgoLabel(
+  BuildContext context,
+  DateTime moment, {
+  required DateTime now,
+}) => context.l10n.commonDaysAgo(
+  daysBetween(moment.toLocal(), now).clamp(0, 9999),
+);
