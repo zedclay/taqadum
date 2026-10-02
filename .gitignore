@@ -66,3 +66,6 @@ key.properties
 *.db
 *.db-shm
 *.db-wal
+
+# Golden test failure output
+**/failures/

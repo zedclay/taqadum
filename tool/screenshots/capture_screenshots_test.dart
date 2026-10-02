@@ -106,7 +106,10 @@ void main() {
     return (c, env);
   }
 
+  // Each test renders real blurred shadows, as on a device, and restores the
+  // test default before it ends.
   testWidgets('English showcase', (tester) async {
+    debugDisableShadows = false;
     final (c, env) = await boot(tester);
     for (final (name, route) in _shots) {
       var location = route;
@@ -122,14 +125,17 @@ void main() {
         matchesGoldenFile('../../docs/screenshots/$name.png'),
       );
     }
+    debugDisableShadows = true;
   });
 
   testWidgets('Arabic showcase', (tester) async {
+    debugDisableShadows = false;
     final (c, _) = await boot(tester, prefs: {'pref.locale': 'ar'});
     await goTo(tester, c, AppRoutes.today);
     await expectLater(
       find.byType(MaterialApp),
       matchesGoldenFile('../../docs/screenshots/11_today_arabic.png'),
     );
+    debugDisableShadows = true;
   });
 }

@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/Flutter-3.47-02569B?logo=flutter&logoColor=white" alt="Flutter 3.47">
   <img src="https://img.shields.io/badge/offline--first-local%20SQLite-2E7D32" alt="Offline-first">
   <img src="https://img.shields.io/badge/platforms-Android%20%7C%20iOS-555555" alt="Platforms: Android and iOS">
-  <img src="https://img.shields.io/badge/tests-119%20passing-success" alt="119 tests passing">
+  <img src="https://img.shields.io/badge/tests-150%20passing-success" alt="150 tests passing">
   <img src="https://img.shields.io/badge/i18n-English%20%7C%20العربية%20(RTL)-F26B1D" alt="English and Arabic">
 </p>
 
@@ -183,7 +183,7 @@ Development verification on the current codebase:
 | Check | Result |
 | --- | --- |
 | `flutter analyze` | No issues |
-| `flutter test` | 119 passing (72 unit, 21 data, 26 widget) |
+| `flutter test` | 150 passing (75 unit, 25 data, 50 widget) |
 | `flutter build apk --debug` | Successful |
 | `flutter build ios --simulator` | Successful |
 
@@ -196,8 +196,8 @@ These are local development results, not a store release. The suite runs fully o
   logs, onboarding, demo seeder, JSON/CSV export, persistence, schema migration, language
   switching without data changes
 - **Widget** — the real app on test doubles: every screen at 360 px and 430 px widths and at
-  1.35× text size (any overflow fails), first-run flow, Quick Add, navigation, Arabic RTL
-  screens and golden images
+  1.35× text size (any overflow fails), first-run flow, Quick Add, bottom navigation in both
+  directions, Arabic RTL screens and golden images
 
 ## Localization
 
